@@ -10,24 +10,61 @@ html, body {
   overflow: hidden;
 }
 
-#passcode-box,
+#app {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#passcode-box {
+  display: block;
+}
+
 .quiz-container {
   display: none;
 }
 
-.show {
-  display: block;
-}
-
 #passcode-box {
-  max-width: 400px;
+  width: 30vh;
+  aspect-ratio: 2.5 / 3.9;
   margin: auto;
   margin-top: 20vh;
   padding: 20px;
   border-radius: 12px;
-  background: rgba(255, 255, 255, 0.8);
+  background: url("ASSETS/All-in-One.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
   box-shadow: 0 0 12px rgba(0, 0, 0, 0.3);
   border: 0.2px solid black;
+}
+
+.passcode-head{
+  margin-top: 10vh;
+  font-size: larger;
+  font-weight: bold;
+  font-family: 'Times New Roman', Times, serif;
+}
+
+#passcode-input {
+  width: 84%;
+  padding: 6px 12px;
+  margin-bottom: 3vh;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 15px;
+}
+
+#passcode-btn{
+  width: 100%;
+  padding: 6px 12px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: large;
+  font-family: 'Times New Roman', Times, serif;
+  font-weight: bolder;
 }
 
 .quiz-container {
