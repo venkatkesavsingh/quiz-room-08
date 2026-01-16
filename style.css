@@ -17,13 +17,14 @@ html, body {
   align-items: center;
 }
 
-#passcode-box,
-.quiz-container {
-  display: none;
-}
+.screen{
+    overflow: hidden;
+    display: none;
+} 
 
-.show {
-  display: block;
+.screen.active {
+    overflow: hidden;
+    display: block;
 }
 
 #passcode-box {
@@ -42,7 +43,7 @@ html, body {
 }
 
 .passcode-head{
-  margin-top: 10vh;
+  margin-top: 13vh;
   font-size: larger;
   font-weight: bold;
   font-family: 'Times New Roman', Times, serif;
@@ -54,7 +55,11 @@ html, body {
   margin-bottom: 3vh;
   border: 1px solid #ccc;
   border-radius: 4px;
-  font-size: 15px;
+  font-size: 14px;
+  letter-spacing: 14px;
+  text-align: center;
+  border: 2px solid #333;
+  outline: none;
 }
 
 #passcode-btn{
@@ -68,7 +73,13 @@ html, body {
   font-weight: bolder;
 }
 
-.quiz-container {
+#passcode-error {
+  color: red;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+#quiz-container {
   max-width: 600px;
   aspect-ratio: 2.5 / 3.6;
   margin: auto;

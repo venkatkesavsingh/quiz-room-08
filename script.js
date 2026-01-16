@@ -6,7 +6,7 @@ import { getDatabase, ref, get, update, onValue } from "https://www.gstatic.com/
 import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
 
 /********************************
- * FIREBASE CONFIG (ROOM-SPECIFIC)
+ * FIREBASE CONFIG
  ********************************/
 const firebaseConfig = {
   apiKey: "AIzaSyCFE2GuML1GCaWPoGHmoiFfKX_WW55kktY",
@@ -24,27 +24,9 @@ const auth = getAuth(app);
 signInAnonymously(auth);
 
 /********************************
- * WAIT FOR DOM (CRITICAL)
+ * WAIT FOR DOM
  ********************************/
 window.addEventListener("DOMContentLoaded", init);
-
-function init() {
-  setupElements();
-  showPasscodeScreen();
-  fetchQuestions();
-  setupAdminListeners();
-}
-
-/********************************
- * TEAM IDENTIFICATION
- ********************************/
-const params = new URLSearchParams(window.location.search);
-const teamId = params.get("team");
-
-if (!teamId) {
-  document.body.innerHTML = "<h2>Invalid team link</h2>";
-  throw new Error("Team ID missing");
-}
 
 /********************************
  * GLOBAL STATE
@@ -57,14 +39,35 @@ let timerInterval = null;
 let selectedOption = null;
 
 /********************************
- * ELEMENT REFERENCES
+ * TEAM ID
  ********************************/
-let passcodeBox, quizContainer, passcodeInput, passcodeBtn, passcodeError;
+const params = new URLSearchParams(window.location.search);
+const teamId = params.get("team");
+
+/********************************
+ * ELEMENTS
+ ********************************/
+let passcodeScreen, quizScreen;
+let passcodeInput, passcodeBtn, passcodeError;
 let questionEl, feedbackEl, timerEl, scoreEl, optionsEls;
 
+/********************************
+ * INIT
+ ********************************/
+function init() {
+  setupElements();
+  showScreen(passcodeScreen);
+  fetchQuestions();
+  setupAdminListeners();
+}
+
+/********************************
+ * SETUP ELEMENTS
+ ********************************/
 function setupElements() {
-  passcodeBox = document.getElementById("passcode-box");
-  quizContainer = document.querySelector(".quiz-container");
+  passcodeScreen = document.getElementById("passcode-box");
+  quizScreen = document.getElementById("quiz-container");
+
   passcodeInput = document.getElementById("passcode-input");
   passcodeBtn = document.getElementById("passcode-btn");
   passcodeError = document.getElementById("passcode-error");
@@ -75,37 +78,17 @@ function setupElements() {
   scoreEl = document.getElementById("live-score");
   optionsEls = document.querySelectorAll(".option");
 
-  passcodeBtn.onclick = handlePasscodeSubmit;
+  passcodeBtn.addEventListener("click", handlePasscodeSubmit);
 }
 
 /********************************
- * UI STATE FUNCTIONS
+ * SCREEN CONTROL (IMPORTANT)
  ********************************/
-function showPasscodeScreen() {
-  passcodeBox.classList.add("show");
-  quizContainer.classList.remove("show");
-}
-
-function showWaitingScreen(msg) {
-  passcodeBox.classList.remove("show");
-  quizContainer.classList.add("show");
-  document.querySelector(".options").style.display = "none";
-  questionEl.innerText = msg;
-}
-
-function showQuizScreen() {
-  passcodeBox.classList.remove("show");
-  quizContainer.classList.add("show");
-  document.querySelector(".options").style.display = "flex";
-}
-
-function showQualifiedScreen() {
-  passcodeBox.classList.remove("show");
-  quizContainer.classList.add("show");
-  document.querySelector(".options").style.display = "none";
-  questionEl.innerText = "🎉 You are qualified to the next round!";
-  feedbackEl.innerText = "";
-  clearInterval(timerInterval);
+function showScreen(screenToShow) {
+  document.querySelectorAll(".screen").forEach(s =>
+    s.classList.remove("active")
+  );
+  screenToShow.classList.add("active");
 }
 
 /********************************
@@ -114,6 +97,11 @@ function showQualifiedScreen() {
 async function handlePasscodeSubmit() {
   const entered = passcodeInput.value.trim();
   passcodeError.innerText = "";
+
+  if (!teamId) {
+    passcodeError.innerText = "Invalid team link";
+    return;
+  }
 
   const teamRef = ref(db, `teams/${teamId}`);
   const snap = await get(teamRef);
@@ -133,14 +121,22 @@ async function handlePasscodeSubmit() {
 }
 
 /********************************
+ * WAITING SCREEN
+ ********************************/
+function showWaitingScreen(msg) {
+  showScreen(quizScreen);
+  document.querySelector(".options").style.display = "none";
+  questionEl.innerText = msg;
+  feedbackEl.innerText = "";
+}
+
+/********************************
  * FETCH QUESTIONS
  ********************************/
 function fetchQuestions() {
   fetch("questions.json")
     .then(res => res.json())
-    .then(data => {
-      questions = data;
-    });
+    .then(data => questions = data);
 }
 
 /********************************
@@ -149,14 +145,7 @@ function fetchQuestions() {
 function setupAdminListeners() {
   onValue(ref(db, "admin/quizStarted"), snap => {
     if (snap.val() === true) {
-      showQuizScreen();
       startQuiz();
-    }
-  });
-
-  onValue(ref(db, `teams/${teamId}/qualified`), snap => {
-    if (snap.val() === true) {
-      showQualifiedScreen();
     }
   });
 }
@@ -169,6 +158,8 @@ function shuffleOptions(arr) {
 }
 
 function startQuiz() {
+  showScreen(quizScreen);
+  document.querySelector(".options").style.display = "flex";
   currentQuestionIndex = 0;
   loadQuestion();
 }
@@ -209,11 +200,11 @@ function loadQuestion() {
 function startTimer() {
   clearInterval(timerInterval);
   timeLeft = 30;
-  timerEl.innerText = `Time: ${timeLeft}s`;
+  timerEl.innerText = `Time ${timeLeft}s`;
 
   timerInterval = setInterval(() => {
     timeLeft--;
-    timerEl.innerText = `Time: ${timeLeft}s`;
+    timerEl.innerText = `Time ${timeLeft}s`;
 
     if (timeLeft <= 0) {
       clearInterval(timerInterval);
@@ -223,12 +214,12 @@ function startTimer() {
 }
 
 /********************************
- * TIME UP HANDLER
+ * TIME UP
  ********************************/
 async function handleTimeUp() {
   const q = questions[currentQuestionIndex];
 
-  optionsEls.forEach(o => (o.disabled = true));
+  optionsEls.forEach(o => o.disabled = true);
 
   if (!selectedOption) {
     score -= 5;
@@ -238,7 +229,7 @@ async function handleTimeUp() {
     feedbackEl.innerText = "✅ Correct!";
   } else {
     score -= 5;
-    feedbackEl.innerText = "❌ Wrong!";
+    feedbackEl.innerText = `❌ Wrong!\nCorrect answer: ${q.answer}`;
   }
 
   scoreEl.innerText = `Score: ${score}`;
@@ -249,4 +240,3 @@ async function handleTimeUp() {
     loadQuestion();
   }, 1500);
 }
- 
