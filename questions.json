@@ -1,0 +1,1460 @@
+[
+  {
+    "question": "What is the capital of Canada?",
+    "options": ["Toronto", "Ottawa", "Vancouver", "Montreal"],
+    "answer": "Ottawa"
+  },
+  {
+    "question": "Which planet is closest to the Sun?",
+    "options": ["Venus", "Earth", "Mercury", "Mars"],
+    "answer": "Mercury"
+  },
+  {
+    "question": "Who wrote the play 'Romeo and Juliet'?",
+    "options": ["William Shakespeare", "Jane Austen", "Mark Twain", "George Orwell"],
+    "answer": "William Shakespeare"
+  },
+  {
+    "question": "What is the chemical symbol for water?",
+    "options": ["H2O", "CO2", "O2", "HO2"],
+    "answer": "H2O"
+  },
+  {
+    "question": "In which year did the Titanic sink?",
+    "options": ["1910", "1912", "1915", "1920"],
+    "answer": "1912"
+  },
+  {
+    "question": "Which country is known as the Land of the Rising Sun?",
+    "options": ["China", "Japan", "Thailand", "Vietnam"],
+    "answer": "Japan"
+  },
+  {
+    "question": "What is the largest internal organ in the human body?",
+    "options": ["Heart", "Liver", "Lung", "Kidney"],
+    "answer": "Liver"
+  },
+  {
+    "question": "Who painted the Mona Lisa?",
+    "options": ["Vincent Van Gogh", "Pablo Picasso", "Leonardo da Vinci", "Claude Monet"],
+    "answer": "Leonardo da Vinci"
+  },
+  {
+    "question": "Which element has the chemical symbol 'Fe'?",
+    "options": ["Iron", "Fluorine", "Zinc", "Lead"],
+    "answer": "Iron"
+  },
+  {
+    "question": "What is the smallest prime number?",
+    "options": ["0", "1", "2", "3"],
+    "answer": "2"
+  },
+
+  {
+    "question": "Which language has the most native speakers?",
+    "options": ["English", "Spanish", "Hindi", "Mandarin Chinese"],
+    "answer": "Mandarin Chinese"
+  },
+  {
+    "question": "What is the currency of Brazil?",
+    "options": ["Peso", "Real", "Dollar", "Euro"],
+    "answer": "Real"
+  },
+  {
+    "question": "How many players are on a soccer team (on the field)?",
+    "options": ["10", "11", "12", "9"],
+    "answer": "11"
+  },
+  {
+    "question": "What gas do plants absorb during photosynthesis?",
+    "options": ["Oxygen", "Nitrogen", "Carbon Dioxide", "Hydrogen"],
+    "answer": "Carbon Dioxide"
+  },
+  {
+    "question": "Which ocean is the largest?",
+    "options": ["Atlantic", "Indian", "Arctic", "Pacific"],
+    "answer": "Pacific"
+  },
+  {
+    "question": "What is the longest river in the world?",
+    "options": ["Amazon", "Nile", "Yangtze", "Mississippi"],
+    "answer": "Nile"
+  },
+  {
+    "question": "In computing, what does 'CPU' stand for?",
+    "options": ["Central Power Unit", "Central Processing Unit", "Computer Power Unit", "Central Program Unit"],
+    "answer": "Central Processing Unit"
+  },
+  {
+    "question": "Which country won the FIFA World Cup in 2018?",
+    "options": ["Brazil", "Germany", "France", "Argentina"],
+    "answer": "France"
+  },
+  {
+    "question": "Which animal is known as the King of the Jungle?",
+    "options": ["Tiger", "Elephant", "Lion", "Panther"],
+    "answer": "Lion"
+  },
+  {
+    "question": "Which famous scientist developed the theory of general relativity?",
+    "options": ["Isaac Newton", "Albert Einstein", "Galileo Galilei", "Marie Curie"],
+    "answer": "Albert Einstein"
+  },
+  {
+    "question": "What is the capital of Australia?",
+    "options": ["Sydney", "Melbourne", "Canberra", "Brisbane"],
+    "answer": "Canberra"
+  },
+  {
+    "question": "Which instrument has 88 keys?",
+    "options": ["Violin", "Piano", "Flute", "Guitar"],
+    "answer": "Piano"
+  },
+  {
+    "question": "How many continents are there on Earth?",
+    "options": ["5", "6", "7", "8"],
+    "answer": "7"
+  },
+  {
+    "question": "Who is known as the 'Father of Computers'?",
+    "options": ["Bill Gates", "Charles Babbage", "Alan Turing", "Steve Jobs"],
+    "answer": "Charles Babbage"
+  },
+  {
+    "question": "Which is the smallest country in the world?",
+    "options": ["Monaco", "San Marino", "Vatican City", "Malta"],
+    "answer": "Vatican City"
+  },
+  {
+    "question": "Which vitamin is produced when a person is exposed to sunlight?",
+    "options": ["Vitamin A", "Vitamin B", "Vitamin C", "Vitamin D"],
+    "answer": "Vitamin D"
+  },
+  {
+    "question": "Which country is home to the Great Barrier Reef?",
+    "options": ["USA", "Australia", "South Africa", "India"],
+    "answer": "Australia"
+  },
+  {
+    "question": "How many bones are there in the adult human body?",
+    "options": ["206", "201", "210", "199"],
+    "answer": "206"
+  },
+  {
+    "question": "What is the name of the longest bone in the human body?",
+    "options": ["Humerus", "Femur", "Tibia", "Radius"],
+    "answer": "Femur"
+  },
+  {
+    "question": "Who was the first person to walk on the moon?",
+    "options": ["Yuri Gagarin", "Buzz Aldrin", "Neil Armstrong", "Michael Collins"],
+    "answer": "Neil Armstrong"
+  },
+  {
+    "question": "Which planet has the most moons?",
+    "options": ["Mars", "Jupiter", "Saturn", "Uranus"],
+    "answer": "Saturn"
+  },
+  {
+    "question": "What does the 'HTTP' in a website address stand for?",
+    "options": ["HyperText Transfer Protocol", "High-Tech Text Processor", "Hyperlink Tool Tagging Protocol", "Hyperlink Transfer Tagging"],
+    "answer": "HyperText Transfer Protocol"
+  },
+  {
+    "question": "In what year did World War II end?",
+    "options": ["1940", "1942", "1945", "1947"],
+    "answer": "1945"
+  },
+  {
+    "question": "What is the largest desert in the world?",
+    "options": ["Sahara", "Arctic", "Gobi", "Antarctica"],
+    "answer": "Antarctica"
+  },
+  {
+    "question": "What is the currency of the United Kingdom?",
+    "options": ["Euro", "Dollar", "Pound Sterling", "Franc"],
+    "answer": "Pound Sterling"
+  },
+  {
+    "question": "Which artist is famous for cutting off his own ear?",
+    "options": ["Claude Monet", "Pablo Picasso", "Leonardo da Vinci", "Vincent van Gogh"],
+    "answer": "Vincent van Gogh"
+  },
+  {
+    "question": "Which planet is known for its beautiful rings?",
+    "options": ["Neptune", "Uranus", "Saturn", "Jupiter"],
+    "answer": "Saturn"
+  },
+  {
+    "question": "Who is the author of 'Harry Potter'?",
+    "options": ["J.R.R. Tolkien", "J.K. Rowling", "Stephen King", "Roald Dahl"],
+    "answer": "J.K. Rowling"
+  },
+  {
+    "question": "What is the tallest mountain in the world?",
+    "options": ["K2", "Mount Everest", "Kangchenjunga", "Makalu"],
+    "answer": "Mount Everest"
+  },
+  {
+    "question": "Which country is known for inventing pizza?",
+    "options": ["France", "USA", "Greece", "Italy"],
+    "answer": "Italy"
+  },
+  {
+    "question": "Which gas is most abundant in the Earth's atmosphere?",
+    "options": ["Oxygen", "Carbon Dioxide", "Nitrogen", "Hydrogen"],
+    "answer": "Nitrogen"
+  },
+  {
+    "question": "Which famous ship sank in 1912 after hitting an iceberg?",
+    "options": ["Britannic", "Titanic", "Lusitania", "Queen Mary"],
+    "answer": "Titanic"
+  },
+  {
+    "question": "What is the currency of Japan?",
+    "options": ["Won", "Yuan", "Dollar", "Yen"],
+    "answer": "Yen"
+  },
+  {
+    "question": "Who discovered penicillin?",
+    "options": ["Alexander Fleming", "Louis Pasteur", "Marie Curie", "Isaac Newton"],
+    "answer": "Alexander Fleming"
+  },
+  {
+    "question": "In which country did the Olympic Games originate?",
+    "options": ["Italy", "Greece", "USA", "France"],
+    "answer": "Greece"
+  },
+  {
+    "question": "How many hearts does an octopus have?",
+    "options": ["1", "2", "3", "4"],
+    "answer": "3"
+  },
+  {
+    "question": "What is the name of the galaxy we live in?",
+    "options": ["Andromeda", "Milky Way", "Orion", "Sagittarius A*"],
+    "answer": "Milky Way"
+  },
+  {
+    "question": "What is the square root of 144?",
+    "options": ["10", "11", "12", "13"],
+    "answer": "12"
+  },
+  {
+    "question": "What is the capital city of Egypt?",
+    "options": ["Cairo", "Alexandria", "Luxor", "Giza"],
+    "answer": "Cairo"
+  },
+  {
+    "question": "Which is the most spoken language in the world?",
+    "options": ["English", "Mandarin Chinese", "Spanish", "Hindi"],
+    "answer": "Mandarin Chinese"
+  },
+
+  {
+    "question": "Which organ is primarily responsible for pumping blood?",
+    "options": ["Brain", "Liver", "Heart", "Kidney"],
+    "answer": "Heart"
+  },
+  {
+    "question": "What is the tallest building in the world as of 2025?",
+    "options": ["Shanghai Tower", "Burj Khalifa", "Empire State", "Petronas Towers"],
+    "answer": "Burj Khalifa"
+  },
+  {
+    "question": "Which planet is known as the Morning Star?",
+    "options": ["Mars", "Mercury", "Venus", "Jupiter"],
+    "answer": "Venus"
+  },
+  {
+    "question": "Which animal is the largest species of cat?",
+    "options": ["Lion", "Cheetah", "Jaguar", "Tiger"],
+    "answer": "Tiger"
+  },
+  {
+    "question": "What is the national flower of India?",
+    "options": ["Rose", "Lotus", "Marigold", "Lily"],
+    "answer": "Lotus"
+  },
+  {
+    "question": "Which country is famous for the Eiffel Tower?",
+    "options": ["Italy", "Germany", "France", "Spain"],
+    "answer": "France"
+  },
+  {
+    "question": "How many days are there in a leap year?",
+    "options": ["365", "366", "364", "360"],
+    "answer": "366"
+  },
+  {
+    "question": "What is the boiling point of water at sea level in Celsius?",
+    "options": ["90°C", "95°C", "100°C", "105°C"],
+    "answer": "100°C"
+  },
+  {
+    "question": "Who was the first female Prime Minister of India?",
+    "options": ["Indira Gandhi", "Sonia Gandhi", "Sarojini Naidu", "Pratibha Patil"],
+    "answer": "Indira Gandhi"
+  },
+  {
+    "question": "Which famous monument is located in Agra, India?",
+    "options": ["India Gate", "Charminar", "Taj Mahal", "Red Fort"],
+    "answer": "Taj Mahal"
+  },
+  {
+    "question": "Which blood type is known as the universal donor?",
+    "options": ["A+", "O-", "B-", "AB+"],
+    "answer": "O-"
+  },
+  {
+    "question": "Which country is known for the Great Wall?",
+    "options": ["India", "China", "Japan", "Mongolia"],
+    "answer": "China"
+  },
+  {
+    "question": "Which metal is liquid at room temperature?",
+    "options": ["Mercury", "Lead", "Copper", "Zinc"],
+    "answer": "Mercury"
+  },
+  {
+    "question": "Which artist painted the ceiling of the Sistine Chapel?",
+    "options": ["Michelangelo", "Raphael", "Donatello", "Leonardo da Vinci"],
+    "answer": "Michelangelo"
+  },
+  {
+    "question": "In which year did India gain independence?",
+    "options": ["1945", "1946", "1947", "1948"],
+    "answer": "1947"
+  },
+  {
+    "question": "Which element has the atomic number 1?",
+    "options": ["Hydrogen", "Helium", "Oxygen", "Carbon"],
+    "answer": "Hydrogen"
+  },
+  {
+    "question": "What is the capital of Russia?",
+    "options": ["St. Petersburg", "Moscow", "Kiev", "Sochi"],
+    "answer": "Moscow"
+  },
+  {
+    "question": "Which sport uses a net, a shuttlecock, and rackets?",
+    "options": ["Tennis", "Squash", "Badminton", "Table Tennis"],
+    "answer": "Badminton"
+  },
+  {
+    "question": "Which fruit has its seeds on the outside?",
+    "options": ["Banana", "Strawberry", "Apple", "Orange"],
+    "answer": "Strawberry"
+  },
+  {
+    "question": "What is the largest island in the world?",
+    "options": ["Australia", "Borneo", "Greenland", "New Guinea"],
+    "answer": "Greenland"
+  },
+  {
+    "question": "What does DNA stand for?",
+    "options": ["Deoxyribonucleic Acid", "Dynamic Nucleic Agent", "Dual Neuron Acid", "Deoxynitric Acid"],
+    "answer": "Deoxyribonucleic Acid"
+  },
+  {
+    "question": "Which famous scientist formulated the laws of motion?",
+    "options": ["Einstein", "Tesla", "Newton", "Bohr"],
+    "answer": "Newton"
+  },
+  {
+    "question": "What is the capital of South Korea?",
+    "options": ["Busan", "Seoul", "Incheon", "Daegu"],
+    "answer": "Seoul"
+  },
+  {
+    "question": "How many legs does a spider have?",
+    "options": ["6", "8", "10", "12"],
+    "answer": "8"
+  },
+  {
+    "question": "What is the main ingredient in guacamole?",
+    "options": ["Cucumber", "Avocado", "Tomato", "Peas"],
+    "answer": "Avocado"
+  },
+  {
+    "question": "Which natural disaster is measured with a Richter scale?",
+    "options": ["Tsunami", "Volcano", "Hurricane", "Earthquake"],
+    "answer": "Earthquake"
+  },
+  {
+    "question": "Which continent is the Sahara Desert located in?",
+    "options": ["Asia", "Africa", "Australia", "South America"],
+    "answer": "Africa"
+  },
+  {
+    "question": "Who is the main character in the video game series 'Legend of Zelda'?",
+    "options": ["Zelda", "Link", "Mario", "Samus"],
+    "answer": "Link"
+  },
+  {
+    "question": "Which is the coldest planet in our solar system?",
+    "options": ["Neptune", "Uranus", "Saturn", "Mars"],
+    "answer": "Uranus"
+  },
+  {
+    "question": "Which famous book series was written by J.R.R. Tolkien?",
+    "options": ["The Chronicles of Narnia", "Percy Jackson", "Harry Potter", "The Lord of the Rings"],
+    "answer": "The Lord of the Rings"
+  },
+  {
+    "question": "What is the process by which plants make their food?",
+    "options": ["Respiration", "Transpiration", "Photosynthesis", "Digestion"],
+    "answer": "Photosynthesis"
+  },
+  {
+    "question": "Which is the longest bone in the human body?",
+    "options": ["Fibula", "Tibia", "Femur", "Humerus"],
+    "answer": "Femur"
+  },
+  {
+    "question": "Who was the first President of the United States?",
+    "options": ["John Adams", "George Washington", "Thomas Jefferson", "Abraham Lincoln"],
+    "answer": "George Washington"
+  },
+  {
+    "question": "What is the speed of light?",
+    "options": ["300,000 km/s", "150,000 km/s", "200,000 km/s", "350,000 km/s"],
+    "answer": "300,000 km/s"
+  },
+  {
+    "question": "Which gas do humans exhale?",
+    "options": ["Oxygen", "Hydrogen", "Carbon Dioxide", "Nitrogen"],
+    "answer": "Carbon Dioxide"
+  },
+  {
+    "question": "Which movie features a character named 'Darth Vader'?",
+    "options": ["Star Trek", "Star Wars", "The Matrix", "Guardians of the Galaxy"],
+    "answer": "Star Wars"
+  },
+  {
+    "question": "Which part of the plant conducts photosynthesis?",
+    "options": ["Stem", "Root", "Leaf", "Flower"],
+    "answer": "Leaf"
+  },
+  {
+    "question": "What is the name of the fairy in Peter Pan?",
+    "options": ["Silvermist", "Rosetta", "Tinker Bell", "Fawn"],
+    "answer": "Tinker Bell"
+  },
+  {
+    "question": "Which chess piece can only move diagonally?",
+    "options": ["Rook", "Knight", "Bishop", "Queen"],
+    "answer": "Bishop"
+  },
+  {
+    "question": "What is the name of the Greek god of war?",
+    "options": ["Zeus", "Ares", "Apollo", "Hermes"],
+    "answer": "Ares"
+  },
+  {
+    "question": "Which continent has the most countries?",
+    "options": ["Europe", "Asia", "Africa", "South America"],
+    "answer": "Africa"
+  },
+  {
+    "question": "Which color is NOT in the Olympic rings?",
+    "options": ["Red", "Blue", "Orange", "Green"],
+    "answer": "Orange"
+  },
+  {
+    "question": "Which U.S. state is famous for Hollywood?",
+    "options": ["New York", "California", "Florida", "Texas"],
+    "answer": "California"
+  },
+  {
+    "question": "What is the freezing point of water in Celsius?",
+    "options": ["0°C", "32°C", "100°C", "-1°C"],
+    "answer": "0°C"
+  },
+  {
+    "question": "What is the chemical formula for table salt?",
+    "options": ["NaCl", "H2O", "CO2", "KCl"],
+    "answer": "NaCl"
+  },
+  {
+    "question": "How many stripes are there on the American flag?",
+    "options": ["10", "11", "13", "15"],
+    "answer": "13"
+  },
+  {
+    "question": "Which is the largest mammal on Earth?",
+    "options": ["Elephant", "Giraffe", "Blue Whale", "Rhino"],
+    "answer": "Blue Whale"
+  },
+  {
+    "question": "Which popular video game features a battle royale mode called 'Warzone'?",
+    "options": ["PUBG", "Call of Duty", "Fortnite", "Apex Legends"],
+    "answer": "Call of Duty"
+  },
+  {
+    "question": "Which bird is known for mimicking human speech?",
+    "options": ["Sparrow", "Owl", "Parrot", "Crow"],
+    "answer": "Parrot"
+  },
+  {
+    "question": "What is the tallest animal in the world?",
+    "options": ["Elephant", "Giraffe", "Kangaroo", "Camel"],
+    "answer": "Giraffe"
+  },
+  {
+    "question": "What is the chemical symbol for potassium?",
+    "options": ["K", "P", "Pt", "Po"],
+    "answer": "K"
+  },
+  {
+    "question": "Which planet is known for having a giant red spot?",
+    "options": ["Mars", "Jupiter", "Venus", "Saturn"],
+    "answer": "Jupiter"
+  },
+  {
+    "question": "Who wrote the novel '1984'?",
+    "options": ["George Orwell", "Aldous Huxley", "Ray Bradbury", "Ernest Hemingway"],
+    "answer": "George Orwell"
+  },
+  {
+    "question": "Which organ is responsible for detoxifying the body?",
+    "options": ["Kidneys", "Liver", "Heart", "Pancreas"],
+    "answer": "Liver"
+  },
+  {
+    "question": "What is the name of the longest river in Asia?",
+    "options": ["Yangtze", "Ganges", "Mekong", "Indus"],
+    "answer": "Yangtze"
+  },
+  {
+    "question": "Which is the most widely consumed beverage in the world after water?",
+    "options": ["Coffee", "Milk", "Tea", "Juice"],
+    "answer": "Tea"
+  },
+  {
+    "question": "Which city hosted the 2016 Summer Olympics?",
+    "options": ["Tokyo", "London", "Rio de Janeiro", "Beijing"],
+    "answer": "Rio de Janeiro"
+  },
+  {
+    "question": "What is the hardest natural substance on Earth?",
+    "options": ["Gold", "Iron", "Diamond", "Platinum"],
+    "answer": "Diamond"
+  },
+  {
+    "question": "Which part of the brain controls breathing?",
+    "options": ["Cerebrum", "Cerebellum", "Medulla", "Hippocampus"],
+    "answer": "Medulla"
+  },
+  {
+    "question": "What is the currency of South Korea?",
+    "options": ["Won", "Yuan", "Baht", "Rupee"],
+    "answer": "Won"
+  },
+  {
+    "question": "What is the capital of Argentina?",
+    "options": ["Lima", "Buenos Aires", "Santiago", "Montevideo"],
+    "answer": "Buenos Aires"
+  },
+  {
+    "question": "In which country is the city of Istanbul located?",
+    "options": ["Greece", "Turkey", "Lebanon", "Egypt"],
+    "answer": "Turkey"
+  },
+  {
+    "question": "What is the term for animals that eat both plants and meat?",
+    "options": ["Herbivores", "Carnivores", "Omnivores", "Insectivores"],
+    "answer": "Omnivores"
+  },
+  {
+    "question": "Which element is essential for tooth enamel?",
+    "options": ["Calcium", "Phosphorus", "Fluoride", "Iron"],
+    "answer": "Fluoride"
+  },
+  {
+    "question": "Which musical instrument has keys, pedals, and strings?",
+    "options": ["Guitar", "Drums", "Violin", "Piano"],
+    "answer": "Piano"
+  },
+  {
+    "question": "What type of animal is a Komodo dragon?",
+    "options": ["Lizard", "Snake", "Mammal", "Bird"],
+    "answer": "Lizard"
+  },
+  {
+    "question": "Which planet takes the longest time to orbit the Sun?",
+    "options": ["Saturn", "Neptune", "Uranus", "Pluto"],
+    "answer": "Neptune"
+  },
+  {
+    "question": "Which famous scientist is buried in Westminster Abbey?",
+    "options": ["Newton", "Einstein", "Darwin", "Tesla"],
+    "answer": "Isaac Newton"
+  },
+  {
+    "question": "Which part of the eye controls how much light enters?",
+    "options": ["Cornea", "Iris", "Lens", "Retina"],
+    "answer": "Iris"
+  },
+  {
+    "question": "Which is the only continent without a desert?",
+    "options": ["Europe", "Asia", "Africa", "North America"],
+    "answer": "Europe"
+  },
+  {
+    "question": "Which gas makes up most of the sun?",
+    "options": ["Hydrogen", "Oxygen", "Carbon", "Helium"],
+    "answer": "Hydrogen"
+  },
+  {
+    "question": "Who directed the movie 'Inception'?",
+    "options": ["James Cameron", "Christopher Nolan", "Steven Spielberg", "Martin Scorsese"],
+    "answer": "Christopher Nolan"
+  },
+  {
+    "question": "What is the national sport of Canada?",
+    "options": ["Baseball", "Hockey", "Lacrosse", "Football"],
+    "answer": "Lacrosse"
+  },
+  {
+    "question": "Which vitamin helps with blood clotting?",
+    "options": ["Vitamin A", "Vitamin C", "Vitamin K", "Vitamin E"],
+    "answer": "Vitamin K"
+  },
+  {
+    "question": "Which insect is known for producing honey?",
+    "options": ["Wasp", "Bee", "Moth", "Ant"],
+    "answer": "Bee"
+  },
+  {
+    "question": "Which city is the Statue of Liberty located in?",
+    "options": ["Chicago", "New York City", "Washington D.C.", "Boston"],
+    "answer": "New York City"
+  },
+  {
+    "question": "Which continent is Madagascar part of?",
+    "options": ["Asia", "Africa", "Europe", "Australia"],
+    "answer": "Africa"
+  },
+  {
+    "question": "Which organ in the human body filters blood?",
+    "options": ["Heart", "Lungs", "Kidneys", "Liver"],
+    "answer": "Kidneys"
+  },
+  {
+    "question": "Which animal is the symbol of the World Wildlife Fund?",
+    "options": ["Tiger", "Elephant", "Panda", "Koala"],
+    "answer": "Panda"
+  },
+  {
+    "question": "What is the largest volcano in the solar system?",
+    "options": ["Mount Everest", "Mauna Loa", "Olympus Mons", "Krakatoa"],
+    "answer": "Olympus Mons"
+  },
+  {
+    "question": "What is the currency of the United States?",
+    "options": ["Euro", "Peso", "Dollar", "Pound"],
+    "answer": "Dollar"
+  },
+  {
+    "question": "Which planet is famous for its rings?",
+    "options": ["Jupiter", "Saturn", "Uranus", "Neptune"],
+    "answer": "Saturn"
+  },
+  {
+    "question": "Who invented the telephone?",
+    "options": ["Alexander Graham Bell", "Thomas Edison", "Nikola Tesla", "Guglielmo Marconi"],
+    "answer": "Alexander Graham Bell"
+  },
+  {
+    "question": "What is the hardest substance in the human body?",
+    "options": ["Bone", "Cartilage", "Tooth enamel", "Nail"],
+    "answer": "Tooth enamel"
+  },
+  {
+    "question": "Which ancient wonder was located in Babylon?",
+    "options": ["Colossus of Rhodes", "Hanging Gardens", "Great Pyramid", "Lighthouse of Alexandria"],
+    "answer": "Hanging Gardens"
+  },
+  {
+    "question": "Which country is known for tulips and windmills?",
+    "options": ["Belgium", "Netherlands", "Sweden", "Germany"],
+    "answer": "Netherlands"
+  },
+  {
+    "question": "What is the national bird of the USA?",
+    "options": ["Eagle", "Hawk", "Falcon", "Owl"],
+    "answer": "Eagle"
+  },
+  {
+    "question": "Which fictional detective lived at 221B Baker Street?",
+    "options": ["Hercule Poirot", "Sherlock Holmes", "Philip Marlowe", "Sam Spade"],
+    "answer": "Sherlock Holmes"
+  },
+  {
+    "question": "What gas do animals breathe in?",
+    "options": ["Hydrogen", "Oxygen", "Nitrogen", "Carbon Monoxide"],
+    "answer": "Oxygen"
+  },
+  {
+    "question": "How many holes are played in a standard round of golf?",
+    "options": ["9", "12", "18", "20"],
+    "answer": "18"
+  },
+  {
+    "question": "Which city is known as the 'City of Love'?",
+    "options": ["Rome", "Paris", "New York", "Barcelona"],
+    "answer": "Paris"
+  },
+  {
+    "question": "Which programming language is known for its snake logo?",
+    "options": ["Java", "Python", "C#", "Ruby"],
+    "answer": "Python"
+  },
+  {
+    "question": "Which country has the maple leaf on its flag?",
+    "options": ["USA", "Canada", "Switzerland", "UK"],
+    "answer": "Canada"
+  },
+  {
+    "question": "What is the main language spoken in Brazil?",
+    "options": ["Spanish", "Portuguese", "French", "Italian"],
+    "answer": "Portuguese"
+  },
+  {
+    "question": "Which planet has the shortest day?",
+    "options": ["Earth", "Jupiter", "Mars", "Mercury"],
+    "answer": "Jupiter"
+  },
+  {
+    "question": "What does 'www' stand for in a website address?",
+    "options": ["World Web Wide", "Web World Window", "World Wide Web", "Wide World Web"],
+    "answer": "World Wide Web"
+  },
+  {
+    "question": "Who discovered gravity by observing a falling apple?",
+    "options": ["Newton", "Einstein", "Galileo", "Copernicus"],
+    "answer": "Newton"
+  },
+  {
+    "question": "What is the capital of Spain?",
+    "options": ["Barcelona", "Madrid", "Seville", "Valencia"],
+    "answer": "Madrid"
+  },
+  {
+    "question": "Which animal is the largest land carnivore?",
+    "options": ["Tiger", "Grizzly Bear", "Polar Bear", "Lion"],
+    "answer": "Polar Bear"
+  },
+  {
+    "question": "How many chromosomes are in a human cell?",
+    "options": ["23", "46", "48", "24"],
+    "answer": "46"
+  },
+  {
+    "question": "What is the main ingredient in traditional Japanese miso soup?",
+    "options": ["Seaweed", "Soybeans", "Rice", "Tofu"],
+    "answer": "Soybeans"
+  },
+  {
+    "question": "Which country gifted the Statue of Liberty to the United States?",
+    "options": ["England", "Germany", "France", "Italy"],
+    "answer": "France"
+  },
+  {
+    "question": "Which U.S. state is known as the 'Sunshine State'?",
+    "options": ["California", "Florida", "Texas", "Nevada"],
+    "answer": "Florida"
+  },
+  {
+    "question": "Who was the first Indian to win a Nobel Prize?",
+    "options": ["Mahatma Gandhi", "Rabindranath Tagore", "C.V. Raman", "Mother Teresa"],
+    "answer": "Rabindranath Tagore"
+  },
+  {
+    "question": "What is the capital of Sweden?",
+    "options": ["Oslo", "Helsinki", "Stockholm", "Copenhagen"],
+    "answer": "Stockholm"
+  },
+  {
+    "question": "Which continent has the highest population?",
+    "options": ["Europe", "Africa", "Asia", "North America"],
+    "answer": "Asia"
+  },
+  {
+    "question": "Which metal is most commonly used in electrical wiring?",
+    "options": ["Aluminum", "Silver", "Copper", "Gold"],
+    "answer": "Copper"
+  },
+  {
+    "question": "In which sport would you perform a slam dunk?",
+    "options": ["Tennis", "Basketball", "Baseball", "Football"],
+    "answer": "Basketball"
+  },
+  {
+    "question": "Which gas do plants release during photosynthesis?",
+    "options": ["Carbon Dioxide", "Oxygen", "Nitrogen", "Hydrogen"],
+    "answer": "Oxygen"
+  },
+  {
+    "question": "Who invented the light bulb?",
+    "options": ["Nikola Tesla", "Alexander Graham Bell", "Thomas Edison", "Benjamin Franklin"],
+    "answer": "Thomas Edison"
+  },
+
+  {
+    "question": "What is the largest ocean on Earth?",
+    "options": ["Atlantic Ocean", "Indian Ocean", "Pacific Ocean", "Arctic Ocean"],
+    "answer": "Pacific Ocean"
+  },
+  {
+    "question": "What does the term 'CPU' stand for in computing?",
+    "options": ["Central Power Unit", "Computer Processing Unit", "Central Processing Unit", "Control Program Utility"],
+    "answer": "Central Processing Unit"
+  },
+  {
+    "question": "What is the currency of Mexico?",
+    "options": ["Dollar", "Peso", "Euro", "Real"],
+    "answer": "Peso"
+  },
+  {
+    "question": "What is the name of the fairy in Disney’s Peter Pan?",
+    "options": ["Tinker Bell", "Wendy", "Pixie Dust", "Rosetta"],
+    "answer": "Tinker Bell"
+  },
+  {
+    "question": "Which scientist proposed the theory of evolution by natural selection?",
+    "options": ["Isaac Newton", "Charles Darwin", "Albert Einstein", "Gregor Mendel"],
+    "answer": "Charles Darwin"
+  },
+  {
+    "question": "What is the tallest structure in the world as of 2025?",
+    "options": ["Shanghai Tower", "Burj Khalifa", "Eiffel Tower", "One World Trade Center"],
+    "answer": "Burj Khalifa"
+  },
+  {
+    "question": "Which language is most widely spoken in South America?",
+    "options": ["Spanish", "Portuguese", "English", "French"],
+    "answer": "Spanish"
+  },
+  {
+    "question": "What is a baby goat called?",
+    "options": ["Calf", "Pup", "Kid", "Lamb"],
+    "answer": "Kid"
+  },
+  {
+    "question": "Which famous scientist was known for his laws of motion and gravity?",
+    "options": ["Einstein", "Newton", "Tesla", "Faraday"],
+    "answer": "Newton"
+  },
+  {
+    "question": "What type of animal is the character 'Baloo' in The Jungle Book?",
+    "options": ["Bear", "Panther", "Tiger", "Elephant"],
+    "answer": "Bear"
+  },
+  {
+    "question": "Which is the longest river in South America?",
+    "options": ["Amazon", "Orinoco", "Paraná", "Magdalena"],
+    "answer": "Amazon"
+  },
+  {
+    "question": "Which blood type is known as the universal recipient?",
+    "options": ["O+", "AB+", "A-", "B+"],
+    "answer": "AB+"
+  },
+  {
+    "question": "What is the name of the first satellite sent into space?",
+    "options": ["Apollo", "Sputnik", "Voyager", "Luna"],
+    "answer": "Sputnik"
+  },
+  {
+    "question": "Which animal is known for changing its color to blend with surroundings?",
+    "options": ["Octopus", "Chameleon", "Cuttlefish", "Gecko"],
+    "answer": "Chameleon"
+  },
+  {
+    "question": "Who composed the famous symphony 'Fifth Symphony'?",
+    "options": ["Mozart", "Beethoven", "Bach", "Tchaikovsky"],
+    "answer": "Beethoven"
+  },
+  {
+    "question": "Which continent has the most countries?",
+    "options": ["Asia", "Africa", "Europe", "South America"],
+    "answer": "Africa"
+  },
+  {
+    "question": "What is the capital of New Zealand?",
+    "options": ["Wellington", "Auckland", "Christchurch", "Hamilton"],
+    "answer": "Wellington"
+  },
+  {
+    "question": "Which device do we use to measure temperature?",
+    "options": ["Barometer", "Thermometer", "Altimeter", "Hygrometer"],
+    "answer": "Thermometer"
+  },
+  {
+    "question": "Which movie character said, 'I'll be back'?",
+    "options": ["Terminator", "Rambo", "Batman", "James Bond"],
+    "answer": "Terminator"
+  },
+  {
+    "question": "Which bird lays the largest egg?",
+    "options": ["Eagle", "Penguin", "Emu", "Ostrich"],
+    "answer": "Ostrich"
+  },
+  {
+    "question": "In which year was the first iPhone released?",
+    "options": ["2005", "2006", "2007", "2008"],
+    "answer": "2007"
+  },
+  {
+    "question": "What is the capital of Canada?",
+    "options": ["Toronto", "Vancouver", "Ottawa", "Montreal"],
+    "answer": "Ottawa"
+  },
+  {
+    "question": "Which element is used in pencils?",
+    "options": ["Lead", "Graphite", "Charcoal", "Carbon"],
+    "answer": "Graphite"
+  },
+  {
+    "question": "Which is the smallest bone in the human body?",
+    "options": ["Stapes", "Ulna", "Radius", "Tibia"],
+    "answer": "Stapes"
+  },
+  {
+    "question": "What is the hottest planet in our solar system?",
+    "options": ["Mercury", "Venus", "Mars", "Jupiter"],
+    "answer": "Venus"
+  },
+  {
+    "question": "What is the official language of Brazil?",
+    "options": ["Spanish", "Portuguese", "English", "French"],
+    "answer": "Portuguese"
+  },
+  {
+    "question": "Which famous painter cut off his own ear?",
+    "options": ["Picasso", "Michelangelo", "Van Gogh", "Rembrandt"],
+    "answer": "Van Gogh"
+  },
+  {
+    "question": "What do bees collect and use to make honey?",
+    "options": ["Nectar", "Pollen", "Sap", "Dew"],
+    "answer": "Nectar"
+  },
+  {
+    "question": "Who was the first woman to fly solo across the Atlantic?",
+    "options": ["Amelia Earhart", "Valentina Tereshkova", "Harriet Quimby", "Bessie Coleman"],
+    "answer": "Amelia Earhart"
+  },
+  {
+    "question": "Which bone protects the brain?",
+    "options": ["Skull", "Spine", "Rib", "Jaw"],
+    "answer": "Skull"
+  },
+  {
+    "question": "Which U.S. holiday is celebrated on the fourth Thursday in November?",
+    "options": ["Independence Day", "Labor Day", "Thanksgiving", "Veterans Day"],
+    "answer": "Thanksgiving"
+  },
+  {
+    "question": "Which is the most abundant element in the Earth's crust?",
+    "options": ["Iron", "Oxygen", "Silicon", "Aluminum"],
+    "answer": "Oxygen"
+  },
+  {
+    "question": "What is the currency of Russia?",
+    "options": ["Ruble", "Euro", "Dollar", "Taka"],
+    "answer": "Ruble"
+  },
+  {
+    "question": "Which famous scientist developed the laws of inheritance?",
+    "options": ["Darwin", "Mendel", "Watson", "Franklin"],
+    "answer": "Mendel"
+  },
+  {
+    "question": "Which river flows through Paris?",
+    "options": ["Danube", "Rhine", "Seine", "Thames"],
+    "answer": "Seine"
+  },
+  {
+    "question": "How many players are on a basketball team on the court at once?",
+    "options": ["5", "6", "7", "8"],
+    "answer": "5"
+  },
+  {
+    "question": "What is the national animal of China?",
+    "options": ["Tiger", "Panda", "Dragon", "Elephant"],
+    "answer": "Panda"
+  },
+  {
+    "question": "Which planet is tilted on its side?",
+    "options": ["Saturn", "Neptune", "Uranus", "Jupiter"],
+    "answer": "Uranus"
+  },
+  {
+    "question": "What does a botanist study?",
+    "options": ["Animals", "Rocks", "Plants", "Stars"],
+    "answer": "Plants"
+  },
+  {
+    "question": "Which is the highest civilian award in India?",
+    "options": ["Padma Shri", "Padma Bhushan", "Bharat Ratna", "Gallantry Award"],
+    "answer": "Bharat Ratna"
+  },
+  {
+    "question": "Who wrote 'The Adventures of Tom Sawyer'?",
+    "options": ["Mark Twain", "J.K. Rowling", "Ernest Hemingway", "Stephen King"],
+    "answer": "Mark Twain"
+  },
+  {
+    "question": "What is a group of lions called?",
+    "options": ["Flock", "Herd", "Pack", "Pride"],
+    "answer": "Pride"
+  },
+  {
+    "question": "What is the main gas found in the air we breathe?",
+    "options": ["Oxygen", "Carbon Dioxide", "Nitrogen", "Hydrogen"],
+    "answer": "Nitrogen"
+  },
+  {
+    "question": "Which ocean lies between Africa and Australia?",
+    "options": ["Pacific", "Indian", "Atlantic", "Arctic"],
+    "answer": "Indian"
+  },
+  {
+    "question": "How many sides does a hexagon have?",
+    "options": ["5", "6", "7", "8"],
+    "answer": "6"
+  },
+  {
+    "question": "What does RAM stand for in computers?",
+    "options": ["Random Access Memory", "Read-Only Access Module", "Rapid Active Machine", "Remote Access Mode"],
+    "answer": "Random Access Memory"
+  },
+  {
+    "question": "What type of animal is Nemo in the animated film?",
+    "options": ["Goldfish", "Clownfish", "Tuna", "Swordfish"],
+    "answer": "Clownfish"
+  },
+  {
+    "question": "Which famous tower is located in Italy?",
+    "options": ["Eiffel Tower", "Leaning Tower of Pisa", "Big Ben", "CN Tower"],
+    "answer": "Leaning Tower of Pisa"
+  },
+  {
+    "question": "What color is a giraffe's tongue?",
+    "options": ["Pink", "Blue", "Purple", "Black"],
+    "answer": "Black"
+  },
+  {
+    "question": "What does the 'E' in email stand for?",
+    "options": ["Electric", "Express", "Electronic", "Encrypted"],
+    "answer": "Electronic"
+  },
+  {
+    "question": "Which organ helps humans to hear?",
+    "options": ["Eye", "Nose", "Ear", "Mouth"],
+    "answer": "Ear"
+  },
+  {
+    "question": "Who was the first President of India?",
+    "options": ["Dr. Rajendra Prasad", "Jawaharlal Nehru", "Dr. B.R. Ambedkar", "Sardar Patel"],
+    "answer": "Dr. Rajendra Prasad"
+  },
+  {
+    "question": "Which river is considered the holiest in India?",
+    "options": ["Yamuna", "Godavari", "Narmada", "Ganga"],
+    "answer": "Ganga"
+  },
+  {
+    "question": "What is the national fruit of India?",
+    "options": ["Banana", "Mango", "Apple", "Guava"],
+    "answer": "Mango"
+  },
+  {
+    "question": "Who wrote the Indian national anthem 'Jana Gana Mana'?",
+    "options": ["Bankim Chandra Chatterjee", "Rabindranath Tagore", "Subhash Chandra Bose", "Sarojini Naidu"],
+    "answer": "Rabindranath Tagore"
+  },
+  {
+    "question": "Which city is known as the 'Silicon Valley of India'?",
+    "options": ["Hyderabad", "Mumbai", "Bengaluru", "Chennai"],
+    "answer": "Bengaluru"
+  },
+  {
+    "question": "In which year did India gain independence?",
+    "options": ["1945", "1946", "1947", "1950"],
+    "answer": "1947"
+  },
+  {
+    "question": "What is the national animal of India?",
+    "options": ["Elephant", "Tiger", "Lion", "Peacock"],
+    "answer": "Tiger"
+  },
+  {
+    "question": "Which Indian state is the largest by area?",
+    "options": ["Maharashtra", "Madhya Pradesh", "Rajasthan", "Uttar Pradesh"],
+    "answer": "Rajasthan"
+  },
+  {
+    "question": "What is the capital of Kerala?",
+    "options": ["Kochi", "Thiruvananthapuram", "Kollam", "Kannur"],
+    "answer": "Thiruvananthapuram"
+  },
+  {
+    "question": "Which Indian scientist won the Nobel Prize in Physics in 1930?",
+    "options": ["Homi Bhabha", "C.V. Raman", "Satyendra Nath Bose", "Venkatraman Ramakrishnan"],
+    "answer": "C.V. Raman"
+  },
+  {
+    "question": "Who was known as the 'Iron Man of India'?",
+    "options": ["Jawaharlal Nehru", "B.R. Ambedkar", "Sardar Vallabhbhai Patel", "Subhash Chandra Bose"],
+    "answer": "Sardar Vallabhbhai Patel"
+  },
+  {
+    "question": "Which dance form is associated with Tamil Nadu?",
+    "options": ["Kathak", "Odissi", "Bharatanatyam", "Kuchipudi"],
+    "answer": "Bharatanatyam"
+  },
+  {
+    "question": "What is the official currency of India?",
+    "options": ["Dollar", "Euro", "Rupee", "Dinar"],
+    "answer": "Rupee"
+  },
+  {
+    "question": "Who was the first woman Prime Minister of India?",
+    "options": ["Indira Gandhi", "Sushma Swaraj", "Pratibha Patil", "Sarojini Naidu"],
+    "answer": "Indira Gandhi"
+  },
+  {
+    "question": "Which Indian city is famous for its Charminar?",
+    "options": ["Hyderabad", "Delhi", "Ahmedabad", "Jaipur"],
+    "answer": "Hyderabad"
+  },
+  {
+    "question": "Which state is known as the 'Spice Garden of India'?",
+    "options": ["Karnataka", "Goa", "Kerala", "Assam"],
+    "answer": "Kerala"
+  },
+  {
+    "question": "Which Mughal emperor built the Taj Mahal?",
+    "options": ["Akbar", "Shah Jahan", "Jahangir", "Babur"],
+    "answer": "Shah Jahan"
+  },
+  {
+    "question": "Who is known as the 'Missile Man of India'?",
+    "options": ["Dr. Kalam", "Dr. Homi Bhabha", "Dr. Vikram Sarabhai", "Dr. Venkatraman"],
+    "answer": "Dr. Kalam"
+  },
+  {
+    "question": "In which year was the Indian Constitution adopted?",
+    "options": ["1947", "1949", "1950", "1952"],
+    "answer": "1950"
+  },
+  {
+    "question": "Which Indian cricketer is known as the 'Master Blaster'?",
+    "options": ["Virat Kohli", "Kapil Dev", "MS Dhoni", "Sachin Tendulkar"],
+    "answer": "Sachin Tendulkar"
+  },
+  {
+    "question": "Which is the highest civilian award in India?",
+    "options": ["Padma Shri", "Padma Bhushan", "Bharat Ratna", "Ashoka Chakra"],
+    "answer": "Bharat Ratna"
+  },
+  {
+    "question": "Which Indian festival is known as the Festival of Lights?",
+    "options": ["Holi", "Diwali", "Navratri", "Raksha Bandhan"],
+    "answer": "Diwali"
+  },
+  {
+    "question": "Which Indian city is also called the 'Pink City'?",
+    "options": ["Udaipur", "Jodhpur", "Jaipur", "Bikaner"],
+    "answer": "Jaipur"
+  },
+  {
+    "question": "Who was the first Indian in space?",
+    "options": ["Rakesh Sharma", "Kalpana Chawla", "Sunita Williams", "Vikram Sarabhai"],
+    "answer": "Rakesh Sharma"
+  },
+  {
+    "question": "Which Indian state has the longest coastline?",
+    "options": ["Kerala", "Maharashtra", "Tamil Nadu", "Gujarat"],
+    "answer": "Gujarat"
+  },
+  {
+    "question": "Which Indian classical dance form originates from Odisha?",
+    "options": ["Kathakali", "Odissi", "Kuchipudi", "Mohiniyattam"],
+    "answer": "Odissi"
+  },
+  {
+    "question": "Which Indian city is called the 'City of Joy'?",
+    "options": ["Kolkata", "Chennai", "Mumbai", "Bengaluru"],
+    "answer": "Kolkata"
+  },
+  {
+    "question": "In which Indian state is the Sunderbans located?",
+    "options": ["Assam", "West Bengal", "Odisha", "Bihar"],
+    "answer": "West Bengal"
+  },
+  {
+    "question": "Who composed the music for the Indian national anthem?",
+    "options": ["Ravi Shankar", "Rabindranath Tagore", "Ilaiyaraaja", "A.R. Rahman"],
+    "answer": "Rabindranath Tagore"
+  },
+  {
+    "question": "Which Indian freedom fighter founded the Azad Hind Fauj?",
+    "options": ["Mahatma Gandhi", "Bhagat Singh", "Subhas Chandra Bose", "Lal Bahadur Shastri"],
+    "answer": "Subhas Chandra Bose"
+  },
+  {
+    "question": "Which state is known for the Bihu festival?",
+    "options": ["Nagaland", "Assam", "Meghalaya", "Manipur"],
+    "answer": "Assam"
+  },
+  {
+    "question": "Which Indian Prime Minister gave the slogan 'Garibi Hatao'?",
+    "options": ["Nehru", "Indira Gandhi", "Rajiv Gandhi", "Narendra Modi"],
+    "answer": "Indira Gandhi"
+  },
+  {
+    "question": "Which is the longest river flowing entirely in India?",
+    "options": ["Ganga", "Godavari", "Yamuna", "Krishna"],
+    "answer": "Godavari"
+  },
+  {
+    "question": "What is the name of India's first satellite?",
+    "options": ["INSAT", "Aryabhata", "Bhaskara", "Chandrayaan"],
+    "answer": "Aryabhata"
+  },
+  {
+    "question": "Which is the highest mountain peak in India?",
+    "options": ["Kanchenjunga", "Nanda Devi", "Mount Everest", "Trisul"],
+    "answer": "Kanchenjunga"
+  },
+  {
+    "question": "Who is known as the 'Father of the Indian Constitution'?",
+    "options": ["Mahatma Gandhi", "B.R. Ambedkar", "Jawaharlal Nehru", "Rajendra Prasad"],
+    "answer": "B.R. Ambedkar"
+  },
+  {
+    "question": "Which monument in Delhi is a UNESCO World Heritage Site?",
+    "options": ["India Gate", "Lotus Temple", "Qutub Minar", "Akshardham"],
+    "answer": "Qutub Minar"
+  },
+  {
+    "question": "Which state is famous for the Gir National Park?",
+    "options": ["Rajasthan", "Gujarat", "Madhya Pradesh", "Maharashtra"],
+    "answer": "Gujarat"
+  },
+  {
+    "question": "Which city is home to the Indian Space Research Organisation (ISRO)?",
+    "options": ["Chennai", "Hyderabad", "Mumbai", "Bengaluru"],
+    "answer": "Bengaluru"
+  },
+  {
+    "question": "What is the name of India's first female IPS officer?",
+    "options": ["Kiran Bedi", "Indira Nooyi", "Kalpana Chawla", "Aruna Asaf Ali"],
+    "answer": "Kiran Bedi"
+  },
+  {
+    "question": "Which Indian city is known as the 'City of Lakes'?",
+    "options": ["Jaipur", "Udaipur", "Bhopal", "Mysuru"],
+    "answer": "Udaipur"
+  },
+  {
+    "question": "Who was the first Indian woman to win an Olympic medal?",
+    "options": ["Saina Nehwal", "P.T. Usha", "Karnam Malleswari", "Mary Kom"],
+    "answer": "Karnam Malleswari"
+  },
+  {
+    "question": "Which Indian state is known as the 'Land of Five Rivers'?",
+    "options": ["Haryana", "Punjab", "Uttar Pradesh", "Gujarat"],
+    "answer": "Punjab"
+  },
+  {
+    "question": "Which Indian city is known for being the headquarters of the Reserve Bank of India?",
+    "options": ["Delhi", "Kolkata", "Mumbai", "Chennai"],
+    "answer": "Mumbai"
+  },
+  {
+    "question": "Who is the current Chief Election Commissioner of India as of 2025?",
+    "options": ["Rajiv Kumar", "Sunil Arora", "Sushil Chandra", "O.P. Rawat"],
+    "answer": "Rajiv Kumar"
+  },
+  {
+    "question": "Which Indian state has the most Lok Sabha seats?",
+    "options": ["Uttar Pradesh", "Maharashtra", "Bihar", "West Bengal"],
+    "answer": "Uttar Pradesh"
+  },
+  {
+    "question": "Which Indian island group lies in the Bay of Bengal?",
+    "options": ["Lakshadweep", "Andaman and Nicobar", "Minicoy", "Rameswaram"],
+    "answer": "Andaman and Nicobar"
+  },
+  {
+    "question": "Which Indian Nobel laureate wrote 'Gitanjali'?",
+    "options": ["Rabindranath Tagore", "Amartya Sen", "C.V. Raman", "Mother Teresa"],
+    "answer": "Rabindranath Tagore"
+  },
+  {
+    "question": "Which city is known as the 'Manchester of India'?",
+    "options": ["Delhi", "Surat", "Ahmedabad", "Ludhiana"],
+    "answer": "Ahmedabad"
+  },
+  {
+    "question": "Which Indian river is also called the 'Dakshin Ganga'?",
+    "options": ["Godavari", "Krishna", "Narmada", "Cauvery"],
+    "answer": "Godavari"
+  },
+  {
+    "question": "Which Indian temple is considered the richest in the world?",
+    "options": ["Vaishno Devi", "Siddhivinayak", "Tirupati Balaji", "Golden Temple"],
+    "answer": "Tirupati Balaji"
+  },
+  {
+    "question": "Who was the first Vice President of India?",
+    "options": ["Sarvepalli Radhakrishnan", "Rajendra Prasad", "Zakir Husain", "B.D. Jatti"],
+    "answer": "Sarvepalli Radhakrishnan"
+  },
+  {
+    "question": "Which Indian state is known for the Sun Temple at Konark?",
+    "options": ["Odisha", "Bihar", "Rajasthan", "Madhya Pradesh"],
+    "answer": "Odisha"
+  },
+  {
+    "question": "Which Indian state has the highest literacy rate?",
+    "options": ["Tamil Nadu", "Kerala", "Maharashtra", "Goa"],
+    "answer": "Kerala"
+  },
+  {
+    "question": "Who is the only Indian to receive a Nobel Prize in Economics?",
+    "options": ["Raghuram Rajan", "Manmohan Singh", "Amartya Sen", "C. Rangarajan"],
+    "answer": "Amartya Sen"
+  },
+  {
+    "question": "Which Indian festival celebrates the victory of good over evil with colors?",
+    "options": ["Diwali", "Navratri", "Holi", "Eid"],
+    "answer": "Holi"
+  },
+  {
+    "question": "Which Indian airport is named after Chhatrapati Shivaji?",
+    "options": ["Pune", "Delhi", "Mumbai", "Nagpur"],
+    "answer": "Mumbai"
+  },
+  {
+    "question": "Which Indian river flows westward into the Arabian Sea?",
+    "options": ["Ganga", "Yamuna", "Narmada", "Brahmaputra"],
+    "answer": "Narmada"
+  },
+  {
+    "question": "Which famous Indian site is known for its rock-cut temples at Mahabalipuram?",
+    "options": ["Konark", "Ellora", "Mamallapuram", "Hampi"],
+    "answer": "Mamallapuram"
+  },
+  {
+    "question": "Which Indian cricketer holds the record for most international runs?",
+    "options": ["MS Dhoni", "Virat Kohli", "Kapil Dev", "Sachin Tendulkar"],
+    "answer": "Sachin Tendulkar"
+  },
+  {
+    "question": "Which Indian monument is also known as the 'Victory Tower'?",
+    "options": ["Qutub Minar", "Charminar", "India Gate", "Gateway of India"],
+    "answer": "Qutub Minar"
+  },
+  {
+    "question": "Which Indian state is the largest producer of tea?",
+    "options": ["Kerala", "Assam", "Sikkim", "West Bengal"],
+    "answer": "Assam"
+  },
+  {
+    "question": "Which Indian freedom fighter is known for the slogan 'Inquilab Zindabad'?",
+    "options": ["Bhagat Singh", "Jawaharlal Nehru", "Subhas Chandra Bose", "Bal Gangadhar Tilak"],
+    "answer": "Bhagat Singh"
+  },
+  {
+    "question": "Which Indian hill station is called the 'Queen of Hills'?",
+    "options": ["Darjeeling", "Shimla", "Manali", "Ooty"],
+    "answer": "Shimla"
+  },
+  {
+    "question": "What is the national aquatic animal of India?",
+    "options": ["Blue Whale", "River Dolphin", "Sea Turtle", "Crocodile"],
+    "answer": "River Dolphin"
+  },
+  {
+    "question": "Which Indian port is the largest by cargo handling?",
+    "options": ["Kolkata Port", "Visakhapatnam Port", "Mumbai Port", "Jawaharlal Nehru Port"],
+    "answer": "Jawaharlal Nehru Port"
+  },
+  {
+    "question": "Which Indian is the first to win a Nobel Peace Prize?",
+    "options": ["Mother Teresa", "Kailash Satyarthi", "Rabindranath Tagore", "C.V. Raman"],
+    "answer": "Mother Teresa"
+  },
+  {
+    "question": "Which state is famous for the traditional dance form 'Kathakali'?",
+    "options": ["Tamil Nadu", "Kerala", "Karnataka", "Andhra Pradesh"],
+    "answer": "Kerala"
+  },
+  {
+    "question": "Which Indian river is the longest?",
+    "options": ["Brahmaputra", "Yamuna", "Ganga", "Godavari"],
+    "answer": "Ganga"
+  },
+  {
+    "question": "Who is the current President of India as of 2025?",
+    "options": ["Droupadi Murmu", "Ram Nath Kovind", "Narendra Modi", "Amit Shah"],
+    "answer": "Droupadi Murmu"
+  },
+  {
+    "question": "Which Indian state has the folk dance 'Bihu'?",
+    "options": ["Meghalaya", "Tripura", "Assam", "Manipur"],
+    "answer": "Assam"
+  },
+  {
+    "question": "Which Indian leader is also called 'Netaji'?",
+    "options": ["Bhagat Singh", "Sardar Patel", "Subhas Chandra Bose", "Jawaharlal Nehru"],
+    "answer": "Subhas Chandra Bose"
+  },
+  {
+    "question": "Which Indian IT company is headquartered in Bengaluru?",
+    "options": ["TCS", "Infosys", "Wipro", "All of the above"],
+    "answer": "All of the above"
+  },
+  {
+    "question": "Which Indian city hosts the Kumbh Mela along with three others?",
+    "options": ["Delhi", "Haridwar", "Udaipur", "Agra"],
+    "answer": "Haridwar"
+  },
+  {
+    "question": "Which state is the Kaziranga National Park located in?",
+    "options": ["West Bengal", "Madhya Pradesh", "Assam", "Odisha"],
+    "answer": "Assam"
+  },
+  {
+    "question": "What is the name of India’s first indigenously built aircraft carrier?",
+    "options": ["INS Vikramaditya", "INS Arihant", "INS Vikrant", "INS Chakra"],
+    "answer": "INS Vikrant"
+  },
+  {
+    "question": "Which Indian state is known for the Gir Forest, home to Asiatic lions?",
+    "options": ["Rajasthan", "Madhya Pradesh", "Gujarat", "Maharashtra"],
+    "answer": "Gujarat"
+  },
+  {
+    "question": "Which Indian actor was awarded the Bharat Ratna in 1994?",
+    "options": ["Amitabh Bachchan", "Dilip Kumar", "M.G. Ramachandran", "Rajkumar"],
+    "answer": "M.G. Ramachandran"
+  },
+  {
+    "question": "Which is the only Indian city to have hosted the Olympic torch relay?",
+    "options": ["New Delhi", "Mumbai", "Bangalore", "Kolkata"],
+    "answer": "New Delhi"
+  },
+  {
+    "question": "Which Indian scientist is known for the Green Revolution?",
+    "options": ["M.S. Swaminathan", "Verghese Kurien", "Dr. Kalam", "Homi Bhabha"],
+    "answer": "M.S. Swaminathan"
+  }
+]

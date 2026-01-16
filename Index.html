@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="google-site-verification" content="vC78cqbkJaStBhYMEA8VgEz8EvkUfO09FwlaZMnZQ20"/>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quiz Mage</title>
+  <link rel="icon" type="image/png" href="Assets/Quiz Mage Favicon.png" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <body>
+  <div id="app">
+
+    <!-- PASSCODE SCREEN -->
+    <div id="passcode-box">
+      <h2>Enter Team Passcode</h2>
+      <input type="password" id="passcode-input" placeholder="Passcode" />
+      <button id="passcode-btn">Enter</button>
+      <p id="passcode-error"></p>
+    </div>
+
+    <!-- QUIZ SCREEN -->
+    <div class="quiz-container">
+      <div class="quiz-header">  
+        <div id="question-number">Question: 1</div>
+        <div id="live-score">Score: 0</div>
+      </div>
+      <div id="timer">Time 30s</div>
+      <div id="quiz-box">
+        <h2 id="question">Loading question...</h2>
+        <div class="options">
+          <button class="option">Option 1</button>
+          <button class="option">Option 2</button>
+          <button class="option">Option 3</button>
+          <button class="option">Option 4</button>
+        </div>
+        <p id="feedback"></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- audio + scripts unchanged -->
+  <audio id="correct-sound" src="Assets/correct.mp3"></audio>
+  <audio id="wrong-sound" src="Assets/wrong.mp3"></audio>
+  <audio id="perfect-score-sound" src="Assets/victory.mp3"></audio>
+  <audio id="defeat-score-sound" src="Assets/defeat.mp3"></audio>
+  <audio id="applause-score-sound" src="Assets/applause.mp3"></audio>
+  <script src="script.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+</body>
+</html>

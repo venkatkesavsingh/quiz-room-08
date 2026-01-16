@@ -1,0 +1,136 @@
+html, body {
+  margin: 0;
+  height: 100%;
+  padding: 0;
+  background: url("ASSETS/Background.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  text-align: center;
+  word-wrap: break-word;
+  overflow: hidden;
+}
+
+#passcode-box,
+.quiz-container {
+  display: none;
+}
+
+.show {
+  display: block;
+}
+
+#passcode-box {
+  max-width: 400px;
+  margin: auto;
+  margin-top: 20vh;
+  padding: 20px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.8);
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.3);
+  border: 0.2px solid black;
+}
+
+.quiz-container {
+  max-width: 600px;
+  aspect-ratio: 2.5 / 3.6;
+  margin: auto;
+  margin-top: 15vh;
+  padding: 11vh 5vh;
+  border-radius: 12px;
+  background: url("ASSETS/All-in-One.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.8);
+  border: 0.2px solid black;
+  width: 90%;
+  box-sizing: border-box;
+}
+
+.quiz-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+#question-number {
+  font-weight: bold;
+  font-size: 3vh;
+  text-align: left;
+}
+
+#live-score {
+  font-weight: bold;
+  font-size: 3vh;
+  text-align: left;
+}
+
+#timer{
+  margin: 0.5vh auto 1vh auto;
+  font-weight:bold;
+  font-size: 3vh;
+}
+
+#quiz-box{
+  height: 38vh;
+  padding: 1vh;
+  background: rgb(200, 200, 200, 0.3);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  border-radius: 12px;
+}
+
+#question {
+  max-height: 10vh;
+  margin: 0.5vh auto;
+  padding: 1vh 0;
+  font-size: 3vh;
+}
+
+.options {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+}
+
+.option {
+  padding:0;
+  font-size: 2vh;
+  border: none;
+  border-radius: 8px;
+  background-color: #e0d4f7;
+  color: #333;
+  cursor: pointer;
+  transition: 0.3s ease;
+  flex: 1 1 calc(50% - 24px);
+  min-width: 120px;
+}
+/*
+.option:hover:not(:disabled):not(.correct):not(.wrong) {
+  background-color: #663399;
+  color: white;
+  font-weight: bold;
+}
+
+.option.correct {
+  background-color: #0bb60b;
+  color: white;
+  font-weight: bold;
+}
+
+.option.wrong {
+  background-color: #FF0000;
+  color: white;
+  font-weight: bold;
+}
+
+#feedback {
+  margin-top: 20px;
+  font-weight: bold;
+}
+
+footer {
+  text-align: end, center;
+  margin: 70px 0 0 0;
+  line-height: 10px;
+}
