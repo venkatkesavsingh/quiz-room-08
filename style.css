@@ -17,12 +17,13 @@ html, body {
   align-items: center;
 }
 
-#passcode-box {
-  display: block;
-}
-
+#passcode-box,
 .quiz-container {
   display: none;
+}
+
+.show {
+  display: block;
 }
 
 #passcode-box {
