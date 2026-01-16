@@ -91,7 +91,6 @@ function showWaitingScreen(msg) {
   quizContainer.classList.add("show");
   document.querySelector(".options").style.display = "none";
   questionEl.innerText = msg;
-  feedbackEl.innerText = "";
 }
 
 function showQuizScreen() {
