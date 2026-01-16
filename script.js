@@ -223,4 +223,7 @@ async function handleTimeUp() {
 /********************************
  * INIT
  ********************************/
-showPasscodeScreen();
+window.addEventListener("DOMContentLoaded", () => {
+  showPasscodeScreen();
+});
+
