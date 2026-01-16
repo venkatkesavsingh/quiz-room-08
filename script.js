@@ -24,6 +24,18 @@ const auth = getAuth(app);
 signInAnonymously(auth);
 
 /********************************
+ * WAIT FOR DOM (CRITICAL)
+ ********************************/
+window.addEventListener("DOMContentLoaded", init);
+
+function init() {
+  setupElements();
+  showPasscodeScreen();
+  fetchQuestions();
+  setupAdminListeners();
+}
+
+/********************************
  * TEAM IDENTIFICATION
  ********************************/
 const params = new URLSearchParams(window.location.search);
@@ -45,18 +57,29 @@ let timerInterval = null;
 let selectedOption = null;
 
 /********************************
- * ELEMENTS
+ * ELEMENT REFERENCES
  ********************************/
-const passcodeBox = document.getElementById("passcode-box");
-const quizContainer = document.querySelector(".quiz-container");
-const questionEl = document.getElementById("question");
-const feedbackEl = document.getElementById("feedback");
-const timerEl = document.getElementById("timer");
-const scoreEl = document.getElementById("live-score");
-const optionsEls = document.querySelectorAll(".option");
+let passcodeBox, quizContainer, passcodeInput, passcodeBtn, passcodeError;
+let questionEl, feedbackEl, timerEl, scoreEl, optionsEls;
+
+function setupElements() {
+  passcodeBox = document.getElementById("passcode-box");
+  quizContainer = document.querySelector(".quiz-container");
+  passcodeInput = document.getElementById("passcode-input");
+  passcodeBtn = document.getElementById("passcode-btn");
+  passcodeError = document.getElementById("passcode-error");
+
+  questionEl = document.getElementById("question");
+  feedbackEl = document.getElementById("feedback");
+  timerEl = document.getElementById("timer");
+  scoreEl = document.getElementById("live-score");
+  optionsEls = document.querySelectorAll(".option");
+
+  passcodeBtn.onclick = handlePasscodeSubmit;
+}
 
 /********************************
- * UI STATE FUNCTIONS (FIXED)
+ * UI STATE FUNCTIONS
  ********************************/
 function showPasscodeScreen() {
   passcodeBox.classList.add("show");
@@ -89,47 +112,55 @@ function showQualifiedScreen() {
 /********************************
  * PASSCODE LOGIC
  ********************************/
-document.getElementById("passcode-btn").onclick = async () => {
-  const entered = document.getElementById("passcode-input").value.trim();
-  const teamRef = ref(db, `teams/${teamId}`);
+async function handlePasscodeSubmit() {
+  const entered = passcodeInput.value.trim();
+  passcodeError.innerText = "";
 
+  const teamRef = ref(db, `teams/${teamId}`);
   const snap = await get(teamRef);
+
   if (!snap.exists()) {
-    document.getElementById("passcode-error").innerText = "Invalid team";
+    passcodeError.innerText = "Invalid team";
     return;
   }
 
   if (snap.val().passcode !== entered) {
-    document.getElementById("passcode-error").innerText = "❌ Incorrect passcode";
+    passcodeError.innerText = "❌ Incorrect passcode";
     return;
   }
 
   score = snap.val().score || 0;
   showWaitingScreen("Waiting for admin to start the game...");
-};
+}
 
 /********************************
  * FETCH QUESTIONS
  ********************************/
-fetch("questions.json")
-  .then(res => res.json())
-  .then(data => (questions = data));
+function fetchQuestions() {
+  fetch("questions.json")
+    .then(res => res.json())
+    .then(data => {
+      questions = data;
+    });
+}
 
 /********************************
  * ADMIN LISTENERS
  ********************************/
-onValue(ref(db, "admin/quizStarted"), snap => {
-  if (snap.val() === true) {
-    showQuizScreen();
-    startQuiz();
-  }
-});
+function setupAdminListeners() {
+  onValue(ref(db, "admin/quizStarted"), snap => {
+    if (snap.val() === true) {
+      showQuizScreen();
+      startQuiz();
+    }
+  });
 
-onValue(ref(db, `teams/${teamId}/qualified`), snap => {
-  if (snap.val() === true) {
-    showQualifiedScreen();
-  }
-});
+  onValue(ref(db, `teams/${teamId}/qualified`), snap => {
+    if (snap.val() === true) {
+      showQualifiedScreen();
+    }
+  });
+}
 
 /********************************
  * QUIZ ENGINE
@@ -161,7 +192,7 @@ function loadQuestion() {
   optionsEls.forEach((btn, i) => {
     btn.innerText = shuffled[i];
     btn.disabled = false;
-    btn.classList.remove("selected", "correct");
+    btn.classList.remove("selected");
 
     btn.onclick = () => {
       optionsEls.forEach(o => o.classList.remove("selected"));
@@ -219,11 +250,4 @@ async function handleTimeUp() {
     loadQuestion();
   }, 1500);
 }
-
-/********************************
- * INIT
- ********************************/
-window.addEventListener("DOMContentLoaded", () => {
-  showPasscodeScreen();
-});
-
+ 
