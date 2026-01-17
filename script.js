@@ -80,6 +80,22 @@ function setupElements() {
   scoreEl = document.getElementById("live-score");
   optionsEls = document.querySelectorAll(".option");
 
+  /* 🔐 PASSCODE ENABLE / DISABLE LOGIC */
+  passcodeBtn.disabled = true;
+
+  passcodeInput.addEventListener("input", () => {
+  const value = passcodeInput.value.trim();
+
+  passcodeBtn.disabled = value.length !== 6;
+  passcodeError.innerText = "";
+
+    if (value.length === 6) {
+      passcodeInput.blur(); // 👈 stops cursor blinking
+    }
+  });
+
+  /* 🔐 END */
+
   passcodeBtn.addEventListener("click", handlePasscodeSubmit);
 }
 

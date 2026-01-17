@@ -20,10 +20,15 @@ html, body {
     display: block;
 }
 
-#passcode-box {
-  width: 57%;
+.welcome{ 
+    margin-top: 12vh;
+    height: 8vh; 
+} 
+
+.contain-bg {
+  width: 30vh;
   aspect-ratio: 2.5 / 3.9;
-  margin: 25vh auto;
+  margin: 3vh auto;
   padding: 20px;
   border-radius: 12px;
   background: url("ASSETS/All-in-One.webp");
@@ -35,15 +40,14 @@ html, body {
 }
 
 .passcode-head{
-  margin-top: 15vh;
+  margin-top: 12vh;
   font-size: larger;
   font-weight: bold;
   font-family: 'Times New Roman', Times, serif;
 }
 
 #passcode-input {
-  width: 75%;
-  padding: 6px 12px;
+  padding: 5px 0px 5px 5px;
   margin-bottom: 3vh;
   border-radius: 4px;
   font-size: 14px;
@@ -54,7 +58,7 @@ html, body {
 }
 
 #passcode-btn{
-  width: 75%;
+  width: 100%;
   padding: 6px 12px;
   margin-bottom: 10px;
   border: 1px solid #ccc;
@@ -64,13 +68,18 @@ html, body {
   font-weight: bolder;
 }
 
+#passcode-btn:disabled {
+    background: #ccc;
+    color: black;
+    cursor: not-allowed;
+}
+
 #passcode-error {
   color: red;
   font-weight: bold;
-  font-size: 1vh;
+  font-size: 3vh;
   margin-top: 10px;
 }
-
 
 #WaitingScreen{
     text-align: center; 
@@ -78,24 +87,19 @@ html, body {
     font-family: 'Arial', sans-serif; 
 }
 
-.welcome{ 
-    margin-top: 15vh;
-    width: 90%;
-} 
-
-.card-container{
+/*.card-container{
     width: 30vh;
     aspect-ratio: 2.5 / 3.9;
-    margin: 1vh auto;
+    margin: 2vh auto;
     padding: 20px;
     border-radius: 12px;
-    background: url("ASSETS/All-in-One.webp");
+    background: url("ASSETS/All-in-One.png");
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
     box-shadow: 0 0 12px rgba(0, 0, 0, 0.3);
     border: 0.2px solid black;
-} 
+}*/ 
 
 .cardContent{
     position: absolute;
@@ -111,7 +115,6 @@ html, body {
     margin: 2vh 0 1vh 0; 
     font-family: 'Courier New', Courier, monospace; 
     font-weight: bold; 
-    font-size: 21px;
 } 
 
 .initializing::after { 
@@ -128,7 +131,7 @@ html, body {
 
 .warn{
   margin-top: 10vh;
-  font-size: 10px;
+  font-size: 11px;
 }
 
 #quiz-container {
@@ -138,7 +141,7 @@ html, body {
   margin-top: 15vh;
   padding: 11vh 5vh;
   border-radius: 12px;
-  background: url("ASSETS/All-in-One.webp");
+  background: url("ASSETS/All-in-One.png");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;

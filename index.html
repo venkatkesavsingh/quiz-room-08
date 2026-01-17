@@ -13,19 +13,22 @@
 
     <!-- PASSCODE SCREEN -->
     <div class="screen active" id="passcode-box">
-      <p class="passcode-head">Enter Team Passcode</p>
-      <input type="text" maxlength="6" id="passcode-input" placeholder="••••••"/>
-      <button id="passcode-btn">Enter</button>
-      <p id="passcode-error"></p>
+      <img src="ASSETS/Welcome Msg.webp" class="welcome">
+      <div class="contain-bg">
+        <p class="passcode-head">Enter Team Passcode</p>
+        <input type="text" maxlength="6" id="passcode-input" placeholder=" ••••••"/>
+        <button id="passcode-btn">Enter</button>
+        <p id="passcode-error"></p>
+      </div>
     </div>
 
     <div class="screen" id="WaitingScreen">
-        <img src="ASSETS/Welcome Msg.webp" class="welcome">
-        <div class="card-container">
-            <div class="cardContent">
-              <h3 class="initializing">Waiting for the<br>Game to Start</h3>
-              <p class="warn"> please wait here until the game Begins.<br><strong>Do not leave this page or refresh it.</strong></p>
-            </div>
+      <img src="ASSETS/Welcome Msg.webp" class="welcome">
+      <div class="contain-bg" id="card-container">
+          <div class="cardContent">
+            <h3 class="initializing">Waiting for the Game to Start</h3>
+            <p class="warn"> please wait until the game Begins.<br><strong>Do not leave this page/refresh it.</strong></p>
+          </div>
         </div>
     </div>
 
