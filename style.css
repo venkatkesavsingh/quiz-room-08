@@ -18,11 +18,7 @@ html, body {
 }
 
 .screen{
-    width: 100%;
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    overflow: hidden;
     display: none;
 } 
 
@@ -32,9 +28,10 @@ html, body {
 }
 
 #passcode-box {
-    width: 90%;
-    max-width: 320px;
+    width: 30vh;
     aspect-ratio: 2.5 / 3.9;
+    margin: auto;
+    margin-top: 20vh;
     padding: 20px;
     border-radius: 12px;
     background: url("ASSETS/All-in-One.png");
@@ -43,15 +40,10 @@ html, body {
     background-position: center;
     box-shadow: 0 0 12px rgba(0, 0, 0, 0.3);
     border: 0.2px solid black;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
 }
 
 .passcode-head{
     margin-top: 13vh;
-    margin-buttom: 3vh;
     font-size: larger;
     font-weight: bold;
     font-family: 'Times New Roman', Times, serif;
@@ -88,20 +80,13 @@ html, body {
 }
 
 #WaitingScreen{
-    width: 80%;
     text-align: center; 
     color: black; 
-    font-family: 'Arial', sans-serif;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    font-family: 'Arial', sans-serif; 
 }
 
 .welcome{
     height: 8vh; 
-    max-height: 60px;
-    margin-bottom: 2vh;
 } 
 
 .initializing{ 
@@ -124,21 +109,20 @@ html, body {
 }
 
 .card-container{ 
-    width: 90%;
-    max-width: 360px;
     position: relative;
     margin: 0 5vh; 
 } 
 
 .cardImage{ 
     margin-top: 1vh; 
-    width: 100%; 
+    width: 40vh; 
     height: auto;
     position: relative;
     z-index: 1; 
 }
 
 .cardContent{
+    position: absolute;
     top: 8vh;   /* adjust as needed */
     left: 50%;
     transform: translateX(-50%);
