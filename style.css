@@ -160,12 +160,20 @@ body {
 /* =======================
    QUIZ CONTAINER
 ======================= */
+.Level-1-banner {
+  margin-top: 5vh;
+  width: min(55%, 500px);
+}
+
 #quiz-container {
-  width: min(95%, 600px);
+  width: min(85%, 600px);
   aspect-ratio: 2.5 / 3.6;
 
-  margin: 8vh auto;
-  padding: clamp(1.5rem, 5vh, 3rem);
+  margin: 3vh auto;
+  padding: clamp(1rem, 12vh, 4rem)
+  clamp(1rem, 3vh, 3rem)
+  clamp(1rem, 10vh, 4rem)
+  clamp(1rem, 3vh, 3rem);
 
   border-radius: 12px;
   background: url("ASSETS/All-in-One.webp") no-repeat center;
@@ -194,8 +202,8 @@ body {
    QUIZ BOX
 ======================= */
 #quiz-box {
-  margin-top: 1rem;
-  padding: 1rem;
+  margin-top: 1vh;
+  padding: 0.6rem 1rem;
 
   background: rgba(200, 200, 200, 0.3);
   border-radius: 12px;
@@ -203,7 +211,7 @@ body {
 }
 
 #question {
-  margin-bottom: 1rem;
+  margin: 0 0 1vh 0;
   font-size: clamp(1rem, 3vw, 1.3rem);
 }
 
@@ -214,14 +222,14 @@ body {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 12px;
+  gap: 7px;
 }
 
 .option {
   flex: 1 1 45%;
   min-width: 120px;
 
-  padding: 0.75rem;
+  padding: 0.6rem;
   font-size: clamp(0.85rem, 2.2vw, 1rem);
 
   border-radius: 8px;
@@ -232,6 +240,12 @@ body {
 
   cursor: pointer;
   transition: 0.3s ease;
+}
+
+#feedback {
+  margin-top: 2vh;
+  font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+  font-weight: bold;
 }
 
 /* =======================

@@ -34,7 +34,7 @@ window.addEventListener("DOMContentLoaded", init);
 let questions = [];
 let currentQuestionIndex = 0;
 let score = 0;
-let timeLeft = 10;
+let timeLeft = 30;
 let timerInterval = null;
 let selectedOption = null;
 let isTeamVerified = false;
@@ -69,7 +69,7 @@ function init() {
 function setupElements() {
   passcodeScreen = document.getElementById("passcode-box");
   waitingScreen = document.getElementById("WaitingScreen");
-  quizScreen = document.getElementById("quiz-container");
+  quizScreen = document.getElementById("quiz-UI");
 
   passcodeInput = document.getElementById("passcode-input");
   passcodeBtn = document.getElementById("passcode-btn");
@@ -212,6 +212,8 @@ function startQuiz(resume = false) {
   });
 }
 
+
+
 function loadQuestion() {
   if (currentQuestionIndex >= questions.length) {
     showWaitingScreen("Round completed. Waiting for admin decision...");
@@ -247,7 +249,7 @@ function loadQuestion() {
  ********************************/
 function startTimer() {
   clearInterval(timerInterval);
-  timeLeft = 10;
+  timeLeft = 30;
   timerEl.innerText = `Time ${timeLeft}s`;
 
   timerInterval = setInterval(() => {
