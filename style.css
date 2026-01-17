@@ -10,6 +10,10 @@ html, body {
   overflow: hidden;
 }
 
+* {
+  box-sizing: border-box;
+}
+
 .screen {
   overflow: hidden;
   display: none;
@@ -21,15 +25,15 @@ html, body {
 }
 
 .welcome{ 
-    margin-top: 12vh;
+    margin-top: 25%;
     width: 85%; 
 } 
 
 .contain-bg {
-  width: 60%;
-  aspect-ratio: 2.5 / 3.9;
-  margin: 3vh auto;
-  padding: 20px;
+  width: 70%;
+  aspect-ratio: 2.5 / 3.7;
+  margin: 1% auto;
+  padding: 7%;
   border-radius: 12px;
   background: url("ASSETS/All-in-One.webp");
   background-repeat: no-repeat;
@@ -40,31 +44,37 @@ html, body {
 }
 
 .passcode-head{
-  margin-top: 12vh;
+  margin-top: 40%;
   font-size: larger;
   font-weight: bold;
   font-family: 'Times New Roman', Times, serif;
 }
 
 #passcode-input {
-  padding: 5px 0px 5px 5px;
-  margin-bottom: 3vh;
+  width: max-content;
+  height: 10%;
+  margin-bottom: 10%;
   border-radius: 4px;
   font-size: 14px;
-  letter-spacing: 14px;
+  letter-spacing: 3vh;
   text-align: center;
   border: 2px solid #333;
   outline: none;
+  caret-color: auto;
+}
+
+#passcode-input.filled {
+  caret-color: transparent;
 }
 
 #passcode-btn{
   width: 100%;
-  padding: 6px 12px;
-  margin-bottom: 10px;
+  padding: 3.3%;
+  margin-bottom: 5%;
   border: 1px solid #ccc;
   color: black;
   border-radius: 4px;
-  font-size: 14px;
+  font-size: 100%;
   font-family: 'Times New Roman', Times, serif;
   font-weight: bolder;
 }
@@ -78,8 +88,8 @@ html, body {
 #passcode-error {
   color: red;
   font-weight: bold;
-  font-size: 3vh;
-  margin-top: 10px;
+  font-size: 125%;
+  margin-top: 7%;
 }
 
 #WaitingScreen{
@@ -88,32 +98,18 @@ html, body {
     font-family: 'Arial', sans-serif; 
 }
 
-/*.card-container{
-    width: 30vh;
-    aspect-ratio: 2.5 / 3.9;
-    margin: 2vh auto;
-    padding: 20px;
-    border-radius: 12px;
-    background: url("ASSETS/All-in-One.png");
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
-    box-shadow: 0 0 12px rgba(0, 0, 0, 0.3);
-    border: 0.2px solid black;
-}*/ 
-
 .cardContent{
     position: absolute;
-    top: 45vh;   /* adjust as needed */
+    top: 40%;   /* adjust as needed */
     left: 50%;
     transform: translateX(-50%);
-    width: 35vh;
-    font-size: 15px;
+    width: 60%;
+    font-size: 100%;
     z-index: 2;
 } 
 
 .initializing{ 
-    margin: 2vh 0 1vh 0; 
+    margin: 10% 0 1% 0; 
     font-family: 'Courier New', Courier, monospace; 
     font-weight: bold; 
 } 
@@ -131,7 +127,7 @@ html, body {
 }
 
 .warn{
-  margin-top: 10vh;
+  margin-top: 35%;
   font-size: 11px;
 }
 
