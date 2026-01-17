@@ -21,7 +21,7 @@ html, body {
 }
 
 #passcode-box {
-  width: 50%;
+  width: 75%;
   aspect-ratio: 2.5 / 3.9;
   margin: 25vh auto;
   padding: 20px;
