@@ -21,7 +21,7 @@ html, body {
 }
 
 #passcode-box {
-  width: 67%;
+  width: 57%;
   aspect-ratio: 2.5 / 3.9;
   margin: 25vh auto;
   padding: 20px;
@@ -84,9 +84,9 @@ html, body {
 } 
 
 .card-container{
-    width: 32vh;
+    width: 30vh;
     aspect-ratio: 2.5 / 3.9;
-    margin: 2vh auto;
+    margin: 1vh auto;
     padding: 20px;
     border-radius: 12px;
     background: url("ASSETS/All-in-One.webp");
