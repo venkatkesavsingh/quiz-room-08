@@ -26,7 +26,7 @@ html, body {
 } 
 
 .contain-bg {
-  width: 75%;
+  width: 60%;
   aspect-ratio: 2.5 / 3.9;
   margin: 3vh auto;
   padding: 20px;
