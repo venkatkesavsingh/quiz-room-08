@@ -22,11 +22,11 @@ html, body {
 
 .welcome{ 
     margin-top: 12vh;
-    height: 8vh; 
+    width: 85%; 
 } 
 
 .contain-bg {
-  width: 30vh;
+  width: 85%;
   aspect-ratio: 2.5 / 3.9;
   margin: 3vh auto;
   padding: 20px;
