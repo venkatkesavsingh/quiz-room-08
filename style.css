@@ -126,7 +126,7 @@ body {
 
 .cardContent {
   position: absolute;
-  top: 45%;
+  top: 40%;
   left: 50%;
   transform: translateX(-50%);
   width: min(85%, 420px);
@@ -154,7 +154,7 @@ body {
 
 .warn {
   margin-top: 25%;
-  font-size: clamp(0.65rem, 2vw, 0.75rem);
+  font-size: clamp(0.75rem, 2vw, 0.75rem);
 }
 
 /* =======================
@@ -256,7 +256,7 @@ body {
   }
 
   .cardContent {
-    width: 75%;
+    width: 70%;
   }
 }
 
