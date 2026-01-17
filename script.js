@@ -199,14 +199,22 @@ async function syncCurrentQuestion() {
 function loadQuestion() {
   if (!questionsLoaded || !questions.length) return;
 
-  if (currentQuestionIndex >= questions.length) {
-    questionEl.innerText = "Quiz completed!";
+  // 🔥 CRITICAL SAFETY CHECK
+  if (
+    currentQuestionIndex < 0 ||
+    currentQuestionIndex >= questions.length
+  ) {
+    questionEl.innerText = "You joined late. Quiz is already completed.";
+    scoreEl.innerText = `Score: ${score}`;
+    feedbackEl.innerText = "";
     document.querySelector(".options").style.display = "none";
+    clearInterval(timerInterval);
     return;
   }
 
   selectedOption = null;
   feedbackEl.innerText = "";
+  document.querySelector(".options").style.display = "flex";
 
   const q = questions[currentQuestionIndex];
   const shuffled = [...q.options].sort(() => Math.random() - 0.5);
