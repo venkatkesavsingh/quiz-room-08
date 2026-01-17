@@ -42,7 +42,7 @@ html, body {
 }
 
 #passcode-input {
-  width: 84%;
+  width: 75%;
   padding: 6px 12px;
   margin-bottom: 3vh;
   border-radius: 4px;
@@ -54,7 +54,7 @@ html, body {
 }
 
 #passcode-btn{
-  width: 90%;
+  width: 75%;
   padding: 6px 12px;
   margin-bottom: 10px;
   border: 1px solid #ccc;
@@ -67,7 +67,7 @@ html, body {
 #passcode-error {
   color: red;
   font-weight: bold;
-  font-size: 1.5vh;
+  font-size: 1vh;
   margin-top: 10px;
 }
 
