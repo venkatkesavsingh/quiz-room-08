@@ -124,7 +124,6 @@ async function handlePasscodeSubmit() {
   score = snap.val().score || 0;
   isTeamVerified = true;
 
-  // Check admin state immediately
   const adminSnap = await get(ref(db, "admin/quizStarted"));
   if (adminSnap.exists() && adminSnap.val() === true) {
     showScreen(quizScreen);
@@ -132,7 +131,6 @@ async function handlePasscodeSubmit() {
     showScreen(waitingScreen);
   }
 
-  // 🔥 IMPORTANT: sync current question for late login / refresh
   await syncCurrentQuestion();
 }
 
@@ -146,14 +144,11 @@ function fetchQuestions() {
       questions = data;
       questionsLoaded = true;
 
-      // If question index already known, render immediately
       if (isTeamVerified && currentQuestionIndex >= 0) {
         loadQuestion();
       }
     })
-    .catch(err => {
-      console.error("Questions load error:", err);
-    });
+    .catch(err => console.error("Questions load error:", err));
 }
 
 /********************************
@@ -180,7 +175,7 @@ function listenQuestionChange() {
 }
 
 /********************************
- * MANUAL SYNC FOR LATE LOGIN
+ * SYNC QUESTION FOR LATE LOGIN
  ********************************/
 async function syncCurrentQuestion() {
   const snap = await get(ref(db, "admin/currentQuestionIndex"));
@@ -199,12 +194,12 @@ async function syncCurrentQuestion() {
 function loadQuestion() {
   if (!questionsLoaded || !questions.length) return;
 
-  // 🔥 CRITICAL SAFETY CHECK
-  if (
-    currentQuestionIndex < 0 ||
-    currentQuestionIndex >= questions.length
-  ) {
-    questionEl.innerText = "You joined late. Quiz is already completed.";
+  // Ignore temporary invalid states
+  if (currentQuestionIndex < 0) return;
+
+  // Quiz finished
+  if (currentQuestionIndex >= questions.length) {
+    questionEl.innerText = "Quiz completed!";
     scoreEl.innerText = `Score: ${score}`;
     feedbackEl.innerText = "";
     document.querySelector(".options").style.display = "none";
