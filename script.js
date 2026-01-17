@@ -34,7 +34,7 @@ window.addEventListener("DOMContentLoaded", init);
 let questions = [];
 let currentQuestionIndex = 0;
 let score = 0;
-let timeLeft = 30;
+let timeLeft = 10;
 let timerInterval = null;
 let selectedOption = null;
 let isTeamVerified = false;
@@ -212,8 +212,6 @@ function startQuiz(resume = false) {
   });
 }
 
-
-
 function loadQuestion() {
   if (currentQuestionIndex >= questions.length) {
     showWaitingScreen("Round completed. Waiting for admin decision...");
@@ -249,7 +247,7 @@ function loadQuestion() {
  ********************************/
 function startTimer() {
   clearInterval(timerInterval);
-  timeLeft = 30;
+  timeLeft = 10;
   timerEl.innerText = `Time ${timeLeft}s`;
 
   timerInterval = setInterval(() => {
