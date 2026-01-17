@@ -79,6 +79,97 @@ html, body {
   margin-top: 10px;
 }
 
+
+#WaitingScreen{
+    text-align: center; 
+    color: black; 
+    font-family: 'Arial', sans-serif; 
+}
+
+.welcome{ 
+    margin-top: 12vh;
+    height: 8vh; 
+} 
+
+.initializing{ 
+    margin: 2vh 0 1vh 0; 
+    font-size: 13px; 
+    font-family: 'Courier New', Courier, monospace; 
+    font-weight: bold; 
+    color: white; 
+} 
+
+.initializing::after { 
+    content: "."; 
+    animation: dots 2.5s steps(4, end) infinite; 
+} 
+
+@keyframes dots {
+    0% { content: "."; } 
+    33% { content: ".."; } 
+    66% { content: "..."; } 
+    100% { content: ""; } 
+}
+
+.card-container{ 
+    position: relative;
+    margin: 0 5vh; 
+} 
+
+.cardImage{ 
+    margin-top: 1vh; 
+    width: 40vh; 
+    height: auto;
+    position: relative;
+    z-index: 1; 
+}
+
+.cardContent{
+    position: absolute;
+    top: 8vh;   /* adjust as needed */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 35vh;
+    font-size: 15px;
+    z-index: 2;
+} 
+
+.regular{
+    margin: 2vh 0;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-weight: bold;
+} 
+
+.regular strong{ 
+    color: red;
+    font-weight: bolder;
+} 
+
+.feature{ 
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; 
+    font-size: 15px; 
+    font-weight: bolder; 
+} 
+
+#enterBtn {
+    width: 75%;
+    height: 5vh;
+    font-size: 2.5vh;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-weight: normal;
+    border-radius: 5px;
+    background: red;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+#enterBtn:disabled {
+    background: #ccc;
+    color: #666;
+    cursor: not-allowed;
+}
+
 #quiz-container {
   max-width: 600px;
   aspect-ratio: 2.5 / 3.6;

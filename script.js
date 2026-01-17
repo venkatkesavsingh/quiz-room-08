@@ -37,6 +37,7 @@ let score = 0;
 let timeLeft = 30;
 let timerInterval = null;
 let selectedOption = null;
+let isTeamVerified = false;
 
 /********************************
  * TEAM ID
@@ -47,7 +48,7 @@ const teamId = params.get("team");
 /********************************
  * ELEMENTS
  ********************************/
-let passcodeScreen, quizScreen;
+let passcodeScreen, waitingScreen, quizScreen;
 let passcodeInput, passcodeBtn, passcodeError;
 let questionEl, feedbackEl, timerEl, scoreEl, optionsEls;
 
@@ -66,6 +67,7 @@ function init() {
  ********************************/
 function setupElements() {
   passcodeScreen = document.getElementById("passcode-box");
+  waitingScreen = document.getElementById("WaitingScreen");
   quizScreen = document.getElementById("quiz-container");
 
   passcodeInput = document.getElementById("passcode-input");
@@ -115,9 +117,18 @@ async function handlePasscodeSubmit() {
     passcodeError.innerText = "❌ Incorrect passcode";
     return;
   }
-
+  
   score = snap.val().score || 0;
-  showWaitingScreen("Waiting for admin to start the game...");
+  isTeamVerified = true;
+
+  // SHOW WAITING ROOM
+  showScreen(waitingScreen);
+
+  // OPTIONAL: if admin already started, jump to quiz
+  const adminSnap = await get(ref(db, "admin/quizStarted"));
+  if (adminSnap.val() === true) {
+    startQuiz();
+  }
 }
 
 /********************************
