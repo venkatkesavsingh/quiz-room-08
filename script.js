@@ -1,4 +1,3 @@
-
 /********************************
  * FIREBASE IMPORTS
  ********************************/
@@ -25,21 +24,14 @@ const auth = getAuth(app);
 signInAnonymously(auth);
 
 /********************************
- * WAIT FOR DOM
- ********************************/
-window.addEventListener("DOMContentLoaded", init);
-
-/********************************
  * GLOBAL STATE
  ********************************/
 let questions = [];
-let currentQuestionIndex = 0;
+let currentQuestionIndex = -1;
 let score = 0;
-let timeLeft = 30;
-let timerInterval = null;
 let selectedOption = null;
+let timerInterval = null;
 let isTeamVerified = false;
-let isResuming = false;
 
 /********************************
  * TEAM ID
@@ -57,15 +49,18 @@ let questionEl, feedbackEl, timerEl, scoreEl, optionsEls;
 /********************************
  * INIT
  ********************************/
+window.addEventListener("DOMContentLoaded", init);
+
 function init() {
   setupElements();
   showScreen(passcodeScreen);
   fetchQuestions();
-  setupAdminListeners();
+  listenQuizStart();
+  listenQuestionChange();
 }
 
 /********************************
- * SETUP ELEMENTS
+ * SETUP
  ********************************/
 function setupElements() {
   passcodeScreen = document.getElementById("passcode-box");
@@ -82,40 +77,26 @@ function setupElements() {
   scoreEl = document.getElementById("live-score");
   optionsEls = document.querySelectorAll(".option");
 
-  /* 🔐 PASSCODE ENABLE / DISABLE LOGIC */
   passcodeBtn.disabled = true;
 
   passcodeInput.addEventListener("input", () => {
-  const value = passcodeInput.value.trim();
-
-  passcodeBtn.disabled = value.length !== 6;
-  passcodeError.innerText = "";
-
-  if (value.length === 6) {
-    passcodeInput.classList.add("filled");
-      passcodeInput.blur();
-    } else {
-      passcodeInput.classList.remove("filled");
-    }
+    passcodeBtn.disabled = passcodeInput.value.trim().length !== 6;
+    passcodeError.innerText = "";
   });
-
-  /* 🔐 END */
 
   passcodeBtn.addEventListener("click", handlePasscodeSubmit);
 }
 
 /********************************
- * SCREEN CONTROL (IMPORTANT)
+ * SCREEN CONTROL
  ********************************/
-function showScreen(screenToShow) {
-  document.querySelectorAll(".screen").forEach(s =>
-    s.classList.remove("active")
-  );
-  screenToShow.classList.add("active");
+function showScreen(screen) {
+  document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
+  screen.classList.add("active");
 }
 
 /********************************
- * PASSCODE LOGIC
+ * PASSCODE
  ********************************/
 async function handlePasscodeSubmit() {
   const entered = passcodeInput.value.trim();
@@ -129,45 +110,21 @@ async function handlePasscodeSubmit() {
   const teamRef = ref(db, `teams/${teamId}`);
   const snap = await get(teamRef);
 
-  if (!snap.exists()) {
-    passcodeError.innerText = "Invalid team";
-    return;
-  }
-
-  if (snap.val().passcode !== entered) {
+  if (!snap.exists() || snap.val().passcode !== entered) {
     passcodeError.innerText = "❌ Incorrect passcode";
     return;
   }
-  
-  const teamData = snap.val();
 
-  score = teamData.score || 0;
-  currentQuestionIndex = teamData.currentQuestionIndex || 0;
+  score = snap.val().score || 0;
   isTeamVerified = true;
-  isResuming = true;
 
-  // If quiz already started, resume directly
-  // Check admin state immediately after login
+  // Check admin state immediately
   const adminSnap = await get(ref(db, "admin/quizStarted"));
-
   if (adminSnap.exists() && adminSnap.val() === true) {
-    // Quiz already started → resume immediately
-    startQuiz(true);
+    showScreen(quizScreen);
   } else {
-    // Quiz not started yet → wait
     showScreen(waitingScreen);
   }
-
-}
-
-/********************************
- * WAITING SCREEN
- ********************************/
-function showWaitingScreen(msg) {
-  showScreen(quizScreen);
-  document.querySelector(".options").style.display = "none";
-  questionEl.innerText = msg;
-  feedbackEl.innerText = "";
 }
 
 /********************************
@@ -176,49 +133,39 @@ function showWaitingScreen(msg) {
 function fetchQuestions() {
   fetch("questions.json")
     .then(res => res.json())
-    .then(data => questions = data);
+    .then(data => questions = data)
+    .catch(err => console.error("Questions load error", err));
 }
 
 /********************************
- * ADMIN LISTENERS
+ * LISTENERS (ADMIN CONTROL)
  ********************************/
-function setupAdminListeners() {
+function listenQuizStart() {
   onValue(ref(db, "admin/quizStarted"), snap => {
     if (snap.val() === true && isTeamVerified) {
-      startQuiz(isResuming);
-      isResuming = false; // reset after first use
+      showScreen(quizScreen);
     }
+  });
+}
+
+function listenQuestionChange() {
+  onValue(ref(db, "admin/currentQuestionIndex"), snap => {
+    if (!snap.exists() || !isTeamVerified) return;
+
+    currentQuestionIndex = snap.val();
+    loadQuestion();
   });
 }
 
 /********************************
  * QUIZ ENGINE
  ********************************/
-function shuffleOptions(arr) {
-  return [...arr].sort(() => Math.random() - 0.5);
-}
-
-function startQuiz(resume = false) {
-  if (!questions.length) {
-    setTimeout(() => startQuiz(resume), 200);
-    return;
-  }
-
-  showScreen(quizScreen);
-  document.querySelector(".options").style.display = "flex";
-
-  if (!resume && !isResuming) {
-    currentQuestionIndex = 0;
-  }
-
-  loadQuestion();
-}
-
-
-
 function loadQuestion() {
+  if (!questions.length || currentQuestionIndex < 0) return;
+
   if (currentQuestionIndex >= questions.length) {
-    showWaitingScreen("Round completed. Waiting for admin decision...");
+    questionEl.innerText = "Quiz completed!";
+    document.querySelector(".options").style.display = "none";
     return;
   }
 
@@ -226,7 +173,7 @@ function loadQuestion() {
   feedbackEl.innerText = "";
 
   const q = questions[currentQuestionIndex];
-  const shuffled = shuffleOptions(q.options);
+  const shuffled = [...q.options].sort(() => Math.random() - 0.5);
 
   questionEl.innerText = q.question;
   scoreEl.innerText = `Score: ${score}`;
@@ -247,52 +194,52 @@ function loadQuestion() {
 }
 
 /********************************
- * TIMER
+ * TIMER (SYNCED)
  ********************************/
 function startTimer() {
   clearInterval(timerInterval);
-  timeLeft = 30;
-  timerEl.innerText = `Time ${timeLeft}s`;
 
-  timerInterval = setInterval(() => {
-    timeLeft--;
-    timerEl.innerText = `Time ${timeLeft}s`;
+  onValue(ref(db, "admin/questionStartTime"), snap => {
+    if (!snap.exists()) return;
 
-    if (timeLeft <= 0) {
-      clearInterval(timerInterval);
-      handleTimeUp();
-    }
-  }, 1000);
+    const startTime = snap.val();
+
+    timerInterval = setInterval(() => {
+      const elapsed = Math.floor((Date.now() - startTime) / 1000);
+      const timeLeft = Math.max(30 - elapsed, 0);
+
+      timerEl.innerText = `Time ${timeLeft}s`;
+
+      if (timeLeft <= 0) {
+        clearInterval(timerInterval);
+        handleTimeUp();
+      }
+    }, 1000);
+  });
 }
 
 /********************************
- * TIME UP
+ * TIME UP (AUTO-SKIP LOGIC)
  ********************************/
 async function handleTimeUp() {
-  const q = questions[currentQuestionIndex];
+  const teamRef = ref(db, `teams/${teamId}`);
+  const snap = await get(teamRef);
 
-  optionsEls.forEach(o => o.disabled = true);
+  const lastAnswered = snap.val()?.lastAnsweredQuestion ?? -1;
+  if (currentQuestionIndex <= lastAnswered) return;
+
+  const q = questions[currentQuestionIndex];
 
   if (!selectedOption) {
     score -= 5;
-    feedbackEl.innerText = `⏱️ Skipped\nCorrect answer: ${q.answer}`;
   } else if (selectedOption === q.answer) {
     score += 10;
-    feedbackEl.innerText = "✅ Correct!";
   } else {
     score -= 5;
-    feedbackEl.innerText = `❌ Wrong!\nCorrect answer: ${q.answer}`;
   }
 
-  scoreEl.innerText = `Score: ${score}`;
-  await update(ref(db, `teams/${teamId}`), {
+  await update(teamRef, {
     score,
-    currentQuestionIndex: currentQuestionIndex + 1
+    lastAnsweredQuestion: currentQuestionIndex
   });
-
-
-  setTimeout(() => {
-    currentQuestionIndex++;
-    loadQuestion();
-  }, 1500);
 }
