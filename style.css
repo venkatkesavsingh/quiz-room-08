@@ -80,13 +80,14 @@ html, body {
 }
 
 #WaitingScreen{
+    margin-top: -5vh;
     text-align: center; 
     color: black; 
     font-family: 'Arial', sans-serif; 
 }
 
 .welcome{
-    height: 8vh; 
+    height: 5vh; 
 } 
 
 .initializing{ 
@@ -108,8 +109,7 @@ html, body {
     100% { content: ""; } 
 }
 
-.card-container{ 
-    position: relative;
+.card-container{
     margin: 0 5vh; 
 } 
 
