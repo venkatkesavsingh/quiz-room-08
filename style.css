@@ -21,9 +21,9 @@ html, body {
 }
 
 #passcode-box {
-  width: 30vh;
+  width: 50%;
   aspect-ratio: 2.5 / 3.9;
-  margin: 20vh auto;
+  margin: 25vh auto;
   padding: 20px;
   border-radius: 12px;
   background: url("ASSETS/All-in-One.webp");
