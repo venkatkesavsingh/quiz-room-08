@@ -79,8 +79,32 @@ html, body {
 }
 
 .welcome{ 
-    margin-top: 12vh;
+    margin-top: 15vh;
     height: 8vh; 
+} 
+
+.card-container{
+    width: 30vh;
+    aspect-ratio: 2.5 / 3.9;
+    margin: 2vh auto;
+    padding: 20px;
+    border-radius: 12px;
+    background: url("ASSETS/All-in-One.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.3);
+    border: 0.2px solid black;
+} 
+
+.cardContent{
+    position: absolute;
+    top: 45vh;   /* adjust as needed */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 35vh;
+    font-size: 15px;
+    z-index: 2;
 } 
 
 .initializing{ 
@@ -101,32 +125,9 @@ html, body {
     100% { content: ""; } 
 }
 
-.card-container{ 
-    position: relative;
-    margin: 0 5vh; 
-} 
-
-.cardImage{ 
-    margin-top: 1vh; 
-    width: 40vh; 
-    height: auto;
-    position: relative;
-    z-index: 1; 
-}
-
-.cardContent{
-    position: absolute;
-    top: 20vh;   /* adjust as needed */
-    left: 50%;
-    transform: translateX(-50%);
-    width: 35vh;
-    font-size: 15px;
-    z-index: 2;
-} 
-
 .warn{
-  margin-top: 12vh;
-  font-size: 12px;
+  margin-top: 10vh;
+  font-size: 10px;
 }
 
 #quiz-container {
@@ -134,7 +135,7 @@ html, body {
   aspect-ratio: 2.5 / 3.6;
   margin: auto;
   margin-top: 15vh;
-  padding: 10vh 5vh;
+  padding: 11vh 5vh;
   border-radius: 12px;
   background: url("ASSETS/All-in-One.png");
   background-repeat: no-repeat;
