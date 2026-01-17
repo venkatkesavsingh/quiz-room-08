@@ -38,6 +38,7 @@ let timeLeft = 30;
 let timerInterval = null;
 let selectedOption = null;
 let isTeamVerified = false;
+let isResuming = false;
 
 /********************************
  * TEAM ID
@@ -89,8 +90,11 @@ function setupElements() {
   passcodeBtn.disabled = value.length !== 6;
   passcodeError.innerText = "";
 
-    if (value.length === 6) {
-      passcodeInput.blur(); // 👈 stops cursor blinking
+  if (value.length === 6) {
+    passcodeInput.classList.add("filled");
+      passcodeInput.blur();
+    } else {
+      passcodeInput.classList.remove("filled");
     }
   });
 
@@ -134,17 +138,20 @@ async function handlePasscodeSubmit() {
     return;
   }
   
-  score = snap.val().score || 0;
+  const teamData = snap.val();
+
+  score = teamData.score || 0;
+  currentQuestionIndex = teamData.currentQuestionIndex || 0;
   isTeamVerified = true;
+  isResuming = true;
 
-  // SHOW WAITING ROOM
-  showScreen(waitingScreen);
-
-  // OPTIONAL: if admin already started, jump to quiz
-  const adminSnap = await get(ref(db, "admin/quizStarted"));
-  if (adminSnap.val() === true) {
-    startQuiz();
+  // If quiz already started, resume directly
+  if (teamData.quizStarted === true) {
+    startQuiz(true);
+  } else {
+    showScreen(waitingScreen);
   }
+
 }
 
 /********************************
@@ -171,8 +178,9 @@ function fetchQuestions() {
  ********************************/
 function setupAdminListeners() {
   onValue(ref(db, "admin/quizStarted"), snap => {
-    if (snap.val() === true) {
-      startQuiz();
+    if (snap.val() === true && isTeamVerified) {
+      startQuiz(isResuming);
+      isResuming = false; // reset after first use
     }
   });
 }
@@ -184,12 +192,27 @@ function shuffleOptions(arr) {
   return [...arr].sort(() => Math.random() - 0.5);
 }
 
-function startQuiz() {
+function startQuiz(resume = false) {
+  if (!questions.length) {
+    setTimeout(() => startQuiz(resume), 200);
+    return;
+  }
+
   showScreen(quizScreen);
   document.querySelector(".options").style.display = "flex";
-  currentQuestionIndex = 0;
+
+  if (!resume && !isResuming) {
+    currentQuestionIndex = 0;
+  }
+
   loadQuestion();
+
+  update(ref(db, `teams/${teamId}`), {
+    quizStarted: true
+  });
 }
+
+
 
 function loadQuestion() {
   if (currentQuestionIndex >= questions.length) {
@@ -260,7 +283,11 @@ async function handleTimeUp() {
   }
 
   scoreEl.innerText = `Score: ${score}`;
-  await update(ref(db, `teams/${teamId}`), { score });
+  await update(ref(db, `teams/${teamId}`), {
+    score,
+    currentQuestionIndex: currentQuestionIndex + 1
+  });
+
 
   setTimeout(() => {
     currentQuestionIndex++;
