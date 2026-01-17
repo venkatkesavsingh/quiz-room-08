@@ -146,12 +146,8 @@ async function handlePasscodeSubmit() {
   isResuming = true;
 
   // If quiz already started, resume directly
-  if (admin.quizStarted === true) {
-    startQuiz(true);
-  } else {
-    showScreen(waitingScreen);
-  }
-
+  // ✅ ALWAYS WAIT FOR ADMIN
+  showScreen(waitingScreen);
 }
 
 /********************************
@@ -206,10 +202,6 @@ function startQuiz(resume = false) {
   }
 
   loadQuestion();
-
-  update(ref(db, `teams/${teamId}`), {
-    quizStarted: true
-  });
 }
 
 
