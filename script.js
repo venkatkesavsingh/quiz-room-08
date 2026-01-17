@@ -243,6 +243,11 @@ function startTimer() {
 
     const startTime = snap.val();
 
+    // 🔐 Ignore invalid start times
+    if (!startTime || startTime <= 0) return;
+
+    clearInterval(timerInterval);
+
     timerInterval = setInterval(() => {
       const elapsed = Math.floor((Date.now() - startTime) / 1000);
       const timeLeft = Math.max(30 - elapsed, 0);
