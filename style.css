@@ -111,6 +111,7 @@ html, body {
     margin: 2vh 0 1vh 0; 
     font-family: 'Courier New', Courier, monospace; 
     font-weight: bold; 
+    font-size: 21px;
 } 
 
 .initializing::after { 
