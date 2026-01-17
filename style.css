@@ -80,7 +80,7 @@ html, body {
 
 .welcome{ 
     margin-top: 15vh;
-    height: 8vh; 
+    width: 90%;
 } 
 
 .card-container{
