@@ -27,12 +27,14 @@ signInAnonymously(auth);
  * GLOBAL STATE
  ********************************/
 let questions = [];
+let questionsLoaded = false;
+
 let currentQuestionIndex = -1;
 let score = 0;
 let selectedOption = null;
 let timerInterval = null;
+
 let isTeamVerified = false;
-let questionsLoaded = false;
 
 /********************************
  * TEAM ID
@@ -55,13 +57,14 @@ window.addEventListener("DOMContentLoaded", init);
 function init() {
   setupElements();
   showScreen(passcodeScreen);
+
   fetchQuestions();
   listenQuizStart();
   listenQuestionChange();
 }
 
 /********************************
- * SETUP
+ * SETUP ELEMENTS
  ********************************/
 function setupElements() {
   passcodeScreen = document.getElementById("passcode-box");
@@ -92,12 +95,14 @@ function setupElements() {
  * SCREEN CONTROL
  ********************************/
 function showScreen(screen) {
-  document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
+  document.querySelectorAll(".screen").forEach(s =>
+    s.classList.remove("active")
+  );
   screen.classList.add("active");
 }
 
 /********************************
- * PASSCODE
+ * PASSCODE LOGIC
  ********************************/
 async function handlePasscodeSubmit() {
   const entered = passcodeInput.value.trim();
@@ -126,6 +131,9 @@ async function handlePasscodeSubmit() {
   } else {
     showScreen(waitingScreen);
   }
+
+  // 🔥 IMPORTANT: sync current question for late login / refresh
+  await syncCurrentQuestion();
 }
 
 /********************************
@@ -138,7 +146,7 @@ function fetchQuestions() {
       questions = data;
       questionsLoaded = true;
 
-      // 🔥 If admin already started & question index exists, load now
+      // If question index already known, render immediately
       if (isTeamVerified && currentQuestionIndex >= 0) {
         loadQuestion();
       }
@@ -149,7 +157,7 @@ function fetchQuestions() {
 }
 
 /********************************
- * LISTENERS (ADMIN CONTROL)
+ * ADMIN LISTENERS
  ********************************/
 function listenQuizStart() {
   onValue(ref(db, "admin/quizStarted"), snap => {
@@ -165,11 +173,24 @@ function listenQuestionChange() {
 
     currentQuestionIndex = snap.val();
 
-    // 🔐 Wait until questions.json is ready
     if (questionsLoaded) {
       loadQuestion();
     }
   });
+}
+
+/********************************
+ * MANUAL SYNC FOR LATE LOGIN
+ ********************************/
+async function syncCurrentQuestion() {
+  const snap = await get(ref(db, "admin/currentQuestionIndex"));
+  if (!snap.exists()) return;
+
+  currentQuestionIndex = snap.val();
+
+  if (questionsLoaded) {
+    loadQuestion();
+  }
 }
 
 /********************************
@@ -209,7 +230,7 @@ function loadQuestion() {
 }
 
 /********************************
- * TIMER (SYNCED)
+ * TIMER (SYNCED WITH ADMIN)
  ********************************/
 function startTimer() {
   clearInterval(timerInterval);
@@ -234,7 +255,7 @@ function startTimer() {
 }
 
 /********************************
- * TIME UP (AUTO-SKIP LOGIC)
+ * TIME UP (AUTO-SKIP)
  ********************************/
 async function handleTimeUp() {
   const teamRef = ref(db, `teams/${teamId}`);
