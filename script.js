@@ -1,3 +1,4 @@
+
 /********************************
  * FIREBASE IMPORTS
  ********************************/
@@ -146,8 +147,17 @@ async function handlePasscodeSubmit() {
   isResuming = true;
 
   // If quiz already started, resume directly
-  // ✅ ALWAYS WAIT FOR ADMIN
-  showScreen(waitingScreen);
+  // Check admin state immediately after login
+  const adminSnap = await get(ref(db, "admin/quizStarted"));
+
+  if (adminSnap.exists() && adminSnap.val() === true) {
+    // Quiz already started → resume immediately
+    startQuiz(true);
+  } else {
+    // Quiz not started yet → wait
+    showScreen(waitingScreen);
+  }
+
 }
 
 /********************************
