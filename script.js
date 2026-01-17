@@ -32,6 +32,7 @@ let score = 0;
 let selectedOption = null;
 let timerInterval = null;
 let isTeamVerified = false;
+let questionsLoaded = false;
 
 /********************************
  * TEAM ID
@@ -133,8 +134,18 @@ async function handlePasscodeSubmit() {
 function fetchQuestions() {
   fetch("questions.json")
     .then(res => res.json())
-    .then(data => questions = data)
-    .catch(err => console.error("Questions load error", err));
+    .then(data => {
+      questions = data;
+      questionsLoaded = true;
+
+      // 🔥 If admin already started & question index exists, load now
+      if (isTeamVerified && currentQuestionIndex >= 0) {
+        loadQuestion();
+      }
+    })
+    .catch(err => {
+      console.error("Questions load error:", err);
+    });
 }
 
 /********************************
@@ -153,7 +164,11 @@ function listenQuestionChange() {
     if (!snap.exists() || !isTeamVerified) return;
 
     currentQuestionIndex = snap.val();
-    loadQuestion();
+
+    // 🔐 Wait until questions.json is ready
+    if (questionsLoaded) {
+      loadQuestion();
+    }
   });
 }
 
@@ -161,7 +176,7 @@ function listenQuestionChange() {
  * QUIZ ENGINE
  ********************************/
 function loadQuestion() {
-  if (!questions.length || currentQuestionIndex < 0) return;
+  if (!questionsLoaded || !questions.length) return;
 
   if (currentQuestionIndex >= questions.length) {
     questionEl.innerText = "Quiz completed!";
