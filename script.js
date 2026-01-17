@@ -146,7 +146,7 @@ async function handlePasscodeSubmit() {
   isResuming = true;
 
   // If quiz already started, resume directly
-  if (teamData.quizStarted === true) {
+  if (admin.quizStarted === true) {
     startQuiz(true);
   } else {
     showScreen(waitingScreen);
