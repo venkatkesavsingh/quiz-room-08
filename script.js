@@ -34,6 +34,7 @@ window.addEventListener("DOMContentLoaded", init);
 let questions = [];
 let currentQuestionIndex = 0;
 let adminQuestionIndex = 0; // ✅ ADD THIS
+let isResuming = false;
 let score = 0;
 let timeLeft = 30;
 let timerInterval = null;
@@ -148,12 +149,13 @@ async function handlePasscodeSubmit() {
 
   // If quiz already started, resume directly
   // Check admin state immediately after login
-  const adminSnap = await get(ref(db, "admin/quizStarted"));
-
-  if (adminSnap.exists() && adminSnap.val() === true) {
-    // Quiz already started → resume immediately
-    startQuiz(true);
-  } else {
+  
+  onst adminSnap = await get(ref(db, "admin/quizStarted"));
+  if (adminSnap.val() === true) {
+    isResuming = true; // ✅ IMPORTANT
+    startQuiz();
+  } 
+  else {
     // Quiz not started yet → wait
     showScreen(waitingScreen);
   }
