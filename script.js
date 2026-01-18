@@ -33,8 +33,6 @@ window.addEventListener("DOMContentLoaded", init);
  ********************************/
 let questions = [];
 let currentQuestionIndex = 0;
-let adminQuestionIndex = 0; // ✅ ADD THIS
-let isResuming = false;
 let score = 0;
 let timeLeft = 30;
 let timerInterval = null;
@@ -52,7 +50,7 @@ const teamId = params.get("team");
  ********************************/
 let passcodeScreen, waitingScreen, quizScreen;
 let passcodeInput, passcodeBtn, passcodeError;
-let questionEl, questionNumberEl, feedbackEl, timerEl, scoreEl, optionsEls;
+let questionEl, feedbackEl, timerEl, scoreEl, optionsEls;
 
 /********************************
  * INIT
@@ -70,14 +68,13 @@ function init() {
 function setupElements() {
   passcodeScreen = document.getElementById("passcode-box");
   waitingScreen = document.getElementById("WaitingScreen");
-  quizScreen = document.getElementById("quiz-UI");
+  quizScreen = document.getElementById("quiz-container");
 
   passcodeInput = document.getElementById("passcode-input");
   passcodeBtn = document.getElementById("passcode-btn");
   passcodeError = document.getElementById("passcode-error");
 
   questionEl = document.getElementById("question");
-  questionNumberEl = document.getElementById("question-number");
   feedbackEl = document.getElementById("feedback");
   timerEl = document.getElementById("timer");
   scoreEl = document.getElementById("live-score");
@@ -140,26 +137,17 @@ async function handlePasscodeSubmit() {
     return;
   }
   
-  const teamData = snap.val();
-
-  score = teamData.score || 0;
-  currentQuestionIndex = teamData.currentQuestionIndex || 0;
+  score = snap.val().score || 0;
   isTeamVerified = true;
-  isResuming = true;
 
-  // If quiz already started, resume directly
-  // Check admin state immediately after login
-  
-  onst adminSnap = await get(ref(db, "admin/quizStarted"));
+  // SHOW WAITING ROOM
+  showScreen(waitingScreen);
+
+  // OPTIONAL: if admin already started, jump to quiz
+  const adminSnap = await get(ref(db, "admin/quizStarted"));
   if (adminSnap.val() === true) {
-    isResuming = true; // ✅ IMPORTANT
     startQuiz();
-  } 
-  else {
-    // Quiz not started yet → wait
-    showScreen(waitingScreen);
   }
-
 }
 
 /********************************
@@ -186,20 +174,8 @@ function fetchQuestions() {
  ********************************/
 function setupAdminListeners() {
   onValue(ref(db, "admin/quizStarted"), snap => {
-    if (snap.val() === true && isTeamVerified) {
-      startQuiz(isResuming);
-      isResuming = false; // reset after first use
-    }
-  });
-
-  onValue(ref(db, "admin/currentQuestion"), snap => {
-    if (!snap.exists()) return;
-
-    adminQuestionIndex = snap.val();
-    currentQuestionIndex = adminQuestionIndex;
-
-    if (quizScreen.classList.contains("active")) {
-      loadQuestion();
+    if (snap.val() === true) {
+      startQuiz();
     }
   });
 }
@@ -211,19 +187,10 @@ function shuffleOptions(arr) {
   return [...arr].sort(() => Math.random() - 0.5);
 }
 
-function startQuiz(resume = false) {
-  if (!questions.length) {
-    setTimeout(() => startQuiz(resume), 200);
-    return;
-  }
-
+function startQuiz() {
   showScreen(quizScreen);
   document.querySelector(".options").style.display = "flex";
-
-  if (!resume && !isResuming) {
-    currentQuestionIndex = 0;
-  }
-
+  currentQuestionIndex = 0;
   loadQuestion();
 }
 
@@ -238,9 +205,6 @@ function loadQuestion() {
 
   const q = questions[currentQuestionIndex];
   const shuffled = shuffleOptions(q.options);
-
-  // ✅ DATABASE-DRIVEN QUESTION NUMBER
-  questionNumberEl.innerText = `Question: ${adminQuestionIndex + 1}`;
 
   questionEl.innerText = q.question;
   scoreEl.innerText = `Score: ${score}`;
@@ -299,8 +263,10 @@ async function handleTimeUp() {
   }
 
   scoreEl.innerText = `Score: ${score}`;
-  await update(ref(db, `teams/${teamId}`), {
-    score,
-    currentQuestionIndex: currentQuestionIndex + 1
-  });
+  await update(ref(db, `teams/${teamId}`), { score });
+
+  setTimeout(() => {
+    currentQuestionIndex++;
+    loadQuestion();
+  }, 1500);
 }
