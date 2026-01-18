@@ -2,7 +2,7 @@
  * FIREBASE IMPORTS
  ********************************/
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
-import { getDatabase, ref, get, update, onValue } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-database.js";
+import { getDatabase, ref, get, onValue } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-database.js";
 import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
 
 /********************************
@@ -24,19 +24,14 @@ const auth = getAuth(app);
 signInAnonymously(auth);
 
 /********************************
- * WAIT FOR DOM
- ********************************/
-window.addEventListener("DOMContentLoaded", init);
-
-/********************************
  * GLOBAL STATE
  ********************************/
 let questions = [];
 let currentQuestionIndex = 0;
 let score = 0;
-let timeLeft = 30;
-let timerInterval = null;
 let selectedOption = null;
+let timerInterval = null;
+let timeLeft = 30;
 let isTeamVerified = false;
 
 /********************************
@@ -50,11 +45,13 @@ const teamId = params.get("team");
  ********************************/
 let passcodeScreen, waitingScreen, quizScreen;
 let passcodeInput, passcodeBtn, passcodeError;
-let questionEl, feedbackEl, timerEl, scoreEl, optionsEls;
+let questionEl, timerEl, scoreEl, optionsEls, questionNumberEl;
 
 /********************************
  * INIT
  ********************************/
+window.addEventListener("DOMContentLoaded", init);
+
 function init() {
   setupElements();
   showScreen(passcodeScreen);
@@ -68,52 +65,48 @@ function init() {
 function setupElements() {
   passcodeScreen = document.getElementById("passcode-box");
   waitingScreen = document.getElementById("WaitingScreen");
-  quizScreen = document.getElementById("quiz-container");
+  quizScreen = document.getElementById("quiz-UI");
 
   passcodeInput = document.getElementById("passcode-input");
   passcodeBtn = document.getElementById("passcode-btn");
   passcodeError = document.getElementById("passcode-error");
 
   questionEl = document.getElementById("question");
-  feedbackEl = document.getElementById("feedback");
   timerEl = document.getElementById("timer");
   scoreEl = document.getElementById("live-score");
+  questionNumberEl = document.getElementById("question-number");
   optionsEls = document.querySelectorAll(".option");
 
-  /* 🔐 PASSCODE ENABLE / DISABLE LOGIC */
   passcodeBtn.disabled = true;
 
   passcodeInput.addEventListener("input", () => {
-  const value = passcodeInput.value.trim();
+    const value = passcodeInput.value.trim();
+    passcodeBtn.disabled = value.length !== 6;
+    passcodeError.innerText = "";
 
-  passcodeBtn.disabled = value.length !== 6;
-  passcodeError.innerText = "";
-
-  if (value.length === 6) {
-    passcodeInput.classList.add("filled");
+    if (value.length === 6) {
+      passcodeInput.classList.add("filled");
       passcodeInput.blur();
     } else {
       passcodeInput.classList.remove("filled");
     }
   });
 
-  /* 🔐 END */
-
   passcodeBtn.addEventListener("click", handlePasscodeSubmit);
 }
 
 /********************************
- * SCREEN CONTROL (IMPORTANT)
+ * SCREEN CONTROL
  ********************************/
-function showScreen(screenToShow) {
+function showScreen(screen) {
   document.querySelectorAll(".screen").forEach(s =>
     s.classList.remove("active")
   );
-  screenToShow.classList.add("active");
+  screen.classList.add("active");
 }
 
 /********************************
- * PASSCODE LOGIC
+ * PASSCODE LOGIN
  ********************************/
 async function handlePasscodeSubmit() {
   const entered = passcodeInput.value.trim();
@@ -124,8 +117,7 @@ async function handlePasscodeSubmit() {
     return;
   }
 
-  const teamRef = ref(db, `teams/${teamId}`);
-  const snap = await get(teamRef);
+  const snap = await get(ref(db, `teams/${teamId}`));
 
   if (!snap.exists()) {
     passcodeError.innerText = "Invalid team";
@@ -136,28 +128,16 @@ async function handlePasscodeSubmit() {
     passcodeError.innerText = "❌ Incorrect passcode";
     return;
   }
-  
+
   score = snap.val().score || 0;
   isTeamVerified = true;
 
-  // SHOW WAITING ROOM
   showScreen(waitingScreen);
 
-  // OPTIONAL: if admin already started, jump to quiz
-  const adminSnap = await get(ref(db, "admin/quizStarted"));
-  if (adminSnap.val() === true) {
-    startQuiz();
+  const adminSnap = await get(ref(db, "admin"));
+  if (adminSnap.exists() && adminSnap.val().quizStarted === true) {
+    showScreen(quizScreen);
   }
-}
-
-/********************************
- * WAITING SCREEN
- ********************************/
-function showWaitingScreen(msg) {
-  showScreen(quizScreen);
-  document.querySelector(".options").style.display = "none";
-  questionEl.innerText = msg;
-  feedbackEl.innerText = "";
 }
 
 /********************************
@@ -173,10 +153,26 @@ function fetchQuestions() {
  * ADMIN LISTENERS
  ********************************/
 function setupAdminListeners() {
+
   onValue(ref(db, "admin/quizStarted"), snap => {
     if (snap.val() === true) {
-      startQuiz();
+      showScreen(quizScreen);
     }
+  });
+
+  onValue(ref(db, "admin/currentQuestionIndex"), snap => {
+    const index = snap.val();
+    if (index === null || !questions.length) return;
+
+    currentQuestionIndex = index;
+    loadQuestion();
+  });
+
+  onValue(ref(db, "admin/questionStartTime"), snap => {
+    const startTime = snap.val();
+    if (!startTime) return;
+
+    startTimer(startTime);
   });
 }
 
@@ -187,86 +183,85 @@ function shuffleOptions(arr) {
   return [...arr].sort(() => Math.random() - 0.5);
 }
 
-function startQuiz() {
-  showScreen(quizScreen);
-  document.querySelector(".options").style.display = "flex";
-  currentQuestionIndex = 0;
-  loadQuestion();
+function resetOptionStyles() {
+  optionsEls.forEach(btn => {
+    btn.style.backgroundColor = "";
+    btn.style.color = "";
+    btn.disabled = false;
+    btn.classList.remove("selected");
+  });
+}
+
+function markCorrectAndWrong(correctAnswer) {
+  optionsEls.forEach(btn => {
+    if (btn.innerText === correctAnswer) {
+      btn.style.backgroundColor = "#4CAF50"; // green
+      btn.style.color = "#fff";
+    }
+
+    if (btn.classList.contains("selected") && btn.innerText !== correctAnswer) {
+      btn.style.backgroundColor = "#E53935"; // red
+      btn.style.color = "#fff";
+    }
+
+    btn.disabled = true;
+  });
 }
 
 function loadQuestion() {
-  if (currentQuestionIndex >= questions.length) {
-    showWaitingScreen("Round completed. Waiting for admin decision...");
-    return;
-  }
+  const q = questions[currentQuestionIndex];
+  if (!q) return;
 
   selectedOption = null;
-  feedbackEl.innerText = "";
+  resetOptionStyles();
 
-  const q = questions[currentQuestionIndex];
-  const shuffled = shuffleOptions(q.options);
-
+  questionNumberEl.innerText = `Question: ${currentQuestionIndex + 1}`;
   questionEl.innerText = q.question;
   scoreEl.innerText = `Score: ${score}`;
 
+  const shuffled = shuffleOptions(q.options);
+
   optionsEls.forEach((btn, i) => {
     btn.innerText = shuffled[i];
-    btn.disabled = false;
-    btn.classList.remove("selected");
 
     btn.onclick = () => {
-      optionsEls.forEach(o => o.classList.remove("selected"));
+      if (!isTeamVerified || timeLeft <= 0) return;
+
+      optionsEls.forEach(o => {
+        o.classList.remove("selected");
+        o.style.backgroundColor = "";
+        o.style.color = "";
+      });
+
       btn.classList.add("selected");
+      btn.style.backgroundColor = "#BDBDBD"; // grey
+      btn.style.color = "#000";
+
       selectedOption = btn.innerText;
     };
   });
-
-  startTimer();
 }
 
 /********************************
- * TIMER
+ * GLOBAL TIMER (REFRESH SAFE)
  ********************************/
-function startTimer() {
+function startTimer(startTime) {
   clearInterval(timerInterval);
-  timeLeft = 30;
-  timerEl.innerText = `Time ${timeLeft}s`;
 
-  timerInterval = setInterval(() => {
-    timeLeft--;
+  function tick() {
+    const elapsed = Math.floor((Date.now() - startTime) / 1000);
+    timeLeft = Math.max(30 - elapsed, 0);
     timerEl.innerText = `Time ${timeLeft}s`;
 
     if (timeLeft <= 0) {
       clearInterval(timerInterval);
-      handleTimeUp();
+      const correct = questions[currentQuestionIndex]?.answer;
+      if (correct) {
+        markCorrectAndWrong(correct);
+      }
     }
-  }, 1000);
-}
-
-/********************************
- * TIME UP
- ********************************/
-async function handleTimeUp() {
-  const q = questions[currentQuestionIndex];
-
-  optionsEls.forEach(o => o.disabled = true);
-
-  if (!selectedOption) {
-    score -= 5;
-    feedbackEl.innerText = `⏱️ Skipped\nCorrect answer: ${q.answer}`;
-  } else if (selectedOption === q.answer) {
-    score += 10;
-    feedbackEl.innerText = "✅ Correct!";
-  } else {
-    score -= 5;
-    feedbackEl.innerText = `❌ Wrong!\nCorrect answer: ${q.answer}`;
   }
 
-  scoreEl.innerText = `Score: ${score}`;
-  await update(ref(db, `teams/${teamId}`), { score });
-
-  setTimeout(() => {
-    currentQuestionIndex++;
-    loadQuestion();
-  }, 1500);
+  tick();
+  timerInterval = setInterval(tick, 1000);
 }
