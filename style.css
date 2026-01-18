@@ -168,7 +168,7 @@ body {
   padding: clamp(1.5rem, 5vh, 3rem);
 
   border-radius: 12px;
-  background: url("ASSETS/All-in-One.png") no-repeat center;
+  background: url("ASSETS/All-in-One.webp") no-repeat center;
   background-size: cover;
 
   box-shadow: 0 0 12px rgba(255, 255, 255, 0.8);
