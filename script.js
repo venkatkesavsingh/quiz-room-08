@@ -30,8 +30,11 @@ let questions = [];
 let currentQuestionIndex = 0;
 let score = 0;
 let selectedOption = null;
+
 let timerInterval = null;
 let timeLeft = 30;
+let lastQuestionStartTime = null;
+
 let isTeamVerified = false;
 
 /********************************
@@ -170,8 +173,11 @@ function setupAdminListeners() {
 
   onValue(ref(db, "admin/questionStartTime"), snap => {
     const startTime = snap.val();
-    if (!startTime) return;
 
+    // prevent invalid or duplicate triggers
+    if (!startTime || startTime === lastQuestionStartTime) return;
+
+    lastQuestionStartTime = startTime;
     startTimer(startTime);
   });
 }
@@ -195,12 +201,12 @@ function resetOptionStyles() {
 function markCorrectAndWrong(correctAnswer) {
   optionsEls.forEach(btn => {
     if (btn.innerText === correctAnswer) {
-      btn.style.backgroundColor = "#4CAF50"; // green
+      btn.style.backgroundColor = "#4CAF50";
       btn.style.color = "#fff";
     }
 
     if (btn.classList.contains("selected") && btn.innerText !== correctAnswer) {
-      btn.style.backgroundColor = "#E53935"; // red
+      btn.style.backgroundColor = "#E53935";
       btn.style.color = "#fff";
     }
 
@@ -243,7 +249,7 @@ function loadQuestion() {
 }
 
 /********************************
- * GLOBAL TIMER (REFRESH SAFE)
+ * GLOBAL TIMER (FIXED)
  ********************************/
 function startTimer(startTime) {
   clearInterval(timerInterval);
