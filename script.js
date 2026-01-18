@@ -2,7 +2,7 @@
  * FIREBASE IMPORTS
  ********************************/
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
-import { getDatabase, ref, get, update, onValue } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-database.js";
+import { getDatabase, ref, get, update, onValue, runTransaction } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-database.js";
 import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
 
 /********************************
@@ -260,8 +260,10 @@ function startCountdown(startTime) {
  ********************************/
 async function handleTimeUp() {
   const teamRef = ref(db, `teams/${teamId}`);
-  const snap = await get(teamRef);
+  const adminRef = ref(db, "admin");
 
+  // ----- SCORE THIS TEAM -----
+  const snap = await get(teamRef);
   const lastAnswered = snap.val()?.lastAnsweredQuestion ?? -1;
   if (currentQuestionIndex <= lastAnswered) return;
 
@@ -269,14 +271,44 @@ async function handleTimeUp() {
 
   if (!selectedOption) {
     score -= 5;
+    feedbackEl.innerText = `⏱️ Skipped\nCorrect: ${q.answer}`;
   } else if (selectedOption === q.answer) {
     score += 10;
+    feedbackEl.innerText = "✅ Correct!";
   } else {
     score -= 5;
+    feedbackEl.innerText = `❌ Wrong\nCorrect: ${q.answer}`;
   }
+
+  scoreEl.innerText = `Score: ${score}`;
 
   await update(teamRef, {
     score,
     lastAnsweredQuestion: currentQuestionIndex
   });
+
+  // ----- SHOW FEEDBACK BRIEFLY -----
+  setTimeout(() => {
+    feedbackEl.innerText = "";
+  }, 2000);
+
+  // ----- ADVANCE QUESTION (LOCKED) -----
+  await runTransaction(adminRef, admin => {
+    if (!admin) return admin;
+
+    // another client already advanced
+    if (admin.advancing === true) return;
+
+    return {
+      ...admin,
+      advancing: true,
+      currentQuestionIndex: admin.currentQuestionIndex + 1,
+      questionStartTime: Date.now()
+    };
+  });
+
+  // ----- RELEASE LOCK -----
+  setTimeout(() => {
+    update(ref(db, "admin/advancing"), false);
+  }, 500);
 }
