@@ -1,3 +1,4 @@
+
 /********************************
  * FIREBASE IMPORTS
  ********************************/
@@ -38,6 +39,7 @@ let timeLeft = 30;
 let timerInterval = null;
 let selectedOption = null;
 let isTeamVerified = false;
+let isResuming = false;
 
 /********************************
  * TEAM ID
@@ -68,7 +70,7 @@ function init() {
 function setupElements() {
   passcodeScreen = document.getElementById("passcode-box");
   waitingScreen = document.getElementById("WaitingScreen");
-  quizScreen = document.getElementById("quiz-container");
+  quizScreen = document.getElementById("quiz-UI");
 
   passcodeInput = document.getElementById("passcode-input");
   passcodeBtn = document.getElementById("passcode-btn");
@@ -137,17 +139,25 @@ async function handlePasscodeSubmit() {
     return;
   }
   
-  score = snap.val().score || 0;
+  const teamData = snap.val();
+
+  score = teamData.score || 0;
+  currentQuestionIndex = teamData.currentQuestionIndex || 0;
   isTeamVerified = true;
+  isResuming = true;
 
-  // SHOW WAITING ROOM
-  showScreen(waitingScreen);
-
-  // OPTIONAL: if admin already started, jump to quiz
+  // If quiz already started, resume directly
+  // Check admin state immediately after login
   const adminSnap = await get(ref(db, "admin/quizStarted"));
-  if (adminSnap.val() === true) {
-    startQuiz();
+
+  if (adminSnap.exists() && adminSnap.val() === true) {
+    // Quiz already started → resume immediately
+    startQuiz(true);
+  } else {
+    // Quiz not started yet → wait
+    showScreen(waitingScreen);
   }
+
 }
 
 /********************************
@@ -174,8 +184,9 @@ function fetchQuestions() {
  ********************************/
 function setupAdminListeners() {
   onValue(ref(db, "admin/quizStarted"), snap => {
-    if (snap.val() === true) {
-      startQuiz();
+    if (snap.val() === true && isTeamVerified) {
+      startQuiz(isResuming);
+      isResuming = false; // reset after first use
     }
   });
 }
@@ -187,12 +198,23 @@ function shuffleOptions(arr) {
   return [...arr].sort(() => Math.random() - 0.5);
 }
 
-function startQuiz() {
+function startQuiz(resume = false) {
+  if (!questions.length) {
+    setTimeout(() => startQuiz(resume), 200);
+    return;
+  }
+
   showScreen(quizScreen);
   document.querySelector(".options").style.display = "flex";
-  currentQuestionIndex = 0;
+
+  if (!resume && !isResuming) {
+    currentQuestionIndex = 0;
+  }
+
   loadQuestion();
 }
+
+
 
 function loadQuestion() {
   if (currentQuestionIndex >= questions.length) {
@@ -263,7 +285,11 @@ async function handleTimeUp() {
   }
 
   scoreEl.innerText = `Score: ${score}`;
-  await update(ref(db, `teams/${teamId}`), { score });
+  await update(ref(db, `teams/${teamId}`), {
+    score,
+    currentQuestionIndex: currentQuestionIndex + 1
+  });
+
 
   setTimeout(() => {
     currentQuestionIndex++;
