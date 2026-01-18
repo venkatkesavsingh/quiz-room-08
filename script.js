@@ -27,7 +27,7 @@ signInAnonymously(auth);
  * GLOBAL STATE
  ********************************/
 let questions = [];
-let currentQuestionIndex = 0;
+let currentQuestionIndex = null;
 let score = 0;
 let selectedOption = null;
 
@@ -36,6 +36,7 @@ let timeLeft = 30;
 let lastQuestionStartTime = null;
 
 let isTeamVerified = false;
+let quizStarted = false;
 
 /********************************
  * TEAM ID
@@ -57,7 +58,7 @@ window.addEventListener("DOMContentLoaded", init);
 
 function init() {
   setupElements();
-  showScreen(passcodeScreen);
+  showScreen(passcodeScreen); // 🔐 ALWAYS start here
   fetchQuestions();
   setupAdminListeners();
 }
@@ -135,11 +136,11 @@ async function handlePasscodeSubmit() {
   score = snap.val().score || 0;
   isTeamVerified = true;
 
-  showScreen(waitingScreen);
-
-  const adminSnap = await get(ref(db, "admin"));
-  if (adminSnap.exists() && adminSnap.val().quizStarted === true) {
+  // Decide screen AFTER login
+  if (quizStarted) {
     showScreen(quizScreen);
+  } else {
+    showScreen(waitingScreen);
   }
 }
 
@@ -153,17 +154,20 @@ function fetchQuestions() {
 }
 
 /********************************
- * ADMIN LISTENERS
+ * ADMIN LISTENERS (SAFE)
  ********************************/
 function setupAdminListeners() {
 
   onValue(ref(db, "admin/quizStarted"), snap => {
-    if (snap.val() === true) {
+    quizStarted = snap.val() === true;
+
+    if (quizStarted && isTeamVerified) {
       showScreen(quizScreen);
     }
   });
 
   onValue(ref(db, "admin/currentQuestionIndex"), snap => {
+    if (!isTeamVerified) return;
     const index = snap.val();
     if (index === null || !questions.length) return;
 
@@ -172,9 +176,9 @@ function setupAdminListeners() {
   });
 
   onValue(ref(db, "admin/questionStartTime"), snap => {
-    const startTime = snap.val();
+    if (!isTeamVerified) return;
 
-    // prevent invalid or duplicate triggers
+    const startTime = snap.val();
     if (!startTime || startTime === lastQuestionStartTime) return;
 
     lastQuestionStartTime = startTime;
@@ -204,12 +208,10 @@ function markCorrectAndWrong(correctAnswer) {
       btn.style.backgroundColor = "#4CAF50";
       btn.style.color = "#fff";
     }
-
     if (btn.classList.contains("selected") && btn.innerText !== correctAnswer) {
       btn.style.backgroundColor = "#E53935";
       btn.style.color = "#fff";
     }
-
     btn.disabled = true;
   });
 }
@@ -231,7 +233,7 @@ function loadQuestion() {
     btn.innerText = shuffled[i];
 
     btn.onclick = () => {
-      if (!isTeamVerified || timeLeft <= 0) return;
+      if (timeLeft <= 0) return;
 
       optionsEls.forEach(o => {
         o.classList.remove("selected");
@@ -240,7 +242,7 @@ function loadQuestion() {
       });
 
       btn.classList.add("selected");
-      btn.style.backgroundColor = "#BDBDBD"; // grey
+      btn.style.backgroundColor = "#BDBDBD";
       btn.style.color = "#000";
 
       selectedOption = btn.innerText;
@@ -249,7 +251,7 @@ function loadQuestion() {
 }
 
 /********************************
- * GLOBAL TIMER (FIXED)
+ * TIMER (FIXED FOR REAL)
  ********************************/
 function startTimer(startTime) {
   clearInterval(timerInterval);
@@ -262,9 +264,7 @@ function startTimer(startTime) {
     if (timeLeft <= 0) {
       clearInterval(timerInterval);
       const correct = questions[currentQuestionIndex]?.answer;
-      if (correct) {
-        markCorrectAndWrong(correct);
-      }
+      if (correct) markCorrectAndWrong(correct);
     }
   }
 
