@@ -160,23 +160,15 @@ body {
 /* =======================
    QUIZ CONTAINER
 ======================= */
-.Level-1-banner {
-  margin-top: 5vh;
-  width: min(55%, 500px);
-}
-
 #quiz-container {
-  width: min(85%, 600px);
+  width: min(95%, 600px);
   aspect-ratio: 2.5 / 3.6;
 
-  margin: 3vh auto;
-  padding: clamp(1rem, 12vh, 4rem)
-  clamp(1rem, 3vh, 3rem)
-  clamp(1rem, 10vh, 4rem)
-  clamp(1rem, 3vh, 3rem);
+  margin: 8vh auto;
+  padding: clamp(1.5rem, 5vh, 3rem);
 
   border-radius: 12px;
-  background: url("ASSETS/All-in-One.webp") no-repeat center;
+  background: url("ASSETS/All-in-One.png") no-repeat center;
   background-size: cover;
 
   box-shadow: 0 0 12px rgba(255, 255, 255, 0.8);
@@ -202,8 +194,8 @@ body {
    QUIZ BOX
 ======================= */
 #quiz-box {
-  margin-top: 0.5vh;
-  padding: 0.6rem 1rem;
+  margin-top: 1rem;
+  padding: 1rem;
 
   background: rgba(200, 200, 200, 0.3);
   border-radius: 12px;
@@ -211,7 +203,7 @@ body {
 }
 
 #question {
-  margin: 0 0 1vh 0;
+  margin-bottom: 1rem;
   font-size: clamp(1rem, 3vw, 1.3rem);
 }
 
@@ -222,14 +214,14 @@ body {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 7px;
+  gap: 12px;
 }
 
 .option {
   flex: 1 1 45%;
   min-width: 120px;
 
-  padding: 0.6rem;
+  padding: 0.75rem;
   font-size: clamp(0.85rem, 2.2vw, 1rem);
 
   border-radius: 8px;
@@ -240,12 +232,6 @@ body {
 
   cursor: pointer;
   transition: 0.3s ease;
-}
-
-#feedback {
-  margin-top: 2vh;
-  font-size: clamp(0.9rem, 2.5vw, 1.1rem);
-  font-weight: bold;
 }
 
 /* =======================

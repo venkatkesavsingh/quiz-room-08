@@ -2,7 +2,7 @@
  * FIREBASE IMPORTS
  ********************************/
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
-import { getDatabase, ref, get, update, onValue, runTransaction } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-database.js";
+import { getDatabase, ref, get, update, onValue } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-database.js";
 import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
 
 /********************************
@@ -24,16 +24,19 @@ const auth = getAuth(app);
 signInAnonymously(auth);
 
 /********************************
+ * WAIT FOR DOM
+ ********************************/
+window.addEventListener("DOMContentLoaded", init);
+
+/********************************
  * GLOBAL STATE
  ********************************/
 let questions = [];
-let questionsLoaded = false;
-
-let currentQuestionIndex = -1;
+let currentQuestionIndex = 0;
 let score = 0;
-let selectedOption = null;
-
+let timeLeft = 30;
 let timerInterval = null;
+let selectedOption = null;
 let isTeamVerified = false;
 
 /********************************
@@ -52,16 +55,11 @@ let questionEl, feedbackEl, timerEl, scoreEl, optionsEls;
 /********************************
  * INIT
  ********************************/
-window.addEventListener("DOMContentLoaded", init);
-
 function init() {
   setupElements();
   showScreen(passcodeScreen);
-
   fetchQuestions();
-  listenQuizStart();
-  listenQuestionChange();
-  listenQuestionStartTime(); // 🔥 timer listener
+  setupAdminListeners();
 }
 
 /********************************
@@ -70,7 +68,7 @@ function init() {
 function setupElements() {
   passcodeScreen = document.getElementById("passcode-box");
   waitingScreen = document.getElementById("WaitingScreen");
-  quizScreen = document.getElementById("quiz-UI");
+  quizScreen = document.getElementById("quiz-container");
 
   passcodeInput = document.getElementById("passcode-input");
   passcodeBtn = document.getElementById("passcode-btn");
@@ -82,28 +80,40 @@ function setupElements() {
   scoreEl = document.getElementById("live-score");
   optionsEls = document.querySelectorAll(".option");
 
+  /* 🔐 PASSCODE ENABLE / DISABLE LOGIC */
   passcodeBtn.disabled = true;
 
   passcodeInput.addEventListener("input", () => {
-    passcodeBtn.disabled = passcodeInput.value.trim().length !== 6;
-    passcodeError.innerText = "";
+  const value = passcodeInput.value.trim();
+
+  passcodeBtn.disabled = value.length !== 6;
+  passcodeError.innerText = "";
+
+  if (value.length === 6) {
+    passcodeInput.classList.add("filled");
+      passcodeInput.blur();
+    } else {
+      passcodeInput.classList.remove("filled");
+    }
   });
+
+  /* 🔐 END */
 
   passcodeBtn.addEventListener("click", handlePasscodeSubmit);
 }
 
 /********************************
- * SCREEN CONTROL
+ * SCREEN CONTROL (IMPORTANT)
  ********************************/
-function showScreen(screen) {
+function showScreen(screenToShow) {
   document.querySelectorAll(".screen").forEach(s =>
     s.classList.remove("active")
   );
-  screen.classList.add("active");
+  screenToShow.classList.add("active");
 }
 
 /********************************
- * PASSCODE
+ * PASSCODE LOGIC
  ********************************/
 async function handlePasscodeSubmit() {
   const entered = passcodeInput.value.trim();
@@ -117,22 +127,37 @@ async function handlePasscodeSubmit() {
   const teamRef = ref(db, `teams/${teamId}`);
   const snap = await get(teamRef);
 
-  if (!snap.exists() || snap.val().passcode !== entered) {
-    passcodeError.innerText = "❌ Incorrect passcode";
+  if (!snap.exists()) {
+    passcodeError.innerText = "Invalid team";
     return;
   }
 
+  if (snap.val().passcode !== entered) {
+    passcodeError.innerText = "❌ Incorrect passcode";
+    return;
+  }
+  
   score = snap.val().score || 0;
   isTeamVerified = true;
 
-  const adminSnap = await get(ref(db, "admin/quizStarted"));
-  if (adminSnap.exists() && adminSnap.val() === true) {
-    showScreen(quizScreen);
-  } else {
-    showScreen(waitingScreen);
-  }
+  // SHOW WAITING ROOM
+  showScreen(waitingScreen);
 
-  await syncCurrentQuestion();
+  // OPTIONAL: if admin already started, jump to quiz
+  const adminSnap = await get(ref(db, "admin/quizStarted"));
+  if (adminSnap.val() === true) {
+    startQuiz();
+  }
+}
+
+/********************************
+ * WAITING SCREEN
+ ********************************/
+function showWaitingScreen(msg) {
+  showScreen(quizScreen);
+  document.querySelector(".options").style.display = "none";
+  questionEl.innerText = msg;
+  feedbackEl.innerText = "";
 }
 
 /********************************
@@ -141,84 +166,45 @@ async function handlePasscodeSubmit() {
 function fetchQuestions() {
   fetch("questions.json")
     .then(res => res.json())
-    .then(data => {
-      questions = data;
-      questionsLoaded = true;
-
-      if (isTeamVerified && currentQuestionIndex >= 0) {
-        loadQuestion();
-      }
-    })
-    .catch(err => console.error("Questions load error:", err));
+    .then(data => questions = data);
 }
 
 /********************************
  * ADMIN LISTENERS
  ********************************/
-function listenQuizStart() {
+function setupAdminListeners() {
   onValue(ref(db, "admin/quizStarted"), snap => {
-    if (snap.val() === true && isTeamVerified) {
-      showScreen(quizScreen);
+    if (snap.val() === true) {
+      startQuiz();
     }
   });
-}
-
-function listenQuestionChange() {
-  onValue(ref(db, "admin/currentQuestionIndex"), snap => {
-    if (!snap.exists() || !isTeamVerified) return;
-
-    currentQuestionIndex = snap.val();
-    if (questionsLoaded) loadQuestion();
-  });
-}
-
-/********************************
- * TIMER LISTENER (IMPORTANT)
- ********************************/
-function listenQuestionStartTime() {
-  onValue(ref(db, "admin/questionStartTime"), snap => {
-    if (!snap.exists()) return;
-
-    const startTime = snap.val();
-    if (!startTime || startTime <= 0) return;
-
-    startCountdown(startTime);
-  });
-}
-
-/********************************
- * SYNC QUESTION FOR LATE LOGIN
- ********************************/
-async function syncCurrentQuestion() {
-  const snap = await get(ref(db, "admin/currentQuestionIndex"));
-  if (!snap.exists()) return;
-
-  currentQuestionIndex = snap.val();
-  if (questionsLoaded) loadQuestion();
 }
 
 /********************************
  * QUIZ ENGINE
  ********************************/
-function loadQuestion() {
-  if (!questionsLoaded || !questions.length) return;
-  if (currentQuestionIndex < 0) return;
+function shuffleOptions(arr) {
+  return [...arr].sort(() => Math.random() - 0.5);
+}
 
+function startQuiz() {
+  showScreen(quizScreen);
+  document.querySelector(".options").style.display = "flex";
+  currentQuestionIndex = 0;
+  loadQuestion();
+}
+
+function loadQuestion() {
   if (currentQuestionIndex >= questions.length) {
-    questionEl.innerText = "Quiz completed!";
-    scoreEl.innerText = `Score: ${score}`;
-    feedbackEl.innerText = "";
-    document.querySelector(".options").style.display = "none";
-    clearInterval(timerInterval);
+    showWaitingScreen("Round completed. Waiting for admin decision...");
     return;
   }
 
   selectedOption = null;
   feedbackEl.innerText = "";
-  document.querySelector(".options").style.display = "flex";
 
   const q = questions[currentQuestionIndex];
-  const shuffled = [...q.options].sort(() => Math.random() - 0.5);
+  const shuffled = shuffleOptions(q.options);
 
   questionEl.innerText = q.question;
   scoreEl.innerText = `Score: ${score}`;
@@ -234,18 +220,20 @@ function loadQuestion() {
       selectedOption = btn.innerText;
     };
   });
+
+  startTimer();
 }
 
 /********************************
- * COUNTDOWN (PURE TIMER)
+ * TIMER
  ********************************/
-function startCountdown(startTime) {
+function startTimer() {
   clearInterval(timerInterval);
+  timeLeft = 30;
+  timerEl.innerText = `Time ${timeLeft}s`;
 
   timerInterval = setInterval(() => {
-    const elapsed = Math.floor((Date.now() - startTime) / 1000);
-    const timeLeft = Math.max(30 - elapsed, 0);
-
+    timeLeft--;
     timerEl.innerText = `Time ${timeLeft}s`;
 
     if (timeLeft <= 0) {
@@ -256,59 +244,29 @@ function startCountdown(startTime) {
 }
 
 /********************************
- * TIME UP (AUTO SKIP)
+ * TIME UP
  ********************************/
 async function handleTimeUp() {
-  const teamRef = ref(db, `teams/${teamId}`);
-  const adminRef = ref(db, "admin");
-
-  // ----- SCORE THIS TEAM -----
-  const snap = await get(teamRef);
-  const lastAnswered = snap.val()?.lastAnsweredQuestion ?? -1;
-  if (currentQuestionIndex <= lastAnswered) return;
-
   const q = questions[currentQuestionIndex];
+
+  optionsEls.forEach(o => o.disabled = true);
 
   if (!selectedOption) {
     score -= 5;
-    feedbackEl.innerText = `⏱️ Skipped\nCorrect: ${q.answer}`;
+    feedbackEl.innerText = `⏱️ Skipped\nCorrect answer: ${q.answer}`;
   } else if (selectedOption === q.answer) {
     score += 10;
     feedbackEl.innerText = "✅ Correct!";
   } else {
     score -= 5;
-    feedbackEl.innerText = `❌ Wrong\nCorrect: ${q.answer}`;
+    feedbackEl.innerText = `❌ Wrong!\nCorrect answer: ${q.answer}`;
   }
 
   scoreEl.innerText = `Score: ${score}`;
+  await update(ref(db, `teams/${teamId}`), { score });
 
-  await update(teamRef, {
-    score,
-    lastAnsweredQuestion: currentQuestionIndex
-  });
-
-  // ----- SHOW FEEDBACK BRIEFLY -----
   setTimeout(() => {
-    feedbackEl.innerText = "";
-  }, 2000);
-
-  // ----- ADVANCE QUESTION (LOCKED) -----
-  await runTransaction(adminRef, admin => {
-    if (!admin) return admin;
-
-    // another client already advanced
-    if (admin.advancing === true) return;
-
-    return {
-      ...admin,
-      advancing: true,
-      currentQuestionIndex: admin.currentQuestionIndex + 1,
-      questionStartTime: Date.now()
-    };
-  });
-
-  // ----- RELEASE LOCK -----
-  setTimeout(() => {
-    update(ref(db, "admin/advancing"), false);
-  }, 500);
+    currentQuestionIndex++;
+    loadQuestion();
+  }, 1500);
 }
