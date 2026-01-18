@@ -1,4 +1,3 @@
-
 /********************************
  * FIREBASE IMPORTS
  ********************************/
@@ -52,7 +51,7 @@ const teamId = params.get("team");
  ********************************/
 let passcodeScreen, waitingScreen, quizScreen;
 let passcodeInput, passcodeBtn, passcodeError;
-let questionEl, feedbackEl, timerEl, scoreEl, optionsEls;
+let questionEl, questionNumberEl, feedbackEl, timerEl, scoreEl, optionsEls;
 
 /********************************
  * INIT
@@ -77,6 +76,7 @@ function setupElements() {
   passcodeError = document.getElementById("passcode-error");
 
   questionEl = document.getElementById("question");
+  questionNumberEl = document.getElementById("question-number");
   feedbackEl = document.getElementById("feedback");
   timerEl = document.getElementById("timer");
   scoreEl = document.getElementById("live-score");
@@ -189,6 +189,17 @@ function setupAdminListeners() {
       isResuming = false; // reset after first use
     }
   });
+
+  onValue(ref(db, "admin/currentQuestion"), snap => {
+    if (!snap.exists()) return;
+
+    adminQuestionIndex = snap.val();
+    currentQuestionIndex = adminQuestionIndex;
+
+    if (quizScreen.classList.contains("active")) {
+      loadQuestion();
+    }
+  });
 }
 
 /********************************
@@ -214,8 +225,6 @@ function startQuiz(resume = false) {
   loadQuestion();
 }
 
-
-
 function loadQuestion() {
   if (currentQuestionIndex >= questions.length) {
     showWaitingScreen("Round completed. Waiting for admin decision...");
@@ -227,6 +236,9 @@ function loadQuestion() {
 
   const q = questions[currentQuestionIndex];
   const shuffled = shuffleOptions(q.options);
+
+  // ✅ DATABASE-DRIVEN QUESTION NUMBER
+  questionNumberEl.innerText = `Question: ${adminQuestionIndex + 1}`;
 
   questionEl.innerText = q.question;
   scoreEl.innerText = `Score: ${score}`;
@@ -289,10 +301,4 @@ async function handleTimeUp() {
     score,
     currentQuestionIndex: currentQuestionIndex + 1
   });
-
-
-  setTimeout(() => {
-    currentQuestionIndex++;
-    loadQuestion();
-  }, 1500);
 }
