@@ -32,8 +32,8 @@ let questionsLoaded = false;
 let currentQuestionIndex = -1;
 let score = 0;
 let selectedOption = null;
-let timerInterval = null;
 
+let timerInterval = null;
 let isTeamVerified = false;
 
 /********************************
@@ -61,6 +61,7 @@ function init() {
   fetchQuestions();
   listenQuizStart();
   listenQuestionChange();
+  listenQuestionStartTime(); // 🔥 timer listener
 }
 
 /********************************
@@ -102,7 +103,7 @@ function showScreen(screen) {
 }
 
 /********************************
- * PASSCODE LOGIC
+ * PASSCODE
  ********************************/
 async function handlePasscodeSubmit() {
   const entered = passcodeInput.value.trim();
@@ -167,10 +168,21 @@ function listenQuestionChange() {
     if (!snap.exists() || !isTeamVerified) return;
 
     currentQuestionIndex = snap.val();
+    if (questionsLoaded) loadQuestion();
+  });
+}
 
-    if (questionsLoaded) {
-      loadQuestion();
-    }
+/********************************
+ * TIMER LISTENER (IMPORTANT)
+ ********************************/
+function listenQuestionStartTime() {
+  onValue(ref(db, "admin/questionStartTime"), snap => {
+    if (!snap.exists()) return;
+
+    const startTime = snap.val();
+    if (!startTime || startTime <= 0) return;
+
+    startCountdown(startTime);
   });
 }
 
@@ -182,10 +194,7 @@ async function syncCurrentQuestion() {
   if (!snap.exists()) return;
 
   currentQuestionIndex = snap.val();
-
-  if (questionsLoaded) {
-    loadQuestion();
-  }
+  if (questionsLoaded) loadQuestion();
 }
 
 /********************************
@@ -193,11 +202,8 @@ async function syncCurrentQuestion() {
  ********************************/
 function loadQuestion() {
   if (!questionsLoaded || !questions.length) return;
-
-  // Ignore temporary invalid states
   if (currentQuestionIndex < 0) return;
 
-  // Quiz finished
   if (currentQuestionIndex >= questions.length) {
     questionEl.innerText = "Quiz completed!";
     scoreEl.innerText = `Score: ${score}`;
@@ -228,42 +234,29 @@ function loadQuestion() {
       selectedOption = btn.innerText;
     };
   });
-
-  startTimer();
 }
 
 /********************************
- * TIMER (SYNCED WITH ADMIN)
+ * COUNTDOWN (PURE TIMER)
  ********************************/
-function startTimer() {
+function startCountdown(startTime) {
   clearInterval(timerInterval);
 
-  onValue(ref(db, "admin/questionStartTime"), snap => {
-    if (!snap.exists()) return;
+  timerInterval = setInterval(() => {
+    const elapsed = Math.floor((Date.now() - startTime) / 1000);
+    const timeLeft = Math.max(30 - elapsed, 0);
 
-    const startTime = snap.val();
+    timerEl.innerText = `Time ${timeLeft}s`;
 
-    // 🔐 Ignore invalid start times
-    if (!startTime || startTime <= 0) return;
-
-    clearInterval(timerInterval);
-
-    timerInterval = setInterval(() => {
-      const elapsed = Math.floor((Date.now() - startTime) / 1000);
-      const timeLeft = Math.max(30 - elapsed, 0);
-
-      timerEl.innerText = `Time ${timeLeft}s`;
-
-      if (timeLeft <= 0) {
-        clearInterval(timerInterval);
-        handleTimeUp();
-      }
-    }, 1000);
-  });
+    if (timeLeft <= 0) {
+      clearInterval(timerInterval);
+      handleTimeUp();
+    }
+  }, 1000);
 }
 
 /********************************
- * TIME UP (AUTO-SKIP)
+ * TIME UP (AUTO SKIP)
  ********************************/
 async function handleTimeUp() {
   const teamRef = ref(db, `teams/${teamId}`);
