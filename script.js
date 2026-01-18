@@ -33,12 +33,12 @@ window.addEventListener("DOMContentLoaded", init);
  ********************************/
 let questions = [];
 let currentQuestionIndex = 0;
+let adminQuestionIndex = 0; // ✅ ADD THIS
 let score = 0;
 let timeLeft = 30;
 let timerInterval = null;
 let selectedOption = null;
 let isTeamVerified = false;
-let isResuming = false;
 
 /********************************
  * TEAM ID
