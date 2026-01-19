@@ -170,7 +170,7 @@ body {
   aspect-ratio: 2.5 / 3.6;
 
   margin: 3vh auto;
-  padding: clamp(1rem, 15vh, 6rem)
+  padding: clamp(1rem, 12vh, 4rem)
   clamp(1rem, 3vh, 3rem)
   clamp(1rem, 10vh, 4rem)
   clamp(1rem, 3vh, 3rem);
