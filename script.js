@@ -31,6 +31,7 @@ let currentQuestionIndex = 0;
 let timeLeft = 0;
 let score = 0;
 let selectedOption = null;
+const TOTAL_QUESTIONS = 15;
 
 let isTeamVerified = false;
 let quizStarted = false;
@@ -182,7 +183,18 @@ function setupDatabaseListeners() {
 
   onValue(ref(db, "admin/currentQuestionIndex"), snap => {
     if (!isTeamVerified || !quizStarted) return;
-    currentQuestionIndex = snap.val();
+
+    const idx = snap.val();
+
+    // 🏁 QUIZ ENDED
+    if (idx >= TOTAL_QUESTIONS) {
+      timerEl.innerText = "Quiz Ended";
+      questionEl.innerText = "—";
+      optionsEls.forEach(btn => btn.disabled = true);
+      return;
+    }
+
+    currentQuestionIndex = idx;
     renderQuestion();
   });
 
@@ -223,6 +235,10 @@ function renderQuestion() {
       optionsEls[i].classList.add("selected");
       optionsEls[i].style.backgroundColor = "#BDBDBD";
       selectedOption = opt;
+
+      await update(ref(db, `teams/${teamId}`), {
+        lastAnsweredQuestion: currentQuestionIndex
+      });
     };
   });
 }
@@ -269,8 +285,21 @@ async function revealAnswer() {
     score -= 5;
   }
 
+  // 🔥 CHECK IF TEAM ANSWERED THIS QUESTION
+  const teamSnap = await get(ref(db, `teams/${teamId}`));
+  const lastAnswered = teamSnap.val()?.lastAnsweredQuestion ?? -1;
+
+  // ❌ Did not answer (offline / idle)
+  if (lastAnswered !== currentQuestionIndex) {
+    score -= 5;
+  }  
+
   scoreEl.innerText = `Score: ${score}`;
-  await update(ref(db, `teams/${teamId}`), { score });
+
+  await update(ref(db, `teams/${teamId}`), {
+  score
+});
+
 }
 
 /********************************
