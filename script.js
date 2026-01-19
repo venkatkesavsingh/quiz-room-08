@@ -27,7 +27,7 @@ signInAnonymously(auth);
  * GLOBAL STATE
  ********************************/
 let questions = [];
-let currentQuestionIndex = null;
+let currentQuestionIndex = 0;
 let timeLeft = 0;
 let score = 0;
 let selectedOption = null;
@@ -202,6 +202,8 @@ function setupDatabaseListeners() {
  * RENDER QUESTION
  ********************************/
 function renderQuestion() {
+  if (!questions.length) return;
+
   const q = questions[currentQuestionIndex];
   if (!q) return;
 
