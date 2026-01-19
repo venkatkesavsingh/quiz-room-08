@@ -27,7 +27,7 @@ signInAnonymously(auth);
  * GLOBAL STATE
  ********************************/
 let questions = [];
-let currentQuestionIndex = 0;
+let currentQuestionIndex = null;
 let timeLeft = 0;
 let score = 0;
 let selectedOption = null;
@@ -153,15 +153,7 @@ function decidePostLoginScreen() {
 function fetchQuestions() {
   fetch("questions.json")
     .then(r => r.json())
-    .then(data => {
-      questions = data;
-
-      // 🔥 FORCE first render if index already exists
-      if (quizStarted && currentQuestionIndex !== null) {
-        renderQuestion();
-      }
-    })
-    .catch(err => console.error("Failed to load questions", err));
+    .then(data => questions = data);
 }
 
 /********************************
@@ -190,11 +182,7 @@ function setupDatabaseListeners() {
 
   onValue(ref(db, "admin/currentQuestionIndex"), snap => {
     if (!isTeamVerified || !quizStarted) return;
-    
-    const idx = snap.val();
-    if (typeof idx !== "number") return;
-    
-    currentQuestionIndex = snap.val() - 1;
+    currentQuestionIndex = snap.val();
     renderQuestion();
   });
 
@@ -214,14 +202,12 @@ function setupDatabaseListeners() {
  * RENDER QUESTION
  ********************************/
 function renderQuestion() {
-  if (!questions.length) return;
-
   const q = questions[currentQuestionIndex];
   if (!q) return;
 
   selectedOption = null;
 
-  questionNumberEl.innerText = `Question: ${currentQuestionIndex}`;
+  questionNumberEl.innerText = `Question: ${currentQuestionIndex + 1}`;
   questionEl.innerText = q.question;
   scoreEl.innerText = `Score: ${score}`;
 
@@ -237,9 +223,6 @@ function renderQuestion() {
       optionsEls[i].classList.add("selected");
       optionsEls[i].style.backgroundColor = "#BDBDBD";
       selectedOption = opt;
-
-      // 🔥 SEND ONLY ANSWER
-      update(ref(db, `teams/${teamId}/answers/${currentQuestionIndex + 1}`), opt);
     };
   });
 }
@@ -260,21 +243,28 @@ function resetOptions(clearHandlers = true) {
 /********************************
  * REVEAL ANSWER
  ********************************/
-onValue(ref(db, "admin/reveal"), snap => {
-  if (!snap.val()) return;
-
+async function revealAnswer() {
   const q = questions[currentQuestionIndex];
+  if (!q) return;
 
   optionsEls.forEach(btn => {
     btn.disabled = true;
 
     if (btn.innerText === q.answer) {
       btn.style.backgroundColor = "#4CAF50";
+      btn.style.color = "#fff";
     } else if (btn.innerText === selectedOption) {
       btn.style.backgroundColor = "#E53935";
+      btn.style.color = "#fff";
     }
   });
-});
+
+  if (selectedOption === q.answer) score += 10;
+  else if (selectedOption) score -= 5;
+
+  scoreEl.innerText = `Score: ${score}`;
+  await update(ref(db, `teams/${teamId}`), { score });
+}
 
 /********************************
  * UTIL
