@@ -285,25 +285,40 @@ async function revealAnswer() {
     score -= 5;
   }
 
-  const teamSnap = await get(ref(db, `teams/${teamId}`));
-  const lastAnswered = teamSnap.val()?.lastAnsweredQuestion ?? -1;
-
-  // ✅ Correct skipped count
-  const skippedQuestions = Math.max(
-    0,
-    (currentQuestionIndex - 1) - lastAnswered
-  );
-
-  // ❌ Did not answer current question
-  if (lastAnswered < currentQuestionIndex) {
-    score -= skippedQuestions * 5;
-  }
   scoreEl.innerText = `Score: ${score}`;
+  await update(ref(db, `teams/${teamId}`), { score });
+}
 
-  await update(ref(db, `teams/${teamId}`), {
-    score
+/********************************
+ * 🔁 Restore quiz state
+ ********************************/
+async function restoreGameState() {
+  const adminSnap = await get(ref(db, "admin"));
+
+  if (!adminSnap.exists()) return;
+
+  const admin = adminSnap.val();
+
+  // 🧠 Restore values
+  currentQuestionIndex = admin.currentQuestionIndex;
+  timeLeft = admin.timeLeft;
+  quizStarted = admin.quizStarted;
+
+  // ✅ Load question immediately
+  loadQuestion(currentQuestionIndex);
+
+  // ⏱ Restore timer UI
+  timerEl.innerText = quizStarted ? timeLeft : `⏸ ${timeLeft}`;
+
+  // 🔁 Live timer sync
+  onValue(ref(db, "admin/timeLeft"), snap => {
+    if (snap.exists()) {
+      timeLeft = snap.val();
+      timerEl.innerText = timeLeft;
+    }
   });
 }
+
 
 /********************************
  * UTIL
