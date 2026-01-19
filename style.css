@@ -230,7 +230,7 @@ body {
   min-width: 120px;
 
   padding: 0.6rem;
-  font-size: clamp(0.9rem, 2.2vw, 1rem);
+  font-size: clamp(1rem, 2.2vw, 1rem);
 
   border-radius: 8px;
   border: none;
