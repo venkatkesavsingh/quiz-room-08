@@ -285,21 +285,24 @@ async function revealAnswer() {
     score -= 5;
   }
 
-  // 🔥 CHECK IF TEAM ANSWERED THIS QUESTION
   const teamSnap = await get(ref(db, `teams/${teamId}`));
   const lastAnswered = teamSnap.val()?.lastAnsweredQuestion ?? -1;
 
-  // ❌ Did not answer (offline / idle)
-  if (lastAnswered !== currentQuestionIndex) {
-    score -= 5;
-  }  
+  // ✅ Correct skipped count
+  const skippedQuestions = Math.max(
+    0,
+    (currentQuestionIndex - 1) - lastAnswered
+  );
 
+  // ❌ Did not answer current question
+  if (lastAnswered < currentQuestionIndex) {
+    score -= skippedQuestions * 5;
+  }
   scoreEl.innerText = `Score: ${score}`;
 
   await update(ref(db, `teams/${teamId}`), {
-  score
-});
-
+    score
+  });
 }
 
 /********************************
