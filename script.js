@@ -237,6 +237,9 @@ function renderQuestion() {
       optionsEls[i].classList.add("selected");
       optionsEls[i].style.backgroundColor = "#BDBDBD";
       selectedOption = opt;
+
+      // 🔥 SEND ONLY ANSWER
+      update(ref(db, `teams/${teamId}/answers/${currentQuestionIndex + 1}`), opt);
     };
   });
 }
@@ -257,29 +260,21 @@ function resetOptions(clearHandlers = true) {
 /********************************
  * REVEAL ANSWER
  ********************************/
-async function revealAnswer() {
+onValue(ref(db, "admin/reveal"), snap => {
+  if (!snap.val()) return;
+
   const q = questions[currentQuestionIndex];
-  if (!q) return;
 
   optionsEls.forEach(btn => {
     btn.disabled = true;
 
     if (btn.innerText === q.answer) {
       btn.style.backgroundColor = "#4CAF50";
-      btn.style.color = "#fff";
     } else if (btn.innerText === selectedOption) {
       btn.style.backgroundColor = "#E53935";
-      btn.style.color = "#fff";
     }
   });
-
-  if (selectedOption === q.answer) score += 10;
-  else if (selectedOption) score -= 5;
-  else score -=5;
-
-  scoreEl.innerText = `Score: ${score}`;
-  await update(ref(db, `teams/${teamId}`), { score });
-}
+});
 
 /********************************
  * UTIL
