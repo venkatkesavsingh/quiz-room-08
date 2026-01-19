@@ -226,15 +226,15 @@ function renderQuestion() {
   resetOptions();
 
   shuffle(q.options).forEach((opt, i) => {
-    optionsEls[i].innerText = opt;
+  optionsEls[i].innerText = opt;
 
-    optionsEls[i].onclick = () => {
-      if (timeLeft <= 0) return;
+  optionsEls[i].onclick = async () => {
+    if (timeLeft <= 0) return;
 
-      resetOptions(false);
-      optionsEls[i].classList.add("selected");
-      optionsEls[i].style.backgroundColor = "#BDBDBD";
-      selectedOption = opt;
+    resetOptions(false);
+    optionsEls[i].classList.add("selected");
+    optionsEls[i].style.backgroundColor = "#BDBDBD";
+    selectedOption = opt;
 
       await update(ref(db, `teams/${teamId}`), {
         lastAnsweredQuestion: currentQuestionIndex
