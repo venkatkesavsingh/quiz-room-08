@@ -1,5 +1,10 @@
 [
   {
+    "question": "Loading...?",
+    "options": ["option 1", "Option 2", "Option 3", "Option 4"],
+    "answer": ""
+  },
+  {
     "question": "What is the capital of Canada?",
     "options": ["Toronto", "Ottawa", "Vancouver", "Montreal"],
     "answer": "Ottawa"
