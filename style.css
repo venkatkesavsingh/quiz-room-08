@@ -256,6 +256,13 @@ body {
     margin-top: 35%;
   }
 
+   #quiz-container {
+     padding: clamp(1rem, 12vh, 4rem)
+     clamp(1rem, 3vh, 3rem)
+     clamp(1rem, 10vh, 4rem)
+     clamp(1rem, 3vh, 3rem);
+   }
+   
   .option {
     flex: 1 1 100%;
   }
