@@ -207,7 +207,7 @@ function renderQuestion() {
 
   selectedOption = null;
 
-  questionNumberEl.innerText = `Question: ${currentQuestionIndex + 1}`;
+  questionNumberEl.innerText = `Question: ${currentQuestionIndex}`;
   questionEl.innerText = q.question;
   scoreEl.innerText = `Score: ${score}`;
 
@@ -261,6 +261,7 @@ async function revealAnswer() {
 
   if (selectedOption === q.answer) score += 10;
   else if (selectedOption) score -= 5;
+  else score -=5;
 
   scoreEl.innerText = `Score: ${score}`;
   await update(ref(db, `teams/${teamId}`), { score });
