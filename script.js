@@ -27,7 +27,7 @@ signInAnonymously(auth);
  * GLOBAL STATE
  ********************************/
 let questions = [];
-let currentQuestionIndex = null;
+let currentQuestionIndex = 0;
 let timeLeft = 0;
 let score = 0;
 let selectedOption = null;
@@ -153,7 +153,15 @@ function decidePostLoginScreen() {
 function fetchQuestions() {
   fetch("questions.json")
     .then(r => r.json())
-    .then(data => questions = data);
+    .then(data => {
+      questions = data;
+
+      // 🔥 FORCE first render if index already exists
+      if (quizStarted && currentQuestionIndex !== null) {
+        renderQuestion();
+      }
+    })
+    .catch(err => console.error("Failed to load questions", err));
 }
 
 /********************************
