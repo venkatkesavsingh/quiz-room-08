@@ -27,7 +27,7 @@ signInAnonymously(auth);
  * GLOBAL STATE
  ********************************/
 let questions = [];
-let currentQuestionIndex = 0;
+let currentQuestionIndex = null;
 let timeLeft = 0;
 let score = 0;
 let selectedOption = null;
