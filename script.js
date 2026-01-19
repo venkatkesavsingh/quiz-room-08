@@ -190,7 +190,11 @@ function setupDatabaseListeners() {
 
   onValue(ref(db, "admin/currentQuestionIndex"), snap => {
     if (!isTeamVerified || !quizStarted) return;
-    currentQuestionIndex = snap.val();
+    
+    const idx = snap.val();
+    if (typeof idx !== "number") return;
+    
+    currentQuestionIndex = snap.val() - 1;
     renderQuestion();
   });
 
