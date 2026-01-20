@@ -31,7 +31,7 @@ let currentQuestionIndex = 0;
 let timeLeft = 0;
 let score = 0;
 let selectedOption = null;
-const TOTAL_QUESTIONS = 15;
+let answerRevealed = false;
 
 let isTeamVerified = false;
 let quizStarted = false;
@@ -59,6 +59,7 @@ function init() {
   showScreen(passcodeScreen);
   fetchQuestions();
   setupDatabaseListeners();
+  restoreGameState(); 
 }
 
 /********************************
@@ -187,7 +188,7 @@ function setupDatabaseListeners() {
     const idx = snap.val();
 
     // 🏁 QUIZ ENDED
-    if (idx > TOTAL_QUESTIONS) {
+    if (idx > 15) {
       timerEl.innerText = "Quiz Ended";
       questionEl.innerText = "—";
       optionsEls.forEach(btn => btn.disabled = true);
@@ -218,6 +219,7 @@ function renderQuestion() {
   if (!q) return;
 
   selectedOption = null;
+  answerRevealed = false; 
 
   questionNumberEl.innerText = `Question: ${currentQuestionIndex}`;
   questionEl.innerText = q.question;
@@ -260,6 +262,8 @@ function resetOptions(clearHandlers = true) {
  * REVEAL ANSWER
  ********************************/
 async function revealAnswer() {
+  if (answerRevealed) return; // 🔒 prevent double scoring
+  answerRevealed = true;
   const q = questions[currentQuestionIndex];
   if (!q) return;
 
@@ -305,7 +309,9 @@ async function restoreGameState() {
   quizStarted = admin.quizStarted;
 
   // ✅ Load question immediately
-  loadQuestion(currentQuestionIndex);
+  if (quizStarted) {
+    renderQuestion();
+  }
 
   // ⏱ Restore timer UI
   timerEl.innerText = quizStarted ? timeLeft : `⏸ ${timeLeft}`;
