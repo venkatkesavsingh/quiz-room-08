@@ -38,5 +38,45 @@
     "question": "What is the largest internal organ in the human body?",
     "options": ["Heart", "Liver", "Lung", "Kidney"],
     "answer": "Liver"
+  },
+  {
+    "question": "Who painted the Mona Lisa?",
+    "options": ["Vincent Van Gogh", "Pablo Picasso", "Leonardo da Vinci", "Claude Monet"],
+    "answer": "Leonardo da Vinci"
+  },
+  {
+    "question": "Which element has the chemical symbol 'Fe'?",
+    "options": ["Iron", "Fluorine", "Zinc", "Lead"],
+    "answer": "Iron"
+  },
+  {
+    "question": "What is the smallest prime number?",
+    "options": ["0", "1", "2", "3"],
+    "answer": "2"
+  },
+  {
+    "question": "Which language has the most native speakers?",
+    "options": ["English", "Spanish", "Hindi", "Mandarin Chinese"],
+    "answer": "Mandarin Chinese"
+  },
+  {
+    "question": "What is the currency of Brazil?",
+    "options": ["Peso", "Real", "Dollar", "Euro"],
+    "answer": "Real"
+  },
+  {
+    "question": "How many players are on a soccer team (on the field)?",
+    "options": ["10", "11", "12", "9"],
+    "answer": "11"
+  },
+  {
+    "question": "What gas do plants absorb during photosynthesis?",
+    "options": ["Oxygen", "Nitrogen", "Carbon Dioxide", "Hydrogen"],
+    "answer": "Carbon Dioxide"
+  },
+  {
+    "question": "Which ocean is the largest?",
+    "options": ["Atlantic", "Indian", "Arctic", "Pacific"],
+    "answer": "Pacific"
   }
 ]
