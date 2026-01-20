@@ -187,7 +187,7 @@ function setupDatabaseListeners() {
     const idx = snap.val();
 
     // 🏁 QUIZ ENDED
-    if (idx >= TOTAL_QUESTIONS) {
+    if (idx > TOTAL_QUESTIONS) {
       timerEl.innerText = "Quiz Ended";
       questionEl.innerText = "—";
       optionsEls.forEach(btn => btn.disabled = true);
