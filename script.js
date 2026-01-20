@@ -203,7 +203,7 @@ function setupDatabaseListeners() {
     if (!isTeamVerified || !quizStarted) return;
 
     timeLeft = snap.val() ?? 0;
-    timerEl.innerText = `Time ${timeLeft}s`;
+    timerEl.innerText = `Time ${timeLeft}s left`;
 
     if (timeLeft === 0) {
       revealAnswer();
