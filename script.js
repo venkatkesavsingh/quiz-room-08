@@ -203,6 +203,14 @@ function setupDatabaseListeners() {
     decidePostLoginScreen();
   });
 
+  onValue(ref(db, `teams/${teamId}/qualified`), snap => {
+    isQualified = snap.val() || false;
+
+    if (!isTeamVerified) return;
+
+    decidePostLoginScreen();
+  });
+
   onValue(ref(db, "admin/currentQuestionIndex"), snap => {
     if (!isTeamVerified || !quizStarted) return;
 
