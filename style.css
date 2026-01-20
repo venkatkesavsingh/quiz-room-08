@@ -124,6 +124,11 @@ body {
   color: black;
 }
 
+#WaitingScreen2 {
+  font-family: Arial, sans-serif;
+  color: black;
+}
+
 .cardContent {
   position: absolute;
   top: 40%;
@@ -140,7 +145,19 @@ body {
   font-weight: bold;
 }
 
+.initializing2 {
+  margin: 10% 0 1%;
+  font-size: 1em;
+  font-family: "Courier New", Courier, monospace;
+  font-weight: bold;
+}
+
 .initializing::after {
+  content: ".";
+  animation: dots 2.5s steps(4, end) infinite;
+}
+
+.initializing2::after {
   content: ".";
   animation: dots 2.5s steps(4, end) infinite;
 }
@@ -211,8 +228,8 @@ body {
 }
 
 #question {
-  margin: 0 0 1.2vh 0;
-  font-size: clamp(1.2rem, 3vw, 1.3rem);
+  margin: 0 0 1vh 0;
+  font-size: clamp(1rem, 3vw, 1.3rem);
 }
 
 /* =======================
@@ -230,7 +247,7 @@ body {
   min-width: 120px;
 
   padding: 0.6rem;
-  font-size: clamp(1rem, 2.2vw, 1rem);
+  font-size: clamp(0.85rem, 2.2vw, 1rem);
 
   border-radius: 8px;
   border: none;

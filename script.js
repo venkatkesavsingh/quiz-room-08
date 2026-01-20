@@ -36,6 +36,7 @@ let answerRevealed = false;
 let isTeamVerified = false;
 let quizStarted = false;
 let waitingRoomOpen = false;
+let level = 1;
 
 /********************************
  * TEAM ID
@@ -45,7 +46,7 @@ const teamId = new URLSearchParams(window.location.search).get("team");
 /********************************
  * ELEMENTS
  ********************************/
-let passcodeScreen, waitingScreen, quizScreen;
+let passcodeScreen, waitingScreen, quizScreen, waitingScreen2;
 let passcodeInput, passcodeBtn, passcodeError;
 let questionEl, timerEl, scoreEl, optionsEls, questionNumberEl;
 
@@ -69,6 +70,7 @@ function setupElements() {
   passcodeScreen = document.getElementById("passcode-box");
   waitingScreen = document.getElementById("WaitingScreen");
   quizScreen = document.getElementById("quiz-UI");
+  waitingScreen2 = document.getElementById("WaitingScreen2");
 
   passcodeInput = document.getElementById("passcode-input");
   passcodeBtn = document.getElementById("passcode-btn");
@@ -165,7 +167,7 @@ function setupDatabaseListeners() {
 
   onValue(ref(db, "admin/waitingRoomOpen"), snap => {
     waitingRoomOpen = snap.val() === true;
-    if (isTeamVerified && waitingRoomOpen) {
+    if (isTeamVerified && waitingRoomOpen && level !== 2) {
       showScreen(waitingScreen);
     }
   });
@@ -175,10 +177,24 @@ function setupDatabaseListeners() {
 
     if (!isTeamVerified) return;
 
-    if (quizStarted) {
+    if (level === 2) {
+      showScreen(waitingScreen2);
+    } else if (quizStarted) {
       showScreen(quizScreen);
     } else {
       showScreen(waitingScreen);
+    }
+  });
+
+  onValue(ref(db, "admin/level"), snap => {
+    level = snap.val() || 1;
+
+    if (!isTeamVerified) return;
+
+    if (level === 2) {
+      showScreen(waitingScreen2);
+    } else {
+      decidePostLoginScreen();
     }
   });
 
@@ -307,6 +323,7 @@ async function restoreGameState() {
   currentQuestionIndex = admin.currentQuestionIndex;
   timeLeft = admin.timeLeft;
   quizStarted = admin.quizStarted;
+  level = admin.level || 1;
 
   // ✅ Load question immediately
   if (quizStarted) {
@@ -324,7 +341,6 @@ async function restoreGameState() {
     }
   });
 }
-
 
 /********************************
  * UTIL
