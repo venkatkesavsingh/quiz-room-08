@@ -320,7 +320,7 @@ async function restoreGameState() {
   onValue(ref(db, "admin/timeLeft"), snap => {
     if (snap.exists()) {
       timeLeft = snap.val();
-      timerEl.innerText = timeLeft;
+      timerEl.innerText = 'Time $(timeLeft)s';
     }
   });
 }
