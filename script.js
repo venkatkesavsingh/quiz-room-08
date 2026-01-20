@@ -49,7 +49,7 @@ const teamId = new URLSearchParams(window.location.search).get("team");
  ********************************/
 let passcodeScreen, waitingScreen, quizScreen, waitingScreen2, qualifiedWaitingScreen;
 let passcodeInput, passcodeBtn, passcodeError;
-let questionEl, timerEl, scoreEl, optionsEls, questionNumberEl;
+let questionEl, timerEl, scoreEl, optionsEls, questionNumberEl, levelBannerEl;
 
 /********************************
  * INIT
@@ -83,6 +83,7 @@ function setupElements() {
   scoreEl = document.getElementById("live-score");
   questionNumberEl = document.getElementById("question-number");
   optionsEls = document.querySelectorAll(".option");
+  levelBannerEl = document.querySelector(".Level-1-banner");
 
   passcodeBtn.disabled = true;
 
@@ -151,6 +152,14 @@ function decidePostLoginScreen() {
     } else {
       showScreen(waitingScreen2);
     }
+  } else if (level === 3) {
+    if (isQualified) {
+      showScreen(qualifiedWaitingScreen);
+    } else if (quizStarted) {
+      showScreen(quizScreen);
+    } else {
+      showScreen(waitingScreen);
+    }
   } else if (waitingRoomOpen) {
     showScreen(waitingScreen);
   } else if (quizStarted) {
@@ -164,9 +173,16 @@ function decidePostLoginScreen() {
  * FETCH QUESTIONS
  ********************************/
 function fetchQuestions() {
-  fetch("questions.json")
+  const questionFile = `questions-${level}.json`;
+  fetch(questionFile)
     .then(r => r.json())
-    .then(data => questions = data);
+    .then(data => questions = data)
+    .catch(() => {
+      // Fallback to default questions.json if level-specific file doesn't exist
+      fetch("questions.json")
+        .then(r => r.json())
+        .then(data => questions = data);
+    });
 }
 
 /********************************
@@ -200,6 +216,8 @@ function setupDatabaseListeners() {
 
     if (!isTeamVerified) return;
 
+    fetchQuestions();
+    updateLevelBanner();
     decidePostLoginScreen();
   });
 
@@ -353,6 +371,16 @@ async function restoreGameState() {
       timerEl.innerText = `Time ${timeLeft}s`;
     }
   });
+}
+
+/********************************
+ * UPDATE LEVEL BANNER
+ ********************************/
+function updateLevelBanner() {
+  if (!levelBannerEl) return;
+
+  const bannerSrc = level === 1 ? "ASSETS/Level-1.webp" : `ASSETS/Level-${level}.webp`;
+  levelBannerEl.src = bannerSrc;
 }
 
 /********************************
