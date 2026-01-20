@@ -80,9 +80,6 @@ function setupElements() {
   questionNumberEl = document.getElementById("question-number");
   optionsEls = document.querySelectorAll(".option");
 
-  correctSoundfx = document.getElementById("correct-sound");
-  wrongSoundfx = document.getElementById("wrong-sound");
-
   passcodeBtn.disabled = true;
 
   passcodeInput.addEventListener("input", () => {
@@ -284,11 +281,9 @@ async function revealAnswer() {
 
   if (selectedOption === q.answer){
     score += 10;
-    correctSoundfx.play();
   }
   else if (selectedOption){ 
     score -= 5;
-    wrongSoundfx.play();
   }
   else {
     score -= 5;
