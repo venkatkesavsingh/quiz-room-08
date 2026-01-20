@@ -37,6 +37,7 @@ let isTeamVerified = false;
 let quizStarted = false;
 let waitingRoomOpen = false;
 let level = 1;
+let isQualified = false;
 
 /********************************
  * TEAM ID
@@ -46,7 +47,7 @@ const teamId = new URLSearchParams(window.location.search).get("team");
 /********************************
  * ELEMENTS
  ********************************/
-let passcodeScreen, waitingScreen, quizScreen, waitingScreen2;
+let passcodeScreen, waitingScreen, quizScreen, waitingScreen2, qualifiedWaitingScreen;
 let passcodeInput, passcodeBtn, passcodeError;
 let questionEl, timerEl, scoreEl, optionsEls, questionNumberEl;
 
@@ -71,6 +72,7 @@ function setupElements() {
   waitingScreen = document.getElementById("WaitingScreen");
   quizScreen = document.getElementById("quiz-UI");
   waitingScreen2 = document.getElementById("WaitingScreen2");
+  qualifiedWaitingScreen = document.getElementById("qualifiedWaitingScreen");
 
   passcodeInput = document.getElementById("passcode-input");
   passcodeBtn = document.getElementById("passcode-btn");
@@ -133,6 +135,7 @@ async function verifyPasscode() {
   }
 
   score = snap.val().score || 0;
+  isQualified = snap.val().qualified || false;
   isTeamVerified = true;
 
   decidePostLoginScreen();
@@ -142,7 +145,13 @@ async function verifyPasscode() {
  * POST LOGIN FLOW
  ********************************/
 function decidePostLoginScreen() {
-  if (waitingRoomOpen) {
+  if (level === 2) {
+    if (isQualified) {
+      showScreen(qualifiedWaitingScreen);
+    } else {
+      showScreen(waitingScreen2);
+    }
+  } else if (waitingRoomOpen) {
     showScreen(waitingScreen);
   } else if (quizStarted) {
     showScreen(quizScreen);
@@ -167,8 +176,8 @@ function setupDatabaseListeners() {
 
   onValue(ref(db, "admin/waitingRoomOpen"), snap => {
     waitingRoomOpen = snap.val() === true;
-    if (isTeamVerified && waitingRoomOpen && level !== 2) {
-      showScreen(waitingScreen);
+    if (isTeamVerified && waitingRoomOpen) {
+      decidePostLoginScreen();
     }
   });
 
@@ -191,11 +200,7 @@ function setupDatabaseListeners() {
 
     if (!isTeamVerified) return;
 
-    if (level === 2) {
-      showScreen(waitingScreen2);
-    } else {
-      decidePostLoginScreen();
-    }
+    decidePostLoginScreen();
   });
 
   onValue(ref(db, "admin/currentQuestionIndex"), snap => {
