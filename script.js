@@ -221,6 +221,14 @@ function setupDatabaseListeners() {
     decidePostLoginScreen();
   });
 
+  // 🔥 LIVE SCORE LISTENER
+  onValue(ref(db, `teams/${teamId}/score`), snap => {
+    if (!snap.exists()) return;
+
+    score = snap.val();
+    scoreEl.innerText = `Score: ${score}`;
+  });
+  
   onValue(ref(db, `teams/${teamId}/qualified`), snap => {
     isQualified = snap.val() || false;
 
