@@ -229,6 +229,8 @@ body {
 
 #question {
   height: 5vh;
+  margin: 1vh 0 0 0;
+  font-weight: bolder;
   webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
