@@ -228,7 +228,7 @@ body {
 }
 
 #question {
-  margin: 0 0 1vh 0;
+  margin: 2vh 0;
   font-size: clamp(1rem, 3vw, 1.3rem);
 }
 
