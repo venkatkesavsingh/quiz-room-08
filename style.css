@@ -229,6 +229,8 @@ body {
 
 #question {
   height: 7vh;
+  top: 50%;
+  transform: translateY(-50%);
   margin: 1vh 0;
   font-size: clamp(1rem, 3vw, 1.3rem);
 }
