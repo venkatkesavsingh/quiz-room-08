@@ -229,9 +229,10 @@ body {
 
 #question {
   height: 7vh;
-  top: 50%;
-  transform: translateY(-50%);
-  margin: 1vh 0;
+  webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;         
   font-size: clamp(1rem, 3vw, 1.3rem);
 }
 
