@@ -228,15 +228,16 @@ body {
 }
 
 #question {
-  height: 8vh;
-  margin: 1vh 0 0 0;
+  height: 10vh;
+  margin: 0;
   font-weight: bolder;
-  justify-content: center; 
+  display: flex;
+  justify-content: center;
   align-items: center;
   webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
-  user-select: none;         
+  user-select: none;
   font-size: clamp(1rem, 3vw, 1.3rem);
 }
 
