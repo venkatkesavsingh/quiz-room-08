@@ -228,7 +228,7 @@ body {
 }
 
 #question {
-  height: 10vh;
+  height: 8vh;
   margin: 0;
   font-weight: bolder;
   display: flex;
@@ -255,8 +255,9 @@ body {
   flex: 1 1 45%;
   min-width: 120px;
 
-  padding: 0.6rem;
+  padding: 0;
   font-size: clamp(0.85rem, 2.2vw, 1rem);
+  font-weight: bold;
 
   border-radius: 8px;
   border: none;
@@ -290,6 +291,7 @@ body {
    }
    
   .option {
+    height: 6vh;
     flex: 1 1 100%;
   }
 }
