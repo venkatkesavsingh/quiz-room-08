@@ -41,6 +41,11 @@ body {
   width: min(85%, 500px);
 }
 
+.thank-you {
+  margin-top: 5vh;
+  width: min(75%, 500px);
+}
+
 /* =======================
    CONTAINER BACKGROUND
 ======================= */

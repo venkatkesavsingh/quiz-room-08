@@ -30,11 +30,14 @@ let questions = [];
 let currentQuestionIndex = 0;
 let timeLeft = 0;
 let score = 0;
+let level = 1;
 let selectedOption = null;
+let answerRevealed = false;
 
 let isTeamVerified = false;
 let quizStarted = false;
 let waitingRoomOpen = false;
+let isQualified = false;
 
 /********************************
  * TEAM ID
@@ -44,9 +47,9 @@ const teamId = new URLSearchParams(window.location.search).get("team");
 /********************************
  * ELEMENTS
  ********************************/
-let passcodeScreen, waitingScreen, quizScreen;
+let passcodeScreen, waitingScreen, quizScreen, waitingScreen2, qualifiedWaitingScreen;
 let passcodeInput, passcodeBtn, passcodeError;
-let questionEl, timerEl, scoreEl, optionsEls, questionNumberEl;
+let questionEl, timerEl, scoreEl, optionsEls, questionNumberEl, levelBannerEl;
 
 /********************************
  * INIT
@@ -58,6 +61,7 @@ function init() {
   showScreen(passcodeScreen);
   fetchQuestions();
   setupDatabaseListeners();
+  restoreGameState(); 
 }
 
 /********************************
@@ -67,6 +71,8 @@ function setupElements() {
   passcodeScreen = document.getElementById("passcode-box");
   waitingScreen = document.getElementById("WaitingScreen");
   quizScreen = document.getElementById("quiz-UI");
+  waitingScreen2 = document.getElementById("WaitingScreen2");
+  qualifiedWaitingScreen = document.getElementById("qualifiedWaitingScreen");
 
   passcodeInput = document.getElementById("passcode-input");
   passcodeBtn = document.getElementById("passcode-btn");
@@ -77,6 +83,7 @@ function setupElements() {
   scoreEl = document.getElementById("live-score");
   questionNumberEl = document.getElementById("question-number");
   optionsEls = document.querySelectorAll(".option");
+  levelBannerEl = document.querySelector(".Level-1-banner");
 
   passcodeBtn.disabled = true;
 
@@ -129,6 +136,7 @@ async function verifyPasscode() {
   }
 
   score = snap.val().score || 0;
+  isQualified = snap.val().qualified || false;
   isTeamVerified = true;
 
   decidePostLoginScreen();
@@ -138,7 +146,13 @@ async function verifyPasscode() {
  * POST LOGIN FLOW
  ********************************/
 function decidePostLoginScreen() {
-  if (waitingRoomOpen) {
+  if (level === 2) {
+    if (isQualified) {
+      showScreen(qualifiedWaitingScreen);
+    } else {
+      showScreen(waitingScreen2);
+    }
+  } else if (waitingRoomOpen) {
     showScreen(waitingScreen);
   } else if (quizStarted) {
     showScreen(quizScreen);
@@ -151,9 +165,16 @@ function decidePostLoginScreen() {
  * FETCH QUESTIONS
  ********************************/
 function fetchQuestions() {
-  fetch("questions.json")
+  const questionFile = `questions.json`;
+  fetch(questionFile)
     .then(r => r.json())
-    .then(data => questions = data);
+    .then(data => questions = data)
+    .catch(() => {
+      // Fallback to default questions.json if level-specific file doesn't exist
+      fetch("questions.json")
+        .then(r => r.json())
+        .then(data => questions = data);
+    });
 }
 
 /********************************
@@ -164,7 +185,7 @@ function setupDatabaseListeners() {
   onValue(ref(db, "admin/waitingRoomOpen"), snap => {
     waitingRoomOpen = snap.val() === true;
     if (isTeamVerified && waitingRoomOpen) {
-      showScreen(waitingScreen);
+      decidePostLoginScreen();
     }
   });
 
@@ -173,24 +194,55 @@ function setupDatabaseListeners() {
 
     if (!isTeamVerified) return;
 
-    if (quizStarted) {
+    if (level === 2) {
+      showScreen(waitingScreen2);
+    } else if (quizStarted) {
       showScreen(quizScreen);
     } else {
       showScreen(waitingScreen);
     }
   });
 
+  onValue(ref(db, "admin/level"), snap => {
+    level = snap.val() || 1;
+
+    if (!isTeamVerified) return;
+
+    fetchQuestions();
+    updateLevelBanner();
+    decidePostLoginScreen();
+  });
+
+  onValue(ref(db, `teams/${teamId}/qualified`), snap => {
+    isQualified = snap.val() || false;
+
+    if (!isTeamVerified) return;
+
+    decidePostLoginScreen();
+  });
+
   onValue(ref(db, "admin/currentQuestionIndex"), snap => {
     if (!isTeamVerified || !quizStarted) return;
+
+    const idx = snap.val();
+
+    // 🏁 QUIZ ENDED
+    if (idx > 15) {
+      timerEl.innerText = "Quiz Ended";
+      questionEl.innerText = "—";
+      optionsEls.forEach(btn => btn.disabled = true);
+      return;
+    }
+
+    currentQuestionIndex = idx;
     renderQuestion();
-    currentQuestionIndex = snap.val();
   });
 
   onValue(ref(db, "admin/timeLeft"), snap => {
     if (!isTeamVerified || !quizStarted) return;
 
     timeLeft = snap.val() ?? 0;
-    timerEl.innerText = `Time ${timeLeft}s`;
+    timerEl.innerText = `Time ${timeLeft}s left`;
 
     if (timeLeft === 0) {
       revealAnswer();
@@ -206,6 +258,7 @@ function renderQuestion() {
   if (!q) return;
 
   selectedOption = null;
+  answerRevealed = false; 
 
   questionNumberEl.innerText = `Question: ${currentQuestionIndex}`;
   questionEl.innerText = q.question;
@@ -214,15 +267,19 @@ function renderQuestion() {
   resetOptions();
 
   shuffle(q.options).forEach((opt, i) => {
-    optionsEls[i].innerText = opt;
+  optionsEls[i].innerText = opt;
 
-    optionsEls[i].onclick = () => {
-      if (timeLeft <= 0) return;
+  optionsEls[i].onclick = async () => {
+    if (timeLeft <= 0) return;
 
-      resetOptions(false);
-      optionsEls[i].classList.add("selected");
-      optionsEls[i].style.backgroundColor = "#BDBDBD";
-      selectedOption = opt;
+    resetOptions(false);
+    optionsEls[i].classList.add("selected");
+    optionsEls[i].style.backgroundColor = "#4a4a4a";
+    selectedOption = opt;
+
+      await update(ref(db, `teams/${teamId}`), {
+        lastAnsweredQuestion: currentQuestionIndex
+      });
     };
   });
 }
@@ -244,6 +301,8 @@ function resetOptions(clearHandlers = true) {
  * REVEAL ANSWER
  ********************************/
 async function revealAnswer() {
+  if (answerRevealed) return; // 🔒 prevent double scoring
+  answerRevealed = true;
   const q = questions[currentQuestionIndex];
   if (!q) return;
 
@@ -271,6 +330,49 @@ async function revealAnswer() {
 
   scoreEl.innerText = `Score: ${score}`;
   await update(ref(db, `teams/${teamId}`), { score });
+}
+
+/********************************
+ * 🔁 Restore quiz state
+ ********************************/
+async function restoreGameState() {
+  const adminSnap = await get(ref(db, "admin"));
+
+  if (!adminSnap.exists()) return;
+
+  const admin = adminSnap.val();
+
+  // 🧠 Restore values
+  currentQuestionIndex = admin.currentQuestionIndex;
+  timeLeft = admin.timeLeft;
+  quizStarted = admin.quizStarted;
+  level = admin.level || 1;
+
+  // ✅ Load question immediately
+  if (quizStarted) {
+    renderQuestion();
+  }
+
+  // ⏱ Restore timer UI
+  timerEl.innerText = quizStarted ? timeLeft : `⏸ ${timeLeft}`;
+
+  // 🔁 Live timer sync
+  onValue(ref(db, "admin/timeLeft"), snap => {
+    if (snap.exists()) {
+      timeLeft = snap.val();
+      timerEl.innerText = `Time ${timeLeft}s`;
+    }
+  });
+}
+
+/********************************
+ * UPDATE LEVEL BANNER
+ ********************************/
+function updateLevelBanner() {
+  if (!levelBannerEl) return;
+
+  const bannerSrc = level === 1 ? "ASSETS/Level-1.webp" : `ASSETS/Level-${level}.webp`;
+  levelBannerEl.src = bannerSrc;
 }
 
 /********************************
