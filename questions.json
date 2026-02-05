@@ -38,7 +38,7 @@
     "question": "Pythogerous Theorem states that",
     "options": ["base^2=height^2+hypotenuse^2", "hypotenuse^2=base^2+height^2", "height^2=base^2+hypotenuse^2", "base^2=height^2-hypotenuse^2"],
     "answer": "hypotenuse^2=base^2+height^2"
-  },
+  }
 ]
 
   
