@@ -157,11 +157,6 @@ body {
   animation: dots 2.5s steps(4, end) infinite;
 }
 
-.initializing2::after {
-  content: ".";
-  animation: dots 2.5s steps(4, end) infinite;
-}
-
 @keyframes dots {
   0% { content: "."; }
   33% { content: ".."; }
@@ -212,7 +207,7 @@ body {
 #live-score,
 #timer {
   font-weight: bold;
-  font-size: clamp(1rem, 2.5vw, 1.2rem);
+  font-size: clamp(0.9rem, 2.5vw, 1.2rem);
 }
 
 /* =======================
@@ -228,16 +223,7 @@ body {
 }
 
 #question {
-  height: 8vh;
-  margin: 0;
-  font-weight: bolder;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
+  margin: 0 0 1vh 0;
   font-size: clamp(1rem, 3vw, 1.3rem);
 }
 
@@ -255,9 +241,8 @@ body {
   flex: 1 1 45%;
   min-width: 120px;
 
-  padding: 0;
+  padding: 0.6rem;
   font-size: clamp(0.85rem, 2.2vw, 1rem);
-  font-weight: bold;
 
   border-radius: 8px;
   border: none;
@@ -291,7 +276,6 @@ body {
    }
    
   .option {
-    height: 5vh;
     flex: 1 1 100%;
   }
 }

@@ -36,7 +36,6 @@ let answerRevealed = false;
 let isTeamVerified = false;
 let quizStarted = false;
 let waitingRoomOpen = false;
-let level = 1;
 let isQualified = false;
 
 /********************************
@@ -152,14 +151,6 @@ function decidePostLoginScreen() {
     } else {
       showScreen(waitingScreen2);
     }
-  } else if (level === 3) {
-    if (isQualified) {
-      showScreen(qualifiedWaitingScreen);
-    } else if (quizStarted) {
-      showScreen(quizScreen);
-    } else {
-      showScreen(waitingScreen);
-    }
   } else if (waitingRoomOpen) {
     showScreen(waitingScreen);
   } else if (quizStarted) {
@@ -173,7 +164,7 @@ function decidePostLoginScreen() {
  * FETCH QUESTIONS
  ********************************/
 function fetchQuestions() {
-  const questionFile = `questions-${level}.json`;
+  const questionFile = `questions.json`;
   fetch(questionFile)
     .then(r => r.json())
     .then(data => questions = data)
@@ -221,14 +212,6 @@ function setupDatabaseListeners() {
     decidePostLoginScreen();
   });
 
-  // 🔥 LIVE SCORE LISTENER
-  onValue(ref(db, `teams/${teamId}/score`), snap => {
-    if (!snap.exists()) return;
-
-    score = snap.val();
-    scoreEl.innerText = `Score: ${score}`;
-  });
-  
   onValue(ref(db, `teams/${teamId}/qualified`), snap => {
     isQualified = snap.val() || false;
 
@@ -376,7 +359,7 @@ async function restoreGameState() {
   onValue(ref(db, "admin/timeLeft"), snap => {
     if (snap.exists()) {
       timeLeft = snap.val();
-      timerEl.innerText = `Time: ${timeLeft}s`;
+      timerEl.innerText = `Time ${timeLeft}s`;
     }
   });
 }
