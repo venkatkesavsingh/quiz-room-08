@@ -274,7 +274,7 @@ function renderQuestion() {
 
     resetOptions(false);
     optionsEls[i].classList.add("selected");
-    optionsEls[i].style.backgroundColor = "#4a4a4a";
+    optionsEls[i].style.backgroundColor = "#BDBDBD";
     selectedOption = opt;
 
       await update(ref(db, `teams/${teamId}`), {
