@@ -10,11 +10,6 @@
     "answer": "DR. A. P. J. Abdul Kalam"
   },
   {
-    "question": "Karna was the blessed son of which celestial body?",
-    "options": ["The Moon", "Jupiter", "The Sun", "Agni"],
-    "answer": "The Sun"
-  },
-  {
     "question": "Who was the daughter of Dhritarashtra?",
     "options": ["Dushala", "Gandhari", "Draupadi", "Kunti"],
     "answer": "Dushala"
@@ -28,11 +23,6 @@
     "question": "Under what categories RRR movie won the OSCAR award?",
     "options": ["Best original song for'NAATU NAATU'", "Best Direction & Best Picture", "Best Flim", "Best Actress"],
     "answer": "Best original song for'NAATU NAATU"
-  },
-  {
-    "question": "Who invented zero?",
-    "options": ["Ramanujam", "C.V.Raman", "Arya Batta", "Bhaskara"],
-    "answer": "Arya Batta"
   },
   {
     "question": "Pythogerous Theorem states that",
